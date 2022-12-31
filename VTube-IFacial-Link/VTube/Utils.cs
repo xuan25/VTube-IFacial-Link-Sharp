@@ -7,14 +7,15 @@ namespace VTube
 {
     static class Utils
     {
+        private static readonly JsonSerializerOptions serializeOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = false
+        };
+
         public static void SendRequest<T>(ClientWebSocket clientWebSocket, T request) where T : RequestBase
         {
-            JsonSerializerOptions options = new()
-            {
-                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = false
-            };
-            string reqJsonStr = JsonSerializer.Serialize(request, options);
+            string reqJsonStr = JsonSerializer.Serialize(request, serializeOptions);
             byte[] payload = Encoding.UTF8.GetBytes(reqJsonStr);
             clientWebSocket.SendAsync(payload, WebSocketMessageType.Text, true, CancellationToken.None).Wait();
         }
@@ -33,12 +34,7 @@ namespace VTube
             while (!receiveResult.EndOfMessage);
             outputStream.Position = 0;
 
-            JsonSerializerOptions options = new()
-            {
-                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = false
-            };
-            T obj = JsonSerializer.Deserialize<T>(outputStream, options);
+            T obj = JsonSerializer.Deserialize<T>(outputStream, serializeOptions);
             return obj;
         }
     }

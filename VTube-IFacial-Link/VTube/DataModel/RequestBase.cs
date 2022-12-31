@@ -2,14 +2,14 @@
 {
     class RequestBase
     {
-        public string apiName { get; set; } = "VTubeStudioPublicAPI";
-        public string apiVersion { get; set; } = "1.0";
-        public string requestID { get; set; } = "VTubeIFacialLink";
-        public string messageType { get; set; }
+        public string ApiName { get; set; } = "VTubeStudioPublicAPI";
+        public string ApiVersion { get; set; } = "1.0";
+        public string RequestID { get; set; } = "VTubeIFacialLink";
+        public string MessageType { get; set; }
 
         public RequestBase(string messageType)
         {
-            this.messageType = messageType;
+            MessageType = messageType;
         }
     }
 }

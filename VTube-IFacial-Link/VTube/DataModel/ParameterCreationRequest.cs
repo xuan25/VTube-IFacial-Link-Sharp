@@ -2,29 +2,29 @@
 {
     class ParameterCreationRequest : RequestBase
     {
-        public class Data
+        public class DataSection
         {
-            public string parameterName { get; set; }
-            public string explanation { get; set; }
-            public float min { get; set; }
-            public float max { get; set; }
-            public float defaultValue { get; set; }
+            public string ParameterName { get; set; }
+            public string Explanation { get; set; }
+            public float Min { get; set; }
+            public float Max { get; set; }
+            public float DefaultValue { get; set; }
 
-            public Data(string parameterName, string explanation, float min, float max, float defaultValue)
+            public DataSection(string parameterName, string explanation, float min, float max, float defaultValue)
             {
-                this.parameterName = parameterName;
-                this.explanation = explanation;
-                this.min = min;
-                this.max = max;
-                this.defaultValue = defaultValue;
+                ParameterName = parameterName;
+                Explanation = explanation;
+                Min = min;
+                Max = max;
+                DefaultValue = defaultValue;
             }
         }
 
-        public Data data { get; set; }
+        public DataSection Data { get; set; }
 
         public ParameterCreationRequest(string parameterName, string explanation, float min, float max, float defaultValue) : base("ParameterCreationRequest")
         {
-            this.data = new Data(parameterName, explanation, min, max, defaultValue);
+            Data = new DataSection(parameterName, explanation, min, max, defaultValue);
         }
     }
 }

@@ -2,14 +2,14 @@
 {
     class AuthenticationTokenRequest : RequestBase
     {
-        public class Data
+        public class DataSection
         {
-            public string pluginName { get; set; } = Constants.PLUGIN_NAME;
-            public string pluginDeveloper { get; set; } = Constants.PLUGIN_DEVELOPER;
-            public string pluginIcon { get; set; } = Constants.PLUGIN_ICON;
+            public string PluginName { get; set; } = Constants.PLUGIN_NAME;
+            public string PluginDeveloper { get; set; } = Constants.PLUGIN_DEVELOPER;
+            public string PluginIcon { get; set; } = Constants.PLUGIN_ICON;
         }
 
-        public Data data { get; set; } = new Data();
+        public DataSection Data { get; set; } = new DataSection();
 
         public AuthenticationTokenRequest() : base("AuthenticationTokenRequest") { }
     }

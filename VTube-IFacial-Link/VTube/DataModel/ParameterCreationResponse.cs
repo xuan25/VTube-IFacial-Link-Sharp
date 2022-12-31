@@ -2,11 +2,11 @@
 {
     class ParameterCreationResponse : ResponseBase
     {
-        public class Data : ErrorInfoBase
+        public class DataSection : ErrorInfoBase
         {
-            public string parameterName { get; set; }
+            public string ParameterName { get; set; }
         }
 
-        public Data data { get; set; }
+        public DataSection Data { get; set; }
     }
 }

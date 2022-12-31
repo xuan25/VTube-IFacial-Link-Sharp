@@ -2,23 +2,23 @@
 {
     class AuthenticationRequest : RequestBase
     {
-        public class Data
+        public class DataSection
         {
-            public string pluginName { get; set; } = Constants.PLUGIN_NAME;
-            public string pluginDeveloper { get; set; } = Constants.PLUGIN_DEVELOPER;
-            public string authenticationToken { get; set; }
+            public string PluginName { get; set; } = Constants.PLUGIN_NAME;
+            public string PluginDeveloper { get; set; } = Constants.PLUGIN_DEVELOPER;
+            public string AuthenticationToken { get; set; }
 
-            public Data(string authenticationToken)
+            public DataSection(string authenticationToken)
             {
-                this.authenticationToken = authenticationToken;
+                AuthenticationToken = authenticationToken;
             }
         }
 
-        public Data data { get; set; }
+        public DataSection Data { get; set; }
 
         public AuthenticationRequest(string authenticationToken) : base("AuthenticationRequest")
         {
-            this.data = new Data(authenticationToken);
+            Data = new DataSection(authenticationToken);
         }
     }
 }

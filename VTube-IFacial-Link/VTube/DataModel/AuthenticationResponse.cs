@@ -2,12 +2,12 @@
 {
     class AuthenticationResponse : ResponseBase
     {
-        public class Data : ErrorInfoBase
+        public class DataSection : ErrorInfoBase
         {
-            public bool authenticated { get; set; }
-            public string reason { get; set; }
+            public bool Authenticated { get; set; }
+            public string Reason { get; set; }
         }
 
-        public Data data { get; set; }
+        public DataSection Data { get; set; }
     }
 }

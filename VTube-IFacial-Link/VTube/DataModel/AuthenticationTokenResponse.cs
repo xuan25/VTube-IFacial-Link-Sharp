@@ -2,11 +2,11 @@
 {
     class AuthenticationTokenResponse : ResponseBase
     {
-        public class Data : ErrorInfoBase
+        public class DataSection : ErrorInfoBase
         {
-            public string authenticationToken { get; set; }
+            public string AuthenticationToken { get; set; }
         }
 
-        public Data data { get; set; }
+        public DataSection Data { get; set; }
     }
 }

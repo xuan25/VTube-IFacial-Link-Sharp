@@ -2,16 +2,16 @@
 {
     class ResponseBase
     {
-        public string apiName { get; set; }
-        public string apiVersion { get; set; }
-        public long timestamp { get; set; }
-        public string messageType { get; set; }
-        public string requestID { get; set; }
+        public string ApiName { get; set; }
+        public string ApiVersion { get; set; }
+        public long Timestamp { get; set; }
+        public string MessageType { get; set; }
+        public string RequestID { get; set; }
 
         public class ErrorInfoBase
         {
-            public int errorID { get; set; }
-            public string message { get; set; }
+            public int ErrorID { get; set; }
+            public string Message { get; set; }
         }
     }
 }

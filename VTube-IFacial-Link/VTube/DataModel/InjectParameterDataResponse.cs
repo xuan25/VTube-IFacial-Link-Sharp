@@ -2,10 +2,10 @@
 {
     class InjectParameterDataResponse : ResponseBase
     {
-        public class Data : ErrorInfoBase
+        public class DataSection : ErrorInfoBase
         {
         }
 
-        public Data data { get; set; }
+        public DataSection Data { get; set; }
     }
 }

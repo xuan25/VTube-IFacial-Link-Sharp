@@ -56,16 +56,16 @@ namespace VTube
         public bool Init()
         {
             System.Diagnostics.Debug.WriteLine($"Requesting Registered Input Parameter List...");
-            InputParameterListResponse.Data data = Api.RequestInputParameterList(clientWebSocket);
+            InputParameterListResponse.DataSection data = Api.RequestInputParameterList(clientWebSocket);
 
             HashSet<string> registeredParameters = new();
-            foreach (InputParameterListResponse.Data.Parameter parameter in data.defaultParameters)
+            foreach (InputParameterListResponse.DataSection.Parameter parameter in data.DefaultParameters)
             {
-                registeredParameters.Add(parameter.name);
+                registeredParameters.Add(parameter.Name);
             }
-            foreach(InputParameterListResponse.Data.Parameter parameter in data.customParameters)
+            foreach(InputParameterListResponse.DataSection.Parameter parameter in data.CustomParameters)
             {
-                registeredParameters.Add(parameter.name);
+                registeredParameters.Add(parameter.Name);
             }
 
             System.Diagnostics.Debug.WriteLine($"Registering Missing Parameters...");
@@ -112,7 +112,7 @@ namespace VTube
             {
                 while (!CTS.IsCancellationRequested)
                 {
-                    List<InjectParameterDataRequest.Data.ParameterValue> parameterValues = ParameterConverter.Convert(Captured);
+                    List<InjectParameterDataRequest.DataSection.ParameterValue> parameterValues = ParameterConverter.Convert(Captured);
                     Api.RequestInjectParameterData(clientWebSocket, true, "set", parameterValues);
                 }
             }

@@ -2,24 +2,24 @@
 {
     class InputParameterListResponse : ResponseBase
     {
-        public class Data : ErrorInfoBase
+        public class DataSection : ErrorInfoBase
         {
             public class Parameter
             {
-                public string name { get; set; }
-                public string addedBy { get; set; }
-                public float value { get; set; }
-                public float min { get; set; }
-                public float max { get; set; }
-                public float defaultValue { get; set; }
+                public string Name { get; set; }
+                public string AddedBy { get; set; }
+                public float Value { get; set; }
+                public float Min { get; set; }
+                public float Max { get; set; }
+                public float DefaultValue { get; set; }
             }
 
-            public bool modelLoaded { get; set; }
-            public string modelName { get; set; }
-            public List<Parameter> customParameters { get; set; }
-            public List<Parameter> defaultParameters { get; set; }
+            public bool ModelLoaded { get; set; }
+            public string ModelName { get; set; }
+            public List<Parameter> CustomParameters { get; set; }
+            public List<Parameter> DefaultParameters { get; set; }
         }
 
-        public Data data { get; set; }
+        public DataSection Data { get; set; }
     }
 }

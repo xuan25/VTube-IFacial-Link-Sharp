@@ -1,49 +1,49 @@
-﻿using static VTube.DataModel.InjectParameterDataRequest.Data;
+﻿using static VTube.DataModel.InjectParameterDataRequest.DataSection;
 
 namespace VTube.DataModel
 {
     class InjectParameterDataRequest : RequestBase
     {
-        public class Data
+        public class DataSection
         {
             public class ParameterValue
             {
-                public string id { get; set; }
-                public double weight { get; set; }
-                public double value { get; set; }
+                public string Id { get; set; }
+                public double Weight { get; set; }
+                public double Value { get; set; }
 
                 public ParameterValue(string id, double weight, double value)
                 {
-                    this.id = id;
-                    this.weight = weight;
-                    this.value = value;
+                    Id = id;
+                    Weight = weight;
+                    Value = value;
                 }
 
                 public ParameterValue(Params id, double weight, double value)
                 {
-                    this.id = Enum.GetName(typeof(Params), id);
-                    this.weight = weight;
-                    this.value = value;
+                    Id = Enum.GetName(typeof(Params), id);
+                    Weight = weight;
+                    Value = value;
                 }
             }
 
-            public bool faceFound { get; set; }
-            public string mode { get; set; } = "set";
-            public List<ParameterValue> parameterValues { get; set; }
+            public bool FaceFound { get; set; }
+            public string Mode { get; set; } = "set";
+            public List<ParameterValue> ParameterValues { get; set; }
 
-            public Data(bool faceFound, string mode, List<ParameterValue> parameterValues)
+            public DataSection(bool faceFound, string mode, List<ParameterValue> parameterValues)
             {
-                this.faceFound = faceFound;
-                this.mode = mode;
-                this.parameterValues = parameterValues;
+                FaceFound = faceFound;
+                Mode = mode;
+                ParameterValues = parameterValues;
             }
         }
 
-        public Data data { get; set; }
+        public DataSection Data { get; set; }
 
         public InjectParameterDataRequest(bool faceFound, string mode, List<ParameterValue> parameterValues) : base("InjectParameterDataRequest")
         {
-            data = new Data(faceFound, mode, parameterValues);
+            Data = new DataSection(faceFound, mode, parameterValues);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace VTube
         {
             Utils.SendRequest(clientWebSocket, new AuthenticationTokenRequest());
             AuthenticationTokenResponse res = Utils.ReceiveResponse<AuthenticationTokenResponse>(clientWebSocket);
-            string authtoken = res.data.authenticationToken;
+            string authtoken = res.Data.AuthenticationToken;
             return authtoken;
         }
 
@@ -17,15 +17,15 @@ namespace VTube
         {
             Utils.SendRequest(clientWebSocket, new AuthenticationRequest(authtoken));
             AuthenticationResponse res = Utils.ReceiveResponse<AuthenticationResponse>(clientWebSocket);
-            bool authenticated = res.data.authenticated;
+            bool authenticated = res.Data.Authenticated;
             return authenticated;
         }
 
-        public static InputParameterListResponse.Data RequestInputParameterList(ClientWebSocket clientWebSocket)
+        public static InputParameterListResponse.DataSection RequestInputParameterList(ClientWebSocket clientWebSocket)
         {
             Utils.SendRequest(clientWebSocket, new InputParameterListRequest());
             InputParameterListResponse res = Utils.ReceiveResponse<InputParameterListResponse>(clientWebSocket);
-            InputParameterListResponse.Data data = res.data;
+            InputParameterListResponse.DataSection data = res.Data;
             return data;
         }
 
@@ -35,7 +35,7 @@ namespace VTube
             ParameterCreationResponse _ = Utils.ReceiveResponse<ParameterCreationResponse>(clientWebSocket);
         }
 
-        public static void RequestInjectParameterData(ClientWebSocket clientWebSocket, bool faceFound, string mode, List<InjectParameterDataRequest.Data.ParameterValue> parameterValues)
+        public static void RequestInjectParameterData(ClientWebSocket clientWebSocket, bool faceFound, string mode, List<InjectParameterDataRequest.DataSection.ParameterValue> parameterValues)
         {
             Utils.SendRequest(clientWebSocket, new InjectParameterDataRequest(faceFound, mode, parameterValues));
             ParameterCreationResponse _ = Utils.ReceiveResponse<ParameterCreationResponse>(clientWebSocket);
