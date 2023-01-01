@@ -239,12 +239,12 @@
         </ScrollView>
         <Grid Grid.Row="1" Opacity="{Binding BusyMessageOpacity}" InputTransparent="True">
             <Grid WidthRequest="300" HeightRequest="200">
-                <Border Background="{DynamicResource Black}" Opacity="0.2">
+                <Border Background="{AppThemeBinding Light=Black, Dark=White}" Opacity="0.2">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8" />
                     </Border.StrokeShape>
                 </Border>
-                <Border Margin="3" Background="{DynamicResource White}">
+                <Border Margin="3" Background="{AppThemeBinding Light=White, Dark=Black}">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="8" />
                     </Border.StrokeShape>
