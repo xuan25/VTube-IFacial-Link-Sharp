@@ -22,6 +22,9 @@ public partial class MainPage : ContentPage
         configPath = Path.Combine(FileSystem.AppDataDirectory, "config-ui.json");
         this.Loaded += MainPage_Loaded;
         InitializeComponent();
+        
+        Directory.CreateDirectory(FileSystem.AppDataDirectory);
+        LoadConfig();
     }
 
     private void OnBrowseAppDataClicked(object sender, EventArgs e)
@@ -37,8 +40,11 @@ public partial class MainPage : ContentPage
     private void MainPage_Loaded(object sender, EventArgs e)
     {
         Window.Destroying += Window_Destroying;
-        Directory.CreateDirectory(FileSystem.AppDataDirectory);
-        LoadConfig();
+
+        if (StartOnLaunch)
+        {
+            Start();
+        }
     }
 
     private bool LoadConfig()
@@ -129,7 +135,14 @@ public partial class MainPage : ContentPage
         set => SetValue(CanStopProperty, value);
     }
 
-    public static readonly BindableProperty StartOnLaunchProperty = BindableProperty.Create(nameof(StartOnLaunch), typeof(bool), typeof(MainPage), false);
+    public static readonly BindableProperty StartOnLaunchProperty = BindableProperty.Create(nameof(StartOnLaunch), typeof(bool), typeof(MainPage), false, propertyChanged: (BindableObject bindable, object oldValue, object newValue) =>
+    {
+        MainPage mainPage = (MainPage)bindable;
+        if (mainPage.IsLoaded)
+        {
+            mainPage.SaveConfig();
+        }
+    });
     public bool StartOnLaunch
     {
         get => (bool)GetValue(StartOnLaunchProperty);
@@ -157,7 +170,6 @@ public partial class MainPage : ContentPage
             animation.Commit(mainPage, "BusyMessageFadeAnimation", 16, duration, Easing.CubicIn, (v, c) => { if (!c) mainPage.BusyMessageOpacity = 0; }, () => false);
         }
     });
-
     public new bool IsBusy
     {
         get => (bool)GetValue(IsBusyProperty);
