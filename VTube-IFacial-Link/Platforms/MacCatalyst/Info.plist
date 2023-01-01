@@ -26,5 +26,9 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>file</string>
+	</array>
 </dict>
 </plist>

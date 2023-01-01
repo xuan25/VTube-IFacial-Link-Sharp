@@ -24,6 +24,11 @@ public partial class MainPage : ContentPage
         InitializeComponent();
 	}
 
+    private void OnBrowseAppDataClicked(object sender, EventArgs e)
+    {
+        Launcher.Default.OpenAsync(new Uri($"file://{FileSystem.AppDataDirectory}")).Wait();
+    }
+
     private void Window_Destroying(object sender, EventArgs e)
     {
         Stop();
@@ -32,6 +37,7 @@ public partial class MainPage : ContentPage
     private void MainPage_Loaded(object sender, EventArgs e)
     {
         Window.Destroying += Window_Destroying;
+        Directory.CreateDirectory(FileSystem.AppDataDirectory);
         LoadConfig();
     }
 

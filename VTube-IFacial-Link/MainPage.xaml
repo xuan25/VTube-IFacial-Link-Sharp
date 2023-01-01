@@ -11,8 +11,9 @@
         <HorizontalStackLayout Grid.Row="0" Margin="8" Spacing="24" Padding="30,0" VerticalOptions="Center" HorizontalOptions="Center">
             <Entry WidthRequest="300" IsEnabled="{Binding Source={x:Reference page}, Path=CanStart}" Text="{Binding Source={x:Reference page}, Path=IFacialAddress}" Placeholder="IP address of the capturing device" SemanticProperties.Hint="IP address of the capturing device" HorizontalOptions="Center" />
             <Entry WidthRequest="300" IsEnabled="{Binding Source={x:Reference page}, Path=CanStart}" Text="{Binding Source={x:Reference page}, Path=VTubeAddress}" Placeholder="API address of the VTube Studio" SemanticProperties.Hint="API address of the VTube Studio" HorizontalOptions="Center" />
-            <Button Text="Start" IsEnabled="{Binding Source={x:Reference page}, Path=CanStart}" SemanticProperties.Hint="Start the plugin" Clicked="OnStartClicked" HorizontalOptions="Center" />
-            <Button Text="Stop" IsEnabled="{Binding Source={x:Reference page}, Path=CanStop}" SemanticProperties.Hint="Stop the plugin" Clicked="OnStopClicked" HorizontalOptions="Center" />
+            <Button Text="Start" IsEnabled="{Binding Source={x:Reference page}, Path=CanStart}" SemanticProperties.Hint="Start the plugin" Clicked="OnStartClicked"/>
+            <Button Text="Stop" IsEnabled="{Binding Source={x:Reference page}, Path=CanStop}" SemanticProperties.Hint="Stop the plugin" Clicked="OnStopClicked"/>
+            <Button Text="Browse App Data" SemanticProperties.Hint="Browse App Data" Clicked="OnBrowseAppDataClicked"/>
         </HorizontalStackLayout>
         <ScrollView Grid.Row="1">
 
