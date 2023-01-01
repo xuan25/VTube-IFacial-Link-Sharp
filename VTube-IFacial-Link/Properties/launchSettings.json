@@ -3,6 +3,10 @@
     "Windows Machine": {
       "commandName": "MsixPackage",
       "nativeDebugging": false
+    },
+    "Windows Machine (unpackaged)": {
+      "commandName": "Executable",
+      "executablePath": "./VTube-IFacial-Link.exe"
     }
   }
 }

@@ -11,11 +11,14 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 
+		<WindowsPackageType>None</WindowsPackageType>
+		<WindowsAppSDKDelfContained>true</WindowsAppSDKDelfContained>
+
 		<!-- Display name -->
 		<ApplicationTitle>VTube-IFacial-Link</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.vtube_ifacial_link</ApplicationId>
+		<ApplicationId>com.xuan25.vtube_ifacial_link</ApplicationId>
 		<ApplicationIdGuid>8be8a29a-9525-4429-ab9b-6e72b29f02fe</ApplicationIdGuid>
 
 		<!-- Versions -->
