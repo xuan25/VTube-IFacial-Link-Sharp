@@ -8,14 +8,11 @@
 
 ## 快速开始指南
 
-*注意：该程序是在 Visual Studio 2022 上开发的*。
-
-1. 克隆并构建代码库。
-2. 确保你的 iPhone 和电脑都在同一个网络上。
-3. 在你的电脑上启动 Vtube Studio，在你的 iPhone 上启动 iFacialMocap。
-4. 确保 "VTube Studio API" 被启用。
-5. 启动桥接插件，并且输入捕捉设备的IP地址（iFacialMocap 中显示）以及 Vtube Studio 的 API 地址。
-6. 你应该看到所有捕获参数显示在了窗口中，并且插件会被 Vtube Studio 检测到。
+1. 从源码编译或下载预构建 VTube-IFacial-Link 可执行程序
+2. 启动 Vtube Studio，并在设置中激活 VTube Studio API 功能
+3. 将 iPhone 接入运行着 Vtube Studio 的主机所在的网络，并启动 iFacialMocap
+4. 运行 VTube-IFacial-Link 可执行程序，并键入 捕捉设备的IP地址（iFacialMocap 中显示）以及 Vtube Studio 的 API 地址 (注意：用 127.0.0.1 替换任何 0.0.0.0，例如：ws://0.0.0.0:8001 -> ws://127.0.0.1:8001)
+5. 点击 `Start` 按钮，此时 可以在窗口中看到捕获到的数据，同时 Vtube Studio 应检测到插件接入
 
 ## 支持的参数
 

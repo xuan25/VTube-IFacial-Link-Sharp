@@ -10,14 +10,11 @@ A *VTube Studio* plugin that bridging facial tracking from *iFacialMocap* (IOS),
 
 ## Quick Start Guide
 
-*Note: The program is developed on Visual Studio 2022*
-
-1. Clone and Compile the repository.
-2. Make sure both your iPhone and PC are on the same network.
-3. Launch both Vtube Studio on your PC and iFacialMocap on your iPhone.
-4. Make sure the `VTube Studio API` is enabled.
-5. Launch the Bridging Plugin and type in the IP address of your capture device (shown in the iFacialMocap) and the API address of your VTube Studio.
-6. You should see all of the captured parameters in the App and the plugin should be detected by Vtube Studio. 
+1. Compile from the source code or download the pre-built VTube-IFacial-Link executable 
+2. Start Vtube Studio and activate the VTube Studio API feature in the settings
+3. Connect your iPhone to the same network as the host where Vtube Studio is running and start iFacialMocap
+4. Run the VTube-IFacial-Link executable and type in the IP address of the capturing device (shown in iFacialMocap) and the API address of Vtube Studio. (Note: replace any 0.0.0.0 with 127.0.0.1 e.g. ws://0.0.0.0:8001 -> ws://127.0.0.1:8001)
+5. Click on the `Start` button and you will see the captured data in the window and Vtube Studio should detect the plugin
 
 ## Supported Parameters
 
