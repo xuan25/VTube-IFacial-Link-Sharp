@@ -1,6 +1,8 @@
 ﻿using IFacial;
+using Microsoft.UI.Xaml;
 using System.Net;
 using System.Text.Json;
+using System.Windows.Input;
 using VTube;
 using VTube_IFacial_Link.DataModel;
 
@@ -8,6 +10,87 @@ namespace VTube_IFacial_Link;
 
 public partial class MainPage : ContentPage
 {
+
+    public class StartCommandModel : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+
+        public MainPage Parent { get; private set; }
+
+        public StartCommandModel(MainPage parent)
+        {
+            Parent = parent;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return Parent.CanStart;
+        }
+
+        public void Execute(object parameter)
+        {
+            Parent.Start();
+        }
+
+        public void OnCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public class StopCommandModel : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+
+        public MainPage Parent { get; private set; }
+
+        public StopCommandModel(MainPage parent)
+        {
+            Parent = parent;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return Parent.CanStop;
+        }
+
+        public void Execute(object parameter)
+        {
+            Parent.Stop();
+        }
+
+        public void OnCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    public class BrowseAppDataCommandModel : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+
+        public MainPage Parent { get; private set; }
+
+        public BrowseAppDataCommandModel(MainPage parent)
+        {
+            Parent = parent;
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            Parent.BrowseAppData();
+        }
+    }
+
+    public StartCommandModel StartCommand { private set; get; }
+    public StopCommandModel StopCommand { private set; get; }
+    public BrowseAppDataCommandModel BrowseAppDataCommand { private set; get; }
+
     readonly string configPath;
 
     public class ConfigStore
@@ -19,6 +102,10 @@ public partial class MainPage : ContentPage
 
     public MainPage()
 	{
+        StartCommand = new StartCommandModel(this);
+        StopCommand = new StopCommandModel(this);
+        BrowseAppDataCommand = new BrowseAppDataCommandModel(this);
+
         configPath = Path.Combine(FileSystem.AppDataDirectory, "config-ui.json");
         this.Loaded += MainPage_Loaded;
         InitializeComponent();
@@ -27,7 +114,7 @@ public partial class MainPage : ContentPage
         LoadConfig();
     }
 
-    private void OnBrowseAppDataClicked(object sender, EventArgs e)
+    private void BrowseAppData()
     {
         Launcher.Default.OpenAsync(new Uri($"file://{FileSystem.AppDataDirectory}")).Wait();
     }
@@ -125,14 +212,22 @@ public partial class MainPage : ContentPage
         set => SetValue(VTubeAddressProperty, value);
     }
 
-    public static readonly BindableProperty CanStartProperty = BindableProperty.Create(nameof(CanStart), typeof(bool), typeof(MainPage), true);
+    public static readonly BindableProperty CanStartProperty = BindableProperty.Create(nameof(CanStart), typeof(bool), typeof(MainPage), true, propertyChanged: (BindableObject bindable, object oldValue, object newValue) =>
+    {
+        MainPage mainPage = (MainPage)bindable;
+        mainPage.StartCommand.OnCanExecuteChanged();
+    });
     public bool CanStart
     {
         get => (bool)GetValue(CanStartProperty);
         set => SetValue(CanStartProperty, value);
     }
 
-    public static readonly BindableProperty CanStopProperty = BindableProperty.Create(nameof(CanStop), typeof(bool), typeof(MainPage), false);
+    public static readonly BindableProperty CanStopProperty = BindableProperty.Create(nameof(CanStop), typeof(bool), typeof(MainPage), false, propertyChanged: (BindableObject bindable, object oldValue, object newValue) =>
+    {
+        MainPage mainPage = (MainPage)bindable;
+        mainPage.StopCommand.OnCanExecuteChanged();
+    });
     public bool CanStop
     {
         get => (bool)GetValue(CanStopProperty);
@@ -338,11 +433,6 @@ public partial class MainPage : ContentPage
         
     }
 
-    private void OnStartClicked(object sender, EventArgs e)
-	{
-        Start();
-    }
-
     private void Stop()
     {
         IsBusy = true;
@@ -371,11 +461,6 @@ public partial class MainPage : ContentPage
             IsBusy = false;
         }
         
-    }
-
-    private void OnStopClicked(object sender, EventArgs e)
-    {
-        Stop();
     }
 
     private void FacialClient_DataUpdated(object sender, EventArgs e)

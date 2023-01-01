@@ -12,13 +12,13 @@
             <HorizontalStackLayout Margin="16" Spacing="24" Padding="30,0" VerticalOptions="Center" HorizontalOptions="Center">
                 <Entry WidthRequest="300" IsEnabled="{Binding CanStart}" Text="{Binding IFacialAddress}" Placeholder="IP address of the capturing device" VerticalOptions="Center" SemanticProperties.Hint="IP address of the capturing device" HorizontalOptions="Center" />
                 <Entry WidthRequest="300" IsEnabled="{Binding CanStart}" Text="{Binding VTubeAddress}" Placeholder="API address of the VTube Studio" VerticalOptions="Center" SemanticProperties.Hint="API address of the VTube Studio" HorizontalOptions="Center" />
-                <Button Text="Start" IsEnabled="{Binding CanStart}" VerticalOptions="Center" SemanticProperties.Hint="Start the plugin" Clicked="OnStartClicked"/>
-                <Button Text="Stop" IsEnabled="{Binding CanStop}" VerticalOptions="Center" SemanticProperties.Hint="Stop the plugin" Clicked="OnStopClicked"/>
+                <Button Text="Start" VerticalOptions="Center" SemanticProperties.Hint="Start the plugin"  Command="{Binding StartCommand}"/>
+                <Button Text="Stop" VerticalOptions="Center" SemanticProperties.Hint="Stop the plugin" Command="{Binding StopCommand}"/>
                 <HorizontalStackLayout VerticalOptions="Center" Spacing="8">
                     <Label Text="Start on Launch" VerticalOptions="Center"/>
                     <Switch IsToggled="{Binding StartOnLaunch}" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
-                <Button Text="Browse App Data" VerticalOptions="Center" SemanticProperties.Hint="Browse App Data" Clicked="OnBrowseAppDataClicked"/>
+                <Button Text="Browse App Data" VerticalOptions="Center" SemanticProperties.Hint="Browse App Data" Command="{Binding BrowseAppDataCommand}"/>
             </HorizontalStackLayout>
         </ScrollView>
         
