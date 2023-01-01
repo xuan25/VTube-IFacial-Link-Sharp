@@ -168,6 +168,10 @@ namespace VTube
 
         private void SaveConfig()
         {
+            if (File.Exists(configPath))
+            {
+                File.Delete(configPath);
+            }
             using (FileStream configStream = File.OpenWrite(configPath))
             {
                 JsonSerializer.Serialize<ConfigStore>(configStream, Config);

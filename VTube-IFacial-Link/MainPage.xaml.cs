@@ -92,6 +92,10 @@ public partial class MainPage : ContentPage
             VTubeAddress = VTubeAddress,
             StartOnLaunch = StartOnLaunch,
         };
+        if (File.Exists(configPath))
+        {
+            File.Delete(configPath);
+        }
         using (FileStream configStream = File.OpenWrite(configPath))
         {
             JsonSerializer.Serialize<ConfigStore>(configStream, config);
