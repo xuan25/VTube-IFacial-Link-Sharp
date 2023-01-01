@@ -22,7 +22,7 @@ public partial class MainPage : ContentPage
         configPath = Path.Combine(FileSystem.AppDataDirectory, "config-ui.json");
         this.Loaded += MainPage_Loaded;
         InitializeComponent();
-	}
+    }
 
     private void OnBrowseAppDataClicked(object sender, EventArgs e)
     {
@@ -136,17 +136,68 @@ public partial class MainPage : ContentPage
         set => SetValue(StartOnLaunchProperty, value);
     }
 
+    public static new readonly BindableProperty IsBusyProperty = BindableProperty.Create(nameof(IsBusy), typeof(bool), typeof(MainPage), false, propertyChanged: (BindableObject bindable, object oldValue, object newValue) =>
+    {
+        MainPage mainPage = (MainPage)bindable;
+        mainPage.AbortAnimation("BusyMessageFadeAnimation");
+        uint duration = 250;
+        if ((bool)newValue)
+        {
+            // show Busy Indicator if the process is longer than one second
+            uint startDelay = 1000;
+            Animation animation = new Animation();
+            Animation ch_animation = new Animation(v => mainPage.BusyMessageOpacity = v, mainPage.BusyMessageOpacity, 1);
+            animation.Add((double)startDelay / (startDelay + duration), 1, ch_animation);
+            animation.Commit(mainPage, "BusyMessageFadeAnimation", 16, (startDelay + duration), Easing.CubicOut, (v, c) => { if (!c) mainPage.BusyMessageOpacity = 1; }, () => false);
+        }
+        else
+        {
+            // hide Busy Indicator immediately
+            Animation animation = new Animation(v => mainPage.BusyMessageOpacity = v, mainPage.BusyMessageOpacity, 0);
+            animation.Commit(mainPage, "BusyMessageFadeAnimation", 16, duration, Easing.CubicIn, (v, c) => { if (!c) mainPage.BusyMessageOpacity = 0; }, () => false);
+        }
+    });
+
+    public new bool IsBusy
+    {
+        get => (bool)GetValue(IsBusyProperty);
+        set
+        {
+            base.IsBusy = value;
+            SetValue(IsBusyProperty, value);
+        }
+    }
+
+    public static readonly BindableProperty BusyMessageOpacityProperty = BindableProperty.Create(nameof(BusyMessageOpacity), typeof(double), typeof(MainPage), 0.0);
+    public double BusyMessageOpacity
+    {
+        get => (double)GetValue(BusyMessageOpacityProperty);
+        set => SetValue(BusyMessageOpacityProperty, value);
+    }
+
+    public static readonly BindableProperty BusyMessageProperty = BindableProperty.Create(nameof(BusyMessage), typeof(string), typeof(MainPage), string.Empty);
+    public string BusyMessage
+    {
+        get => (string)GetValue(BusyMessageProperty);
+        set => SetValue(BusyMessageProperty, value);
+    }
 
     IFacialClient facialClient;
     VTubeClient vtubeClient;
 
     private void Start()
     {
+        BusyMessage = "Starting...";
+        IsBusy = true;
         CanStart = false;
         Task.Factory.StartNew(() =>
         {
             try
             {
+                MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    BusyMessage = "Initializing...";
+                }).Wait();
                 SaveConfig();
 
                 facialClient = new IFacialClient(IPAddress.Parse(IFacialAddress));
@@ -162,9 +213,11 @@ public partial class MainPage : ContentPage
             {
                 MainThread.InvokeOnMainThreadAsync(() =>
                 {
+                    BusyMessage = string.Empty;
                     DisplayAlert("Failed to Initialize", $"{ex.Message}", "OK");
                     Stop();
                     CanStart = true;
+                    IsBusy = false;
                 }).Wait();
                 
                 return;
@@ -172,7 +225,15 @@ public partial class MainPage : ContentPage
 
             try
             {
+                MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    BusyMessage = " Connecting to Capturing Device...";
+                }).Wait();
                 facialClient.Connect();
+                MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    BusyMessage = " Starting Captures...";
+                }).Wait();
                 facialClient.Start();
             }
             catch (Exception ex)
@@ -180,33 +241,57 @@ public partial class MainPage : ContentPage
                 
                 MainThread.InvokeOnMainThreadAsync(() =>
                 {
+                    BusyMessage = string.Empty;
                     DisplayAlert("Failed to Connect Capturing Device", $"{ex.Message}", "OK");
                     Stop();
                     CanStart = true;
+                    IsBusy = false;
                 }).Wait();
                 return;
             }
 
             try
             {
-                bool res = vtubeClient.Connect();
-                bool res2 = vtubeClient.Init();
+                MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    BusyMessage = "Connecting to VTube Studio...";
+                }).Wait();
+                vtubeClient.Connect((string message) =>
+                {
+                    MainThread.InvokeOnMainThreadAsync(() =>
+                    {
+                        BusyMessage = $"Connecting to VTube Studio...\n{message}";
+                    }).Wait();
+                });
+                MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    BusyMessage = "Initializing VTube Studio...";
+                }).Wait();
+                vtubeClient.Init();
+                MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    BusyMessage = "Starting VTube Studio Plugin...";
+                }).Wait();
                 vtubeClient.Start();
             }
             catch (Exception ex)
             {
                 MainThread.InvokeOnMainThreadAsync(() =>
                 {
+                    BusyMessage = string.Empty;
                     DisplayAlert("Failed to Connect VTube Studio", $"{ex.Message}", "OK");
                     Stop();
                     CanStart = true;
+                    IsBusy = false;
                 }).Wait();
                 return;
             }
 
             MainThread.InvokeOnMainThreadAsync(() =>
             {
+                BusyMessage = string.Empty;
                 CanStop = true;
+                IsBusy = false;
             }).Wait();
         });
     }
@@ -244,6 +329,7 @@ public partial class MainPage : ContentPage
 
     private void Stop()
     {
+        IsBusy = true;
         CanStop = false;
         try
         {
@@ -260,11 +346,13 @@ public partial class MainPage : ContentPage
                 vtubeClient = null;
             }
             CanStart = true;
+            IsBusy = false;
         }
         catch (Exception ex)
         {
             DisplayAlert("Failed to Stop", $"{ex.Message}", "OK");
             CanStop = true;
+            IsBusy = false;
         }
         
     }

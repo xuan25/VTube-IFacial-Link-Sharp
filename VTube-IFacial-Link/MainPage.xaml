@@ -2,17 +2,17 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:VTube_IFacial_Link"
-             x:Class="VTube_IFacial_Link.MainPage" x:Name="page">
+             x:Class="VTube_IFacial_Link.MainPage" x:Name="page" BindingContext="{x:Reference page}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <HorizontalStackLayout Grid.Row="0" Margin="8" Spacing="24" Padding="30,0" VerticalOptions="Center" HorizontalOptions="Center">
-            <Entry WidthRequest="300" IsEnabled="{Binding Source={x:Reference page}, Path=CanStart}" Text="{Binding Source={x:Reference page}, Path=IFacialAddress}" Placeholder="IP address of the capturing device" SemanticProperties.Hint="IP address of the capturing device" HorizontalOptions="Center" />
-            <Entry WidthRequest="300" IsEnabled="{Binding Source={x:Reference page}, Path=CanStart}" Text="{Binding Source={x:Reference page}, Path=VTubeAddress}" Placeholder="API address of the VTube Studio" SemanticProperties.Hint="API address of the VTube Studio" HorizontalOptions="Center" />
-            <Button Text="Start" IsEnabled="{Binding Source={x:Reference page}, Path=CanStart}" SemanticProperties.Hint="Start the plugin" Clicked="OnStartClicked"/>
-            <Button Text="Stop" IsEnabled="{Binding Source={x:Reference page}, Path=CanStop}" SemanticProperties.Hint="Stop the plugin" Clicked="OnStopClicked"/>
+            <Entry WidthRequest="300" IsEnabled="{Binding CanStart}" Text="{Binding IFacialAddress}" Placeholder="IP address of the capturing device" SemanticProperties.Hint="IP address of the capturing device" HorizontalOptions="Center" />
+            <Entry WidthRequest="300" IsEnabled="{Binding CanStart}" Text="{Binding VTubeAddress}" Placeholder="API address of the VTube Studio" SemanticProperties.Hint="API address of the VTube Studio" HorizontalOptions="Center" />
+            <Button Text="Start" IsEnabled="{Binding CanStart}" SemanticProperties.Hint="Start the plugin" Clicked="OnStartClicked"/>
+            <Button Text="Stop" IsEnabled="{Binding CanStop}" SemanticProperties.Hint="Stop the plugin" Clicked="OnStopClicked"/>
             <Button Text="Browse App Data" SemanticProperties.Hint="Browse App Data" Clicked="OnBrowseAppDataClicked"/>
         </HorizontalStackLayout>
         <ScrollView Grid.Row="1">
@@ -21,215 +21,233 @@
 
                 <VerticalStackLayout Margin="12" WidthRequest="200">
                     <Label Text="EyeBlinkLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeBlinkLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkLeft}"/>
 
                     <Label Text="EyeLookDownLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeLookDownLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownLeft}"/>
 
                     <Label Text="EyeLookInLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeLookInLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInLeft}"/>
 
                     <Label Text="EyeLookOutLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeLookOutLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutLeft}"/>
 
                     <Label Text="EyeLookUpLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeLookUpLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpLeft}"/>
 
                     <Label Text="EyeSquintLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeSquintLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintLeft}"/>
 
                     <Label Text="EyeWideLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeWideLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeWideLeft}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Margin="12" WidthRequest="200">
                     <Label Text="EyeBlinkRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeBlinkRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkRight}"/>
 
                     <Label Text="EyeLookDownRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeLookDownRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownRight}"/>
 
                     <Label Text="EyeLookInRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeLookInRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInRight}"/>
 
                     <Label Text="EyeLookOutRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeLookOutRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutRight}"/>
 
                     <Label Text="EyeLookUpRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeLookUpRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpRight}"/>
 
                     <Label Text="EyeSquintRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeSquintRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintRight}"/>
 
                     <Label Text="EyeWideRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.EyeWideRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeWideRight}"/>
 
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Margin="12" WidthRequest="200">
                     <Label Text="JawForward"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.JawForward}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.JawForward}"/>
 
                     <Label Text="JawLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.JawLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.JawLeft}"/>
 
                     <Label Text="JawRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.JawRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.JawRight}"/>
 
                     <Label Text="JawOpen"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.JawOpen}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.JawOpen}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Margin="12" WidthRequest="200">
                     <Label Text="MouthClose"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthClose}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthClose}"/>
 
                     <Label Text="MouthFunnel"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthFunnel}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthFunnel}"/>
 
                     <Label Text="MouthPucker"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthPucker}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthPucker}"/>
 
                     <Label Text="MouthLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthLeft}"/>
 
                     <Label Text="MouthRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthRight}"/>
 
                     <Label Text="MouthSmileLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthSmileLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileLeft}"/>
 
                     <Label Text="MouthSmileRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthSmileRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileRight}"/>
 
                     <Label Text="MouthFrownLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthFrownLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownLeft}"/>
 
                     <Label Text="MouthFrownRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthFrownRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownRight}"/>
 
                     <Label Text="MouthDimpleLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthDimpleLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleLeft}"/>
 
                     <Label Text="MouthDimpleRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthDimpleRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleRight}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Margin="12" WidthRequest="200">
                     <Label Text="MouthStretchLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthStretchLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchLeft}"/>
 
                     <Label Text="MouthStretchRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthStretchRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchRight}"/>
 
                     <Label Text="MouthRollLower"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthRollLower}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthRollLower}"/>
 
                     <Label Text="MouthRollUpper"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthRollUpper}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthRollUpper}"/>
 
                     <Label Text="MouthShrugLower"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthShrugLower}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugLower}"/>
 
                     <Label Text="MouthShrugUpper"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthShrugUpper}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugUpper}"/>
 
                     <Label Text="MouthPressLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthPressLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthPressLeft}"/>
 
                     <Label Text="MouthPressRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthPressRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthPressRight}"/>
 
                     <Label Text="MouthLowerDownLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthLowerDownLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownLeft}"/>
 
                     <Label Text="MouthLowerDownRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthLowerDownRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownRight}"/>
 
                     <Label Text="MouthUpperUpLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthUpperUpLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpLeft}"/>
 
                     <Label Text="MouthUpperUpRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.MouthUpperUpRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpRight}"/>
 
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Margin="12" WidthRequest="200">
                     <Label Text="BrowDownLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.BrowDownLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.BrowDownLeft}"/>
 
                     <Label Text="BrowDownRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.BrowDownRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.BrowDownRight}"/>
 
                     <Label Text="BrowInnerUp"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.BrowInnerUp}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.BrowInnerUp}"/>
 
                     <Label Text="BrowOuterUpLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.BrowOuterUpLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpLeft}"/>
 
                     <Label Text="BrowOuterUpRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.BrowOuterUpRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpRight}"/>
 
                     <Label Text="CheekPuff"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.CheekPuff}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.CheekPuff}"/>
 
                     <Label Text="CheekSquintLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.CheekSquintLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintLeft}"/>
 
                     <Label Text="CheekSquintRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.CheekSquintRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintRight}"/>
 
                     <Label Text="NoseSneerLeft"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.NoseSneerLeft}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerLeft}"/>
 
                     <Label Text="NoseSneerRight"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.NoseSneerRight}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerRight}"/>
 
                     <Label Text="TongueOut"/>
-                    <Slider Value="{Binding Source={x:Reference page}, Path=CapDataModel.Data.BlendShapes.TongueOut}"/>
+                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.TongueOut}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Margin="12" WidthRequest="200">
                     <Label Text="Head.Rotation.X"/>
-                    <Label Text="{Binding Source={x:Reference page}, Path=CapDataModel.Data.Tracking.Head.Rotation.X}"/>
+                    <Label Text="{Binding CapDataModel.Data.Tracking.Head.Rotation.X}"/>
 
                     <Label Text="Head.Rotation.Y"/>
-                    <Label Text="{Binding Source={x:Reference page}, Path=CapDataModel.Data.Tracking.Head.Rotation.Y}"/>
+                    <Label Text="{Binding CapDataModel.Data.Tracking.Head.Rotation.Y}"/>
 
                     <Label Text="Head.Rotation.Z"/>
-                    <Label Text="{Binding Source={x:Reference page}, Path=CapDataModel.Data.Tracking.Head.Rotation.Z}"/>
+                    <Label Text="{Binding CapDataModel.Data.Tracking.Head.Rotation.Z}"/>
 
                     <Label Text="Head.Position.X"/>
-                    <Label Text="{Binding Source={x:Reference page}, Path=CapDataModel.Data.Tracking.Head.Position.X}"/>
+                    <Label Text="{Binding CapDataModel.Data.Tracking.Head.Position.X}"/>
 
                     <Label Text="Head.Position.Y"/>
-                    <Label Text="{Binding Source={x:Reference page}, Path=CapDataModel.Data.Tracking.Head.Position.Y}"/>
+                    <Label Text="{Binding CapDataModel.Data.Tracking.Head.Position.Y}"/>
 
                     <Label Text="Head.Position.Z"/>
-                    <Label Text="{Binding Source={x:Reference page}, Path=CapDataModel.Data.Tracking.Head.Position.Z}"/>
+                    <Label Text="{Binding CapDataModel.Data.Tracking.Head.Position.Z}"/>
 
                     <Label Text="LeftEye.Rotation.X"/>
-                    <Label Text="{Binding Source={x:Reference page}, Path=CapDataModel.Data.Tracking.LeftEye.Rotation.X}"/>
+                    <Label Text="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.X}"/>
 
                     <Label Text="LeftEye.Rotation.Y"/>
-                    <Label Text="{Binding Source={x:Reference page}, Path=CapDataModel.Data.Tracking.LeftEye.Rotation.Y}"/>
+                    <Label Text="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Y}"/>
 
                     <Label Text="LeftEye.Rotation.Z"/>
-                    <Label Text="{Binding Source={x:Reference page}, Path=CapDataModel.Data.Tracking.LeftEye.Rotation.Z}"/>
+                    <Label Text="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Z}"/>
 
                     <Label Text="RightEye.Rotation.X"/>
-                    <Label Text="{Binding Source={x:Reference page}, Path=CapDataModel.Data.Tracking.RightEye.Rotation.X}"/>
+                    <Label Text="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.X}"/>
 
                     <Label Text="RightEye.Rotation.Y"/>
-                    <Label Text="{Binding Source={x:Reference page}, Path=CapDataModel.Data.Tracking.RightEye.Rotation.Y}"/>
+                    <Label Text="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Y}"/>
 
                     <Label Text="RightEye.Rotation.Z"/>
-                    <Label Text="{Binding Source={x:Reference page}, Path=CapDataModel.Data.Tracking.RightEye.Rotation.Z}"/>
+                    <Label Text="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Z}"/>
                 </VerticalStackLayout>
 
             </FlexLayout>
 
         </ScrollView>
+        <Grid Grid.Row="1" Opacity="{Binding BusyMessageOpacity}" InputTransparent="True">
+            <Grid WidthRequest="300" HeightRequest="200">
+                <Border Background="{DynamicResource Black}" Opacity="0.2">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                </Border>
+                <Border Margin="3" Background="{DynamicResource White}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                </Border>
+                <VerticalStackLayout VerticalOptions="Center" Spacing="24">
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" />
+                    <Label Text="{Binding BusyMessage}" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </Grid>
+        </Grid>
     </Grid>
 
 

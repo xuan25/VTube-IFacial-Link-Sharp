@@ -30,25 +30,25 @@ namespace VTube
 
         ClientWebSocket clientWebSocket;
 
-        public bool Connect()
+        public void Connect(Action<string> messageHandler = null)
         {
             clientWebSocket = new ClientWebSocket();
             clientWebSocket.ConnectAsync(ApiAddress, CancellationToken.None).Wait();
-            bool success;
             if (Config.AuthenticationKey != null)
             {
-                success = Authentication(Config.AuthenticationKey);
-                if (!success)
+                try
                 {
-                    success = Authentication();
+                    Authentication(Config.AuthenticationKey, messageHandler);
+                }
+                catch (Exception)
+                {
+                    Authentication(messageHandler);
                 }
             } 
             else
             {
-                success = Authentication();
+                Authentication(messageHandler);
             }
-
-            return success;
         }
 
         public CapturedData Captured { get; set; }
@@ -175,20 +175,22 @@ namespace VTube
             System.Diagnostics.Debug.WriteLine($"Config saved. ({configPath})");
         }
 
-        private bool Authentication()
+        private void Authentication(Action<string> messageHandler = null)
         {
             System.Diagnostics.Debug.WriteLine($"Requesting Authentication Token...");
+            messageHandler?.Invoke("Requesting Authentication Token...\n\nPlease Allow the plugin in VTube Studio");
             string token = Api.RequestAuthenticationToken(clientWebSocket);
             System.Diagnostics.Debug.WriteLine($"Authentication token requested. ({token})");
             Config.AuthenticationKey = token;
             SaveConfig();
-            return Authentication(token);
+            Authentication(token);
         }
 
-        private bool Authentication(string authenticationKey)
+        private void Authentication(string authenticationKey, Action<string> messageHandler = null)
         {
             System.Diagnostics.Debug.WriteLine($"Requesting Authentication...");
-            return Api.RequestAuthentication(clientWebSocket, authenticationKey);
+            messageHandler?.Invoke("Requesting Authentication...");
+            Api.RequestAuthentication(clientWebSocket, authenticationKey);
         }
 
     }
