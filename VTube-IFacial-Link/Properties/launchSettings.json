@@ -1,12 +1,8 @@
 {
   "profiles": {
     "Windows Machine": {
-      "commandName": "MsixPackage",
+      "commandName": "Project",
       "nativeDebugging": false
-    },
-    "Windows Machine (unpackaged)": {
-      "commandName": "Executable",
-      "executablePath": "./VTube-IFacial-Link.exe"
     }
   }
 }
