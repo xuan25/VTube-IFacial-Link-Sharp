@@ -411,9 +411,9 @@ public partial class MainPage : ContentPage
     {
         Task.Factory.StartNew(() =>
         {
-            Stop();
             MainThread.InvokeOnMainThreadAsync(() =>
             {
+                Stop();
                 DisplayAlert("Error Occurred with VTube Studio", $"{exception.Message}", "OK");
             }).Wait();
         });
@@ -424,9 +424,9 @@ public partial class MainPage : ContentPage
     {
         Task.Factory.StartNew(() =>
         {
-            Stop();
             MainThread.InvokeOnMainThreadAsync(() =>
             {
+                Stop();
                 DisplayAlert("Error Occurred with Capturing Device", $"{exception.Message}", "OK");
             }).Wait();
         });
