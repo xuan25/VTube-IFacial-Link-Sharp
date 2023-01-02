@@ -139,8 +139,8 @@
             </FlexLayout>
 
         </ScrollView>
-        
-        <Grid Grid.Row="1" Opacity="{Binding BusyMessageOpacity}" InputTransparent="True">
+
+        <Grid Grid.Row="1" Opacity="{Binding BusyMessageOpacity}" InputTransparent="True" Scale="{Binding BusyMessageScale}">
             <Grid WidthRequest="300" HeightRequest="200">
                 <Border Background="{AppThemeBinding Light=Black, Dark=White}" Opacity="0.2">
                     <Border.StrokeShape>

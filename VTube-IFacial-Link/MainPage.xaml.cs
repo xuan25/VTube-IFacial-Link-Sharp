@@ -258,15 +258,26 @@ public partial class MainPage : ContentPage
             // show Busy Indicator if the process is longer than one second
             uint startDelay = 1000;
             Animation animation = new Animation();
-            Animation ch_animation = new Animation(v => mainPage.BusyMessageOpacity = v, mainPage.BusyMessageOpacity, 1);
-            animation.Add((double)startDelay / (startDelay + duration), 1, ch_animation);
-            animation.Commit(mainPage, "BusyMessageFadeAnimation", 16, (startDelay + duration), Easing.CubicOut, (v, c) => { if (!c) mainPage.BusyMessageOpacity = 1; }, () => false);
+            animation.Add((double)startDelay / (startDelay + duration), 1, new Animation(v => mainPage.BusyMessageOpacity = v, 0, 1, Easing.CubicOut));
+            animation.Add((double)startDelay / (startDelay + duration), 1, new Animation(v => mainPage.BusyMessageScale = v, 1.15, 1, Easing.CubicOut));
+            animation.Commit(mainPage, "BusyMessageFadeAnimation", 16, (startDelay + duration), null, (v, c) => {
+                if (c) return;
+                mainPage.BusyMessageOpacity = 1;
+                mainPage.BusyMessageScale = 1;
+            }, () => false);
         }
         else
         {
             // hide Busy Indicator immediately
-            Animation animation = new Animation(v => mainPage.BusyMessageOpacity = v, mainPage.BusyMessageOpacity, 0);
-            animation.Commit(mainPage, "BusyMessageFadeAnimation", 16, duration, Easing.CubicIn, (v, c) => { if (!c) mainPage.BusyMessageOpacity = 0; }, () => false);
+            Animation animation = new Animation();
+            animation.Add(0, 1, new Animation(v => mainPage.BusyMessageOpacity = v, mainPage.BusyMessageOpacity, 0, Easing.CubicIn));
+            animation.Add(0, 1, new Animation(v => mainPage.BusyMessageScale = v, mainPage.BusyMessageScale, 1.15, Easing.CubicIn));
+            animation.Commit(mainPage, "BusyMessageFadeAnimation", 16, duration, null, (v, c) => 
+            { 
+                if (c) return; 
+                mainPage.BusyMessageOpacity = 0; 
+                mainPage.BusyMessageScale = 1.15;
+            }, () => false);
         }
     });
     public new bool IsBusy
@@ -284,6 +295,13 @@ public partial class MainPage : ContentPage
     {
         get => (double)GetValue(BusyMessageOpacityProperty);
         set => SetValue(BusyMessageOpacityProperty, value);
+    }
+
+    public static readonly BindableProperty BusyMessageScaleProperty = BindableProperty.Create(nameof(BusyMessageScale), typeof(double), typeof(MainPage), 1d);
+    public double BusyMessageScale
+    {
+        get => (double)GetValue(BusyMessageScaleProperty);
+        set => SetValue(BusyMessageScaleProperty, value);
     }
 
     public static readonly BindableProperty BusyMessageProperty = BindableProperty.Create(nameof(BusyMessage), typeof(string), typeof(MainPage), string.Empty);
