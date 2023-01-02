@@ -5,7 +5,9 @@
     <RootNamespace>VTube_IFacial_Link</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
+  </PropertyGroup>
+	
+  <PropertyGroup>
 	<Authors>Xuan25</Authors>
 	<Copyright>Copyright © 2023 Xuan25</Copyright>
 	<Description>Library for VTube Studio plugin that bridging facial tracking from iFacialMocap (IOS), enabling full Apple ARKit facial tracking features.</Description>
