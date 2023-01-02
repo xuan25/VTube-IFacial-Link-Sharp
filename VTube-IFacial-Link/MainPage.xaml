@@ -2,12 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:VTube_IFacial_Link"
-             x:Class="VTube_IFacial_Link.MainPage" x:Name="page" BindingContext="{x:Reference page}">
-    <Grid>
+             x:Class="VTube_IFacial_Link.MainPage" x:Name="page">
+    <Grid BindingContext="{x:Reference page}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
         <ScrollView Grid.Row="0" Orientation="Horizontal">
             <HorizontalStackLayout Margin="16" Spacing="24" Padding="30,0" VerticalOptions="Center" HorizontalOptions="Center">
                 <Entry WidthRequest="300" IsEnabled="{Binding CanStart}" Text="{Binding IFacialAddress}" Placeholder="IP address of the capturing device" VerticalOptions="Center" SemanticProperties.Hint="IP address of the capturing device" HorizontalOptions="Center" />
@@ -25,409 +26,96 @@
         <ScrollView Grid.Row="1">
 
             <FlexLayout Margin="16,0" VerticalOptions="Center" Wrap="Wrap" HorizontalOptions="Center" JustifyContent="Start" AlignItems="Start">
-
+                
                 <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <Grid>
-                        <Label Text="EyeBlinkLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeBlinkLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkLeft}"/>
-
-                    <Grid>
-                        <Label Text="EyeLookDownLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeLookDownLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownLeft}"/>
-
-                    <Grid>
-                        <Label Text="EyeLookInLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeLookInLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInLeft}"/>
-
-                    <Grid>
-                        <Label Text="EyeLookOutLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeLookOutLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutLeft}"/>
-
-                    <Grid>
-                        <Label Text="EyeLookUpLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeLookUpLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpLeft}"/>
-
-                    <Grid>
-                        <Label Text="EyeSquintLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeSquintLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintLeft}"/>
-
-                    <Grid>
-                        <Label Text="EyeWideLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeWideLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeWideLeft}"/>
+                    <local:LabelledValueSlider Text="EyeBlinkLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkLeft}"/>
+                    <local:LabelledValueSlider Text="EyeLookDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownLeft}"/>
+                    <local:LabelledValueSlider Text="EyeLookInLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInLeft}"/>
+                    <local:LabelledValueSlider Text="EyeLookOutLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutLeft}"/>
+                    <local:LabelledValueSlider Text="EyeLookUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpLeft}"/>
+                    <local:LabelledValueSlider Text="EyeSquintLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintLeft}"/>
+                    <local:LabelledValueSlider Text="EyeWideLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeWideLeft}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <Grid>
-                        <Label Text="EyeBlinkRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeBlinkRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkRight}"/>
-
-                    <Grid>
-                        <Label Text="EyeLookDownRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeLookDownRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownRight}"/>
-
-                    <Grid>
-                        <Label Text="EyeLookInRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeLookInRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInRight}"/>
-
-                    <Grid>
-                        <Label Text="EyeLookOutRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeLookOutRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutRight}"/>
-
-                    <Grid>
-                        <Label Text="EyeLookUpRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeLookUpRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpRight}"/>
-
-                    <Grid>
-                        <Label Text="EyeSquintRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeSquintRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintRight}"/>
-
-                    <Grid>
-                        <Label Text="EyeWideRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.EyeWideRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.EyeWideRight}"/>
+                    <local:LabelledValueSlider Text="EyeBlinkRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkRight}"/>
+                    <local:LabelledValueSlider Text="EyeLookDownRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownRight}"/>
+                    <local:LabelledValueSlider Text="EyeLookInRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInRight}"/>
+                    <local:LabelledValueSlider Text="EyeLookOutRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutRight}"/>
+                    <local:LabelledValueSlider Text="EyeLookUpRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpRight}"/>
+                    <local:LabelledValueSlider Text="EyeSquintRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintRight}"/>
+                    <local:LabelledValueSlider Text="EyeWideRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeWideRight}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <Grid>
-                        <Label Text="JawForward" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.JawForward, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.JawForward}"/>
-
-                    <Grid>
-                        <Label Text="JawLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.JawLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.JawLeft}"/>
-
-                    <Grid>
-                        <Label Text="JawRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.JawRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.JawRight}"/>
-
-                    <Grid>
-                        <Label Text="JawOpen" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.JawOpen, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.JawOpen}"/>
+                    <local:LabelledValueSlider Text="JawForward" Value="{Binding CapDataModel.Data.BlendShapes.JawForward}"/>
+                    <local:LabelledValueSlider Text="JawLeft" Value="{Binding CapDataModel.Data.BlendShapes.JawLeft}"/>
+                    <local:LabelledValueSlider Text="JawRight" Value="{Binding CapDataModel.Data.BlendShapes.JawRight}"/>
+                    <local:LabelledValueSlider Text="JawOpen" Value="{Binding CapDataModel.Data.BlendShapes.JawOpen}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <Grid>
-                        <Label Text="MouthClose" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthClose, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthClose}"/>
-
-                    <Grid>
-                        <Label Text="MouthFunnel" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthFunnel, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthFunnel}"/>
-
-                    <Grid>
-                        <Label Text="MouthPucker" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthPucker, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthPucker}"/>
-
-                    <Grid>
-                        <Label Text="MouthLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthLeft}"/>
-
-                    <Grid>
-                        <Label Text="MouthRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthRight}"/>
-
-                    <Grid>
-                        <Label Text="MouthSmileLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthSmileLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileLeft}"/>
-
-                    <Grid>
-                        <Label Text="MouthSmileRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthSmileRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileRight}"/>
-
-                    <Grid>
-                        <Label Text="MouthFrownLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthFrownLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownLeft}"/>
-
-                    <Grid>
-                        <Label Text="MouthFrownRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthFrownRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownRight}"/>
-
-                    <Grid>
-                        <Label Text="MouthDimpleLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthDimpleLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleLeft}"/>
-
-                    <Grid>
-                        <Label Text="MouthDimpleRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthDimpleRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleRight}"/>
+                    <local:LabelledValueSlider Text="MouthClose" Value="{Binding CapDataModel.Data.BlendShapes.MouthClose}"/>
+                    <local:LabelledValueSlider Text="MouthFunnel" Value="{Binding CapDataModel.Data.BlendShapes.MouthFunnel}"/>
+                    <local:LabelledValueSlider Text="MouthPucker" Value="{Binding CapDataModel.Data.BlendShapes.MouthPucker}"/>
+                    <local:LabelledValueSlider Text="MouthLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthLeft}"/>
+                    <local:LabelledValueSlider Text="MouthRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthRight}"/>
+                    <local:LabelledValueSlider Text="MouthSmileLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileLeft}"/>
+                    <local:LabelledValueSlider Text="MouthSmileRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileRight}"/>
+                    <local:LabelledValueSlider Text="MouthFrownLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownLeft}"/>
+                    <local:LabelledValueSlider Text="MouthFrownRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownRight}"/>
+                    <local:LabelledValueSlider Text="MouthDimpleLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleLeft}"/>
+                    <local:LabelledValueSlider Text="MouthDimpleRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleRight}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <Grid>
-                        <Label Text="MouthStretchLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthStretchLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchLeft}"/>
-
-                    <Grid>
-                        <Label Text="MouthStretchRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthStretchRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchRight}"/>
-
-                    <Grid>
-                        <Label Text="MouthRollLower" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthRollLower, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthRollLower}"/>
-
-                    <Grid>
-                        <Label Text="MouthRollUpper" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthRollUpper, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthRollUpper}"/>
-
-                    <Grid>
-                        <Label Text="MouthShrugLower" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthShrugLower, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugLower}"/>
-
-                    <Grid>
-                        <Label Text="MouthShrugUpper" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthShrugUpper, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugUpper}"/>
-
-                    <Grid>
-                        <Label Text="MouthPressLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthPressLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthPressLeft}"/>
-
-                    <Grid>
-                        <Label Text="MouthPressRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthPressRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthPressRight}"/>
-
-                    <Grid>
-                        <Label Text="MouthLowerDownLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownLeft}"/>
-
-                    <Grid>
-                        <Label Text="MouthLowerDownRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownRight}"/>
-
-                    <Grid>
-                        <Label Text="MouthUpperUpLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpLeft}"/>
-
-                    <Grid>
-                        <Label Text="MouthUpperUpRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpRight}"/>
-
+                    <local:LabelledValueSlider Text="MouthStretchLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchLeft}"/>
+                    <local:LabelledValueSlider Text="MouthStretchRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchRight}"/>
+                    <local:LabelledValueSlider Text="MouthRollLower" Value="{Binding CapDataModel.Data.BlendShapes.MouthRollLower}"/>
+                    <local:LabelledValueSlider Text="MouthRollUpper" Value="{Binding CapDataModel.Data.BlendShapes.MouthRollUpper}"/>
+                    <local:LabelledValueSlider Text="MouthShrugLower" Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugLower}"/>
+                    <local:LabelledValueSlider Text="MouthShrugUpper" Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugUpper}"/>
+                    <local:LabelledValueSlider Text="MouthPressLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthPressLeft}"/>
+                    <local:LabelledValueSlider Text="MouthPressRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthPressRight}"/>
+                    <local:LabelledValueSlider Text="MouthLowerDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownLeft}"/>
+                    <local:LabelledValueSlider Text="MouthLowerDownRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownRight}"/>
+                    <local:LabelledValueSlider Text="MouthUpperUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpLeft}"/>
+                    <local:LabelledValueSlider Text="MouthUpperUpRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpRight}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <Grid>
-                        <Label Text="BrowDownLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.BrowDownLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.BrowDownLeft}"/>
-
-                    <Grid>
-                        <Label Text="BrowDownRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.BrowDownRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.BrowDownRight}"/>
-
-                    <Grid>
-                        <Label Text="BrowInnerUp" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.BrowInnerUp, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.BrowInnerUp}"/>
-
-                    <Grid>
-                        <Label Text="BrowOuterUpLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpLeft}"/>
-
-                    <Grid>
-                        <Label Text="BrowOuterUpRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpRight}"/>
-
-                    <Grid>
-                        <Label Text="CheekPuff" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.CheekPuff, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.CheekPuff}"/>
-
-                    <Grid>
-                        <Label Text="CheekSquintLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.CheekSquintLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintLeft}"/>
-
-                    <Grid>
-                        <Label Text="CheekSquintRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.CheekSquintRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintRight}"/>
-
-                    <Grid>
-                        <Label Text="NoseSneerLeft" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.NoseSneerLeft, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerLeft}"/>
-
-                    <Grid>
-                        <Label Text="NoseSneerRight" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.NoseSneerRight, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerRight}"/>
-
-                    <Grid>
-                        <Label Text="TongueOut" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.BlendShapes.TongueOut, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.BlendShapes.TongueOut}"/>
+                    <local:LabelledValueSlider Text="BrowDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.BrowDownLeft}"/>
+                    <local:LabelledValueSlider Text="BrowDownRight" Value="{Binding CapDataModel.Data.BlendShapes.BrowDownRight}"/>
+                    <local:LabelledValueSlider Text="BrowInnerUp" Value="{Binding CapDataModel.Data.BlendShapes.BrowInnerUp}"/>
+                    <local:LabelledValueSlider Text="BrowOuterUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpLeft}"/>
+                    <local:LabelledValueSlider Text="BrowOuterUpRight" Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpRight}"/>
+                    <local:LabelledValueSlider Text="CheekPuff" Value="{Binding CapDataModel.Data.BlendShapes.CheekPuff}"/>
+                    <local:LabelledValueSlider Text="CheekSquintLeft" Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintLeft}"/>
+                    <local:LabelledValueSlider Text="CheekSquintRight" Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintRight}"/>
+                    <local:LabelledValueSlider Text="NoseSneerLeft" Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerLeft}"/>
+                    <local:LabelledValueSlider Text="NoseSneerRight" Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerRight}"/>
+                    <local:LabelledValueSlider Text="TongueOut" Value="{Binding CapDataModel.Data.BlendShapes.TongueOut}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <Grid>
-                        <Label Text="Head.Rotation.X" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.Tracking.Head.Rotation.X, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.X}" Minimum="-90" Maximum="90"/>
-
-                    <Grid>
-                        <Label Text="Head.Rotation.Y" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.Tracking.Head.Rotation.Y, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Y}" Minimum="-90" Maximum="90"/>
-
-                    <Grid>
-                        <Label Text="Head.Rotation.Z" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.Tracking.Head.Rotation.Z, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Z}" Minimum="-90" Maximum="90"/>
-
-                    <Grid>
-                        <Label Text="Head.Position.X" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.Tracking.Head.Position.X, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.Tracking.Head.Position.X}" Minimum="-0.5" Maximum="0.5"/>
-
-                    <Grid>
-                        <Label Text="Head.Position.Y" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.Tracking.Head.Position.Y, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.Tracking.Head.Position.Y}" Minimum="-0.5" Maximum="0.5"/>
-
-                    <Grid>
-                        <Label Text="Head.Position.Z" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.Tracking.Head.Position.Z, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.Tracking.Head.Position.Z}" Minimum="-0.5" Maximum="0.5"/>
-
-                    <Grid>
-                        <Label Text="LeftEye.Rotation.X" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.X, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.X}" Minimum="-60" Maximum="60"/>
-
-                    <Grid>
-                        <Label Text="LeftEye.Rotation.Y" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Y, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Y}" Minimum="-60" Maximum="60"/>
-
-                    <Grid>
-                        <Label Text="LeftEye.Rotation.Z" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Z, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Z}" Minimum="-60" Maximum="60"/>
-
-                    <Grid>
-                        <Label Text="RightEye.Rotation.X" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.X, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.X}" Minimum="-60" Maximum="60"/>
-
-                    <Grid>
-                        <Label Text="RightEye.Rotation.Y" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Y, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Y}" Minimum="-60" Maximum="60"/>
-
-                    <Grid>
-                        <Label Text="RightEye.Rotation.Z" HorizontalOptions="Start"/>
-                        <Label Text="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Z, StringFormat='{0:F2}'}" HorizontalOptions="End"/>
-                    </Grid>
-                    <Slider Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Z}" Minimum="-60" Maximum="60"/>
+                    <local:LabelledValueSlider Text="Head.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.X}" Minimum="-90" Maximum="90"/>
+                    <local:LabelledValueSlider Text="Head.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Y}" Minimum="-90" Maximum="90"/>
+                    <local:LabelledValueSlider Text="Head.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Z}" Minimum="-90" Maximum="90"/>
+                    <local:LabelledValueSlider Text="Head.Position.X" Value="{Binding CapDataModel.Data.Tracking.Head.Position.X}" Minimum="-0.5" Maximum="0.5"/>
+                    <local:LabelledValueSlider Text="Head.Position.Y" Value="{Binding CapDataModel.Data.Tracking.Head.Position.Y}" Minimum="-0.5" Maximum="0.5"/>
+                    <local:LabelledValueSlider Text="Head.Position.Z" Value="{Binding CapDataModel.Data.Tracking.Head.Position.Z}" Minimum="-0.5" Maximum="0.5"/>
+                    <local:LabelledValueSlider Text="LeftEye.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.X}" Minimum="-60" Maximum="60"/>
+                    <local:LabelledValueSlider Text="LeftEye.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Y}" Minimum="-60" Maximum="60"/>
+                    <local:LabelledValueSlider Text="LeftEye.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Z}" Minimum="-60" Maximum="60"/>
+                    <local:LabelledValueSlider Text="RightEye.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.X}" Minimum="-60" Maximum="60"/>
+                    <local:LabelledValueSlider Text="RightEye.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Y}" Minimum="-60" Maximum="60"/>
+                    <local:LabelledValueSlider Text="RightEye.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Z}" Minimum="-60" Maximum="60"/>
                 </VerticalStackLayout>
 
             </FlexLayout>
 
         </ScrollView>
+        
         <Grid Grid.Row="1" Opacity="{Binding BusyMessageOpacity}" InputTransparent="True">
             <Grid WidthRequest="300" HeightRequest="200">
                 <Border Background="{AppThemeBinding Light=Black, Dark=White}" Opacity="0.2">
