@@ -40,6 +40,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Lib-VTube-IFacial-Link\Lib-VTube-IFacial-Link.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="LabelledValueSlider.xaml.cs">
 	    <DependentUpon>LabelledValueSlider.xaml</DependentUpon>
 	  </Compile>

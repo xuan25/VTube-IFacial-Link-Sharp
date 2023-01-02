@@ -1,4 +1,6 @@
-﻿namespace VTube.DataModel
+﻿using System.Collections.Generic;
+
+namespace VTube.DataModel
 {
     class InputParameterListResponse : ResponseBase
     {

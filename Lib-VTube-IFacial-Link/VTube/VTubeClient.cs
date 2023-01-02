@@ -2,6 +2,10 @@
 using System.Text.Json;
 using VTube.DataModel;
 using IFacial;
+using System;
+using System.Threading;
+using System.IO;
+using System.Collections.Generic;
 
 namespace VTube
 {
@@ -17,11 +21,11 @@ namespace VTube
         ConfigStore Config;
         public Uri ApiAddress { get; private set; }
 
-        public VTubeClient(Uri apiAddress, CapturedData captured) {
+        public VTubeClient(Uri apiAddress, CapturedData captured, string configPath) {
             ApiAddress = apiAddress;
             Captured = captured;
 
-            configPath = Path.Combine(FileSystem.AppDataDirectory, "config-vtube.json");
+            this.configPath = configPath;
             if (!LoadConfig())
             {
                 Config = new ConfigStore();

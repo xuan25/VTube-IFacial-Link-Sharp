@@ -1,4 +1,6 @@
-﻿namespace IFacial
+﻿using System;
+
+namespace IFacial
 {
     public class DataParser
     {

@@ -106,17 +106,17 @@ public partial class MainPage : ContentPage
         StopCommand = new StopCommandModel(this);
         BrowseAppDataCommand = new BrowseAppDataCommandModel(this);
 
-        configPath = Path.Combine(FileSystem.AppDataDirectory, "config-ui.json");
+        configPath = Path.Combine(PathUtils.ConfigPath, "config-ui.json");
         this.Loaded += MainPage_Loaded;
         InitializeComponent();
         
-        Directory.CreateDirectory(FileSystem.AppDataDirectory);
+        Directory.CreateDirectory(PathUtils.ConfigPath);
         LoadConfig();
     }
 
     private void BrowseAppData()
     {
-        Launcher.Default.OpenAsync(new Uri($"file://{FileSystem.AppDataDirectory}")).Wait();
+        Launcher.Default.OpenAsync(new Uri($"file://{PathUtils.ConfigPath}")).Wait();
     }
 
     private void Window_Destroying(object sender, EventArgs e)
@@ -334,7 +334,7 @@ public partial class MainPage : ContentPage
                 facialClient.DataUpdated += FacialClient_DataUpdated;
                 facialClient.ExceptionOccurred += FacialClient_ExceptionOccurred;
 
-                vtubeClient = new VTubeClient(new Uri(VTubeAddress), facialClient.Data);
+                vtubeClient = new VTubeClient(new Uri(VTubeAddress), facialClient.Data, Path.Combine(PathUtils.ConfigPath, "config-vtube.json"));
                 vtubeClient.ExceptionOccurred += VtubeClient_ExceptionOccurred;
 
             }

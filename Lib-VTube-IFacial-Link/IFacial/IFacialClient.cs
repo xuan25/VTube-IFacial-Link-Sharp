@@ -1,10 +1,13 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace IFacial
 {
-    internal class IFacialClient : IDisposable
+    public class IFacialClient : IDisposable
     {
         public IPAddress CaptureDeviceAddress { get; private set; }
         public CapturedData Data { get; private set; }
