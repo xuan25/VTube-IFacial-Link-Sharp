@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:VTube_IFacial_Link"
-             x:Class="VTube_IFacial_Link.MainPage" x:Name="page">
-    <Grid BindingContext="{x:Reference page}">
+             x:Class="VTube_IFacial_Link.MainPage" x:Name="root">
+    <Grid BindingContext="{x:Reference root}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
