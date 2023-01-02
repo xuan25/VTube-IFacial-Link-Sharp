@@ -9,109 +9,133 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <FlexLayout Grid.Row="0" Margin="16" VerticalOptions="Center" Wrap="Wrap" HorizontalOptions="Center" JustifyContent="Center" AlignItems="Center">
-            <Entry WidthRequest="200" Margin="4,2" IsEnabled="{Binding CanStart}" Text="{Binding IFacialAddress}" Placeholder="Capturing device IP address" VerticalOptions="Center" SemanticProperties.Hint="VTube Studio API address" HorizontalOptions="Center" />
-            <Entry WidthRequest="200" Margin="4,2" IsEnabled="{Binding CanStart}" Text="{Binding VTubeAddress}" Placeholder="VTube Studio API address" VerticalOptions="Center" SemanticProperties.Hint="VTube Studio API address" HorizontalOptions="Center" />
-            <HorizontalStackLayout Margin="4,2" VerticalOptions="Center" HorizontalOptions="End" Spacing="8">
-                <Button WidthRequest="80" Text="Start" VerticalOptions="Center" SemanticProperties.Hint="Start the plugin"  Command="{Binding StartCommand}"/>
-                <Button WidthRequest="80" Text="Stop" VerticalOptions="Center" SemanticProperties.Hint="Stop the plugin" Command="{Binding StopCommand}"/>
-            </HorizontalStackLayout>
-            <HorizontalStackLayout Margin="4,2" VerticalOptions="Center" HorizontalOptions="End" Spacing="8">
-                <Label Text="Start on Launch" VerticalOptions="Center"/>
-                <Switch IsToggled="{Binding StartOnLaunch}" VerticalOptions="Center"/>
-            </HorizontalStackLayout>
-            <Button WidthRequest="160" Margin="4,2" Text="Browse App Data" VerticalOptions="Center" SemanticProperties.Hint="Browse App Data" Command="{Binding BrowseAppDataCommand}"/>
+        <FlexLayout Grid.Row="0" Margin="16,8" VerticalOptions="Center" Wrap="Wrap" HorizontalOptions="Center" JustifyContent="Center" AlignItems="Center">
+            <Border>
+                <Entry WidthRequest="200" Margin="4,2" IsEnabled="{Binding CanStart}" Text="{Binding IFacialAddress}" Placeholder="Capturing device IP address" VerticalOptions="Center" SemanticProperties.Hint="VTube Studio API address" HorizontalOptions="Center" />
+            </Border>
+            <Border>
+                <Entry WidthRequest="200" Margin="4,2" IsEnabled="{Binding CanStart}" Text="{Binding VTubeAddress}" Placeholder="VTube Studio API address" VerticalOptions="Center" SemanticProperties.Hint="VTube Studio API address" HorizontalOptions="Center" />
+            </Border>
+            <Border>
+                <HorizontalStackLayout Margin="4,2" VerticalOptions="Center" HorizontalOptions="End" Spacing="8">
+                    <Button WidthRequest="80" Text="Start" VerticalOptions="Center" SemanticProperties.Hint="Start the plugin"  Command="{Binding StartCommand}"/>
+                    <Button WidthRequest="80" Text="Stop" VerticalOptions="Center" SemanticProperties.Hint="Stop the plugin" Command="{Binding StopCommand}"/>
+                </HorizontalStackLayout>
+            </Border>
+            <Border>
+                <HorizontalStackLayout Margin="4,2" VerticalOptions="Center" HorizontalOptions="End" Spacing="8">
+                    <Label Text="Start on Launch" VerticalOptions="Center"/>
+                    <Switch IsToggled="{Binding StartOnLaunch}" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Border>
+            <Border>
+                <Button WidthRequest="160" Margin="4,2" Text="Browse App Data" VerticalOptions="Center" SemanticProperties.Hint="Browse App Data" Command="{Binding BrowseAppDataCommand}"/>
+            </Border>
         </FlexLayout>
 
         <ScrollView Grid.Row="1">
 
             <FlexLayout Margin="16,0" VerticalOptions="Center" Wrap="Wrap" HorizontalOptions="Center" JustifyContent="Start" AlignItems="Start">
-                
-                <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <local:LabelledValueSlider Text="EyeBlinkLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkLeft}"/>
-                    <local:LabelledValueSlider Text="EyeLookDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownLeft}"/>
-                    <local:LabelledValueSlider Text="EyeLookInLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInLeft}"/>
-                    <local:LabelledValueSlider Text="EyeLookOutLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutLeft}"/>
-                    <local:LabelledValueSlider Text="EyeLookUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpLeft}"/>
-                    <local:LabelledValueSlider Text="EyeSquintLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintLeft}"/>
-                    <local:LabelledValueSlider Text="EyeWideLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeWideLeft}"/>
-                </VerticalStackLayout>
 
-                <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <local:LabelledValueSlider Text="EyeBlinkRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkRight}"/>
-                    <local:LabelledValueSlider Text="EyeLookDownRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownRight}"/>
-                    <local:LabelledValueSlider Text="EyeLookInRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInRight}"/>
-                    <local:LabelledValueSlider Text="EyeLookOutRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutRight}"/>
-                    <local:LabelledValueSlider Text="EyeLookUpRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpRight}"/>
-                    <local:LabelledValueSlider Text="EyeSquintRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintRight}"/>
-                    <local:LabelledValueSlider Text="EyeWideRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeWideRight}"/>
-                </VerticalStackLayout>
+                <Border>
+                    <VerticalStackLayout Margin="12" WidthRequest="200">
+                        <local:LabelledValueSlider Text="EyeBlinkLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkLeft}"/>
+                        <local:LabelledValueSlider Text="EyeLookDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownLeft}"/>
+                        <local:LabelledValueSlider Text="EyeLookInLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInLeft}"/>
+                        <local:LabelledValueSlider Text="EyeLookOutLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutLeft}"/>
+                        <local:LabelledValueSlider Text="EyeLookUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpLeft}"/>
+                        <local:LabelledValueSlider Text="EyeSquintLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintLeft}"/>
+                        <local:LabelledValueSlider Text="EyeWideLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeWideLeft}"/>
+                    </VerticalStackLayout>
+                </Border>
 
-                <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <local:LabelledValueSlider Text="JawForward" Value="{Binding CapDataModel.Data.BlendShapes.JawForward}"/>
-                    <local:LabelledValueSlider Text="JawLeft" Value="{Binding CapDataModel.Data.BlendShapes.JawLeft}"/>
-                    <local:LabelledValueSlider Text="JawRight" Value="{Binding CapDataModel.Data.BlendShapes.JawRight}"/>
-                    <local:LabelledValueSlider Text="JawOpen" Value="{Binding CapDataModel.Data.BlendShapes.JawOpen}"/>
-                </VerticalStackLayout>
+                <Border>
+                    <VerticalStackLayout Margin="12" WidthRequest="200">
+                        <local:LabelledValueSlider Text="EyeBlinkRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkRight}"/>
+                        <local:LabelledValueSlider Text="EyeLookDownRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownRight}"/>
+                        <local:LabelledValueSlider Text="EyeLookInRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInRight}"/>
+                        <local:LabelledValueSlider Text="EyeLookOutRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutRight}"/>
+                        <local:LabelledValueSlider Text="EyeLookUpRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpRight}"/>
+                        <local:LabelledValueSlider Text="EyeSquintRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintRight}"/>
+                        <local:LabelledValueSlider Text="EyeWideRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeWideRight}"/>
+                    </VerticalStackLayout>
+                </Border>
 
-                <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <local:LabelledValueSlider Text="MouthClose" Value="{Binding CapDataModel.Data.BlendShapes.MouthClose}"/>
-                    <local:LabelledValueSlider Text="MouthFunnel" Value="{Binding CapDataModel.Data.BlendShapes.MouthFunnel}"/>
-                    <local:LabelledValueSlider Text="MouthPucker" Value="{Binding CapDataModel.Data.BlendShapes.MouthPucker}"/>
-                    <local:LabelledValueSlider Text="MouthLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthLeft}"/>
-                    <local:LabelledValueSlider Text="MouthRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthRight}"/>
-                    <local:LabelledValueSlider Text="MouthSmileLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileLeft}"/>
-                    <local:LabelledValueSlider Text="MouthSmileRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileRight}"/>
-                    <local:LabelledValueSlider Text="MouthFrownLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownLeft}"/>
-                    <local:LabelledValueSlider Text="MouthFrownRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownRight}"/>
-                    <local:LabelledValueSlider Text="MouthDimpleLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleLeft}"/>
-                    <local:LabelledValueSlider Text="MouthDimpleRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleRight}"/>
-                </VerticalStackLayout>
+                <Border>
 
-                <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <local:LabelledValueSlider Text="MouthStretchLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchLeft}"/>
-                    <local:LabelledValueSlider Text="MouthStretchRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchRight}"/>
-                    <local:LabelledValueSlider Text="MouthRollLower" Value="{Binding CapDataModel.Data.BlendShapes.MouthRollLower}"/>
-                    <local:LabelledValueSlider Text="MouthRollUpper" Value="{Binding CapDataModel.Data.BlendShapes.MouthRollUpper}"/>
-                    <local:LabelledValueSlider Text="MouthShrugLower" Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugLower}"/>
-                    <local:LabelledValueSlider Text="MouthShrugUpper" Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugUpper}"/>
-                    <local:LabelledValueSlider Text="MouthPressLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthPressLeft}"/>
-                    <local:LabelledValueSlider Text="MouthPressRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthPressRight}"/>
-                    <local:LabelledValueSlider Text="MouthLowerDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownLeft}"/>
-                    <local:LabelledValueSlider Text="MouthLowerDownRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownRight}"/>
-                    <local:LabelledValueSlider Text="MouthUpperUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpLeft}"/>
-                    <local:LabelledValueSlider Text="MouthUpperUpRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpRight}"/>
-                </VerticalStackLayout>
+                    <VerticalStackLayout Margin="12" WidthRequest="200">
+                        <local:LabelledValueSlider Text="JawForward" Value="{Binding CapDataModel.Data.BlendShapes.JawForward}"/>
+                        <local:LabelledValueSlider Text="JawLeft" Value="{Binding CapDataModel.Data.BlendShapes.JawLeft}"/>
+                        <local:LabelledValueSlider Text="JawRight" Value="{Binding CapDataModel.Data.BlendShapes.JawRight}"/>
+                        <local:LabelledValueSlider Text="JawOpen" Value="{Binding CapDataModel.Data.BlendShapes.JawOpen}"/>
+                    </VerticalStackLayout>
+                </Border>
 
-                <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <local:LabelledValueSlider Text="BrowDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.BrowDownLeft}"/>
-                    <local:LabelledValueSlider Text="BrowDownRight" Value="{Binding CapDataModel.Data.BlendShapes.BrowDownRight}"/>
-                    <local:LabelledValueSlider Text="BrowInnerUp" Value="{Binding CapDataModel.Data.BlendShapes.BrowInnerUp}"/>
-                    <local:LabelledValueSlider Text="BrowOuterUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpLeft}"/>
-                    <local:LabelledValueSlider Text="BrowOuterUpRight" Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpRight}"/>
-                    <local:LabelledValueSlider Text="CheekPuff" Value="{Binding CapDataModel.Data.BlendShapes.CheekPuff}"/>
-                    <local:LabelledValueSlider Text="CheekSquintLeft" Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintLeft}"/>
-                    <local:LabelledValueSlider Text="CheekSquintRight" Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintRight}"/>
-                    <local:LabelledValueSlider Text="NoseSneerLeft" Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerLeft}"/>
-                    <local:LabelledValueSlider Text="NoseSneerRight" Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerRight}"/>
-                    <local:LabelledValueSlider Text="TongueOut" Value="{Binding CapDataModel.Data.BlendShapes.TongueOut}"/>
-                </VerticalStackLayout>
+                <Border>
+                    <VerticalStackLayout Margin="12" WidthRequest="200">
+                        <local:LabelledValueSlider Text="MouthClose" Value="{Binding CapDataModel.Data.BlendShapes.MouthClose}"/>
+                        <local:LabelledValueSlider Text="MouthFunnel" Value="{Binding CapDataModel.Data.BlendShapes.MouthFunnel}"/>
+                        <local:LabelledValueSlider Text="MouthPucker" Value="{Binding CapDataModel.Data.BlendShapes.MouthPucker}"/>
+                        <local:LabelledValueSlider Text="MouthLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthLeft}"/>
+                        <local:LabelledValueSlider Text="MouthRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthRight}"/>
+                        <local:LabelledValueSlider Text="MouthSmileLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileLeft}"/>
+                        <local:LabelledValueSlider Text="MouthSmileRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileRight}"/>
+                        <local:LabelledValueSlider Text="MouthFrownLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownLeft}"/>
+                        <local:LabelledValueSlider Text="MouthFrownRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownRight}"/>
+                        <local:LabelledValueSlider Text="MouthDimpleLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleLeft}"/>
+                        <local:LabelledValueSlider Text="MouthDimpleRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleRight}"/>
+                    </VerticalStackLayout>
+                </Border>
 
-                <VerticalStackLayout Margin="12" WidthRequest="200">
-                    <local:LabelledValueSlider Text="Head.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.X}" Minimum="-90" Maximum="90"/>
-                    <local:LabelledValueSlider Text="Head.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Y}" Minimum="-90" Maximum="90"/>
-                    <local:LabelledValueSlider Text="Head.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Z}" Minimum="-90" Maximum="90"/>
-                    <local:LabelledValueSlider Text="Head.Position.X" Value="{Binding CapDataModel.Data.Tracking.Head.Position.X}" Minimum="-0.5" Maximum="0.5"/>
-                    <local:LabelledValueSlider Text="Head.Position.Y" Value="{Binding CapDataModel.Data.Tracking.Head.Position.Y}" Minimum="-0.5" Maximum="0.5"/>
-                    <local:LabelledValueSlider Text="Head.Position.Z" Value="{Binding CapDataModel.Data.Tracking.Head.Position.Z}" Minimum="-0.5" Maximum="0.5"/>
-                    <local:LabelledValueSlider Text="LeftEye.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.X}" Minimum="-60" Maximum="60"/>
-                    <local:LabelledValueSlider Text="LeftEye.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Y}" Minimum="-60" Maximum="60"/>
-                    <local:LabelledValueSlider Text="LeftEye.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Z}" Minimum="-60" Maximum="60"/>
-                    <local:LabelledValueSlider Text="RightEye.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.X}" Minimum="-60" Maximum="60"/>
-                    <local:LabelledValueSlider Text="RightEye.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Y}" Minimum="-60" Maximum="60"/>
-                    <local:LabelledValueSlider Text="RightEye.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Z}" Minimum="-60" Maximum="60"/>
-                </VerticalStackLayout>
+                <Border>
+                    <VerticalStackLayout Margin="12" WidthRequest="200">
+                        <local:LabelledValueSlider Text="MouthStretchLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchLeft}"/>
+                        <local:LabelledValueSlider Text="MouthStretchRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchRight}"/>
+                        <local:LabelledValueSlider Text="MouthRollLower" Value="{Binding CapDataModel.Data.BlendShapes.MouthRollLower}"/>
+                        <local:LabelledValueSlider Text="MouthRollUpper" Value="{Binding CapDataModel.Data.BlendShapes.MouthRollUpper}"/>
+                        <local:LabelledValueSlider Text="MouthShrugLower" Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugLower}"/>
+                        <local:LabelledValueSlider Text="MouthShrugUpper" Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugUpper}"/>
+                        <local:LabelledValueSlider Text="MouthPressLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthPressLeft}"/>
+                        <local:LabelledValueSlider Text="MouthPressRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthPressRight}"/>
+                        <local:LabelledValueSlider Text="MouthLowerDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownLeft}"/>
+                        <local:LabelledValueSlider Text="MouthLowerDownRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownRight}"/>
+                        <local:LabelledValueSlider Text="MouthUpperUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpLeft}"/>
+                        <local:LabelledValueSlider Text="MouthUpperUpRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpRight}"/>
+                    </VerticalStackLayout>
+                </Border>
 
+                <Border>
+                    <VerticalStackLayout Margin="12" WidthRequest="200">
+                        <local:LabelledValueSlider Text="BrowDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.BrowDownLeft}"/>
+                        <local:LabelledValueSlider Text="BrowDownRight" Value="{Binding CapDataModel.Data.BlendShapes.BrowDownRight}"/>
+                        <local:LabelledValueSlider Text="BrowInnerUp" Value="{Binding CapDataModel.Data.BlendShapes.BrowInnerUp}"/>
+                        <local:LabelledValueSlider Text="BrowOuterUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpLeft}"/>
+                        <local:LabelledValueSlider Text="BrowOuterUpRight" Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpRight}"/>
+                        <local:LabelledValueSlider Text="CheekPuff" Value="{Binding CapDataModel.Data.BlendShapes.CheekPuff}"/>
+                        <local:LabelledValueSlider Text="CheekSquintLeft" Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintLeft}"/>
+                        <local:LabelledValueSlider Text="CheekSquintRight" Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintRight}"/>
+                        <local:LabelledValueSlider Text="NoseSneerLeft" Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerLeft}"/>
+                        <local:LabelledValueSlider Text="NoseSneerRight" Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerRight}"/>
+                        <local:LabelledValueSlider Text="TongueOut" Value="{Binding CapDataModel.Data.BlendShapes.TongueOut}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border>
+                    <VerticalStackLayout Margin="12" WidthRequest="200">
+                        <local:LabelledValueSlider Text="Head.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.X}" Minimum="-90" Maximum="90"/>
+                        <local:LabelledValueSlider Text="Head.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Y}" Minimum="-90" Maximum="90"/>
+                        <local:LabelledValueSlider Text="Head.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Z}" Minimum="-90" Maximum="90"/>
+                        <local:LabelledValueSlider Text="Head.Position.X" Value="{Binding CapDataModel.Data.Tracking.Head.Position.X}" Minimum="-0.5" Maximum="0.5"/>
+                        <local:LabelledValueSlider Text="Head.Position.Y" Value="{Binding CapDataModel.Data.Tracking.Head.Position.Y}" Minimum="-0.5" Maximum="0.5"/>
+                        <local:LabelledValueSlider Text="Head.Position.Z" Value="{Binding CapDataModel.Data.Tracking.Head.Position.Z}" Minimum="-0.5" Maximum="0.5"/>
+                        <local:LabelledValueSlider Text="LeftEye.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.X}" Minimum="-60" Maximum="60"/>
+                        <local:LabelledValueSlider Text="LeftEye.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Y}" Minimum="-60" Maximum="60"/>
+                        <local:LabelledValueSlider Text="LeftEye.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Z}" Minimum="-60" Maximum="60"/>
+                        <local:LabelledValueSlider Text="RightEye.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.X}" Minimum="-60" Maximum="60"/>
+                        <local:LabelledValueSlider Text="RightEye.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Y}" Minimum="-60" Maximum="60"/>
+                        <local:LabelledValueSlider Text="RightEye.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Z}" Minimum="-60" Maximum="60"/>
+                    </VerticalStackLayout>
+                </Border>
             </FlexLayout>
 
         </ScrollView>
