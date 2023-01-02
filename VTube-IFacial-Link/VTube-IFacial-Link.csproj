@@ -20,7 +20,7 @@
 		<ApplicationIdGuid>8be8a29a-9525-4429-ab9b-6e72b29f02fe</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>0.1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
@@ -29,6 +29,10 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+
+		<Authors>Xuan25</Authors>
+		<Copyright>Copyright © 2023 Xuan25</Copyright>
+		<Description>A VTube Studio plugin that bridging facial tracking from iFacialMocap (IOS), enabling full Apple ARKit facial tracking features.</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
