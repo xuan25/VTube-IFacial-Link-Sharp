@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    //"VTube-IFacial-Link (Package)": {
+    //  "commandName": "MsixPackage"
+    //},
+    //"VTube-IFacial-Link (Unpackaged)": {
+    //  "commandName": "Project"
+    //}
+    "VTube-IFacial-Link": {
+      "commandName": "Project"
+    }
+  }
+}
