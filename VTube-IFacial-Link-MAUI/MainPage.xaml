@@ -17,15 +17,15 @@
                 <Entry WidthRequest="200" Margin="4,2" IsEnabled="{Binding CanStart}" Text="{Binding VTubeAddress}" Placeholder="VTube Studio API address" VerticalOptions="Center" SemanticProperties.Hint="VTube Studio API address" HorizontalOptions="Center" />
             </Border>
             <Border>
-                <HorizontalStackLayout Margin="4,2" VerticalOptions="Center" HorizontalOptions="End" Spacing="8">
+                <HorizontalStackLayout Margin="4,2" Spacing="8">
                     <Button WidthRequest="80" Text="Start" VerticalOptions="Center" SemanticProperties.Hint="Start the plugin"  Command="{Binding StartCommand}"/>
                     <Button WidthRequest="80" Text="Stop" VerticalOptions="Center" SemanticProperties.Hint="Stop the plugin" Command="{Binding StopCommand}"/>
                 </HorizontalStackLayout>
             </Border>
             <Border>
-                <HorizontalStackLayout Margin="4,2" VerticalOptions="Center" HorizontalOptions="End" Spacing="8">
-                    <Label Text="Start on Launch" VerticalOptions="Center"/>
+                <HorizontalStackLayout Margin="4,2" Spacing="8">
                     <Switch IsToggled="{Binding StartOnLaunch}" VerticalOptions="Center"/>
+                    <Label Text="Start on Launch" VerticalOptions="Center"/>
                 </HorizontalStackLayout>
             </Border>
             <Border>
