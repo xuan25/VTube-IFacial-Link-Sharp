@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VTube-IFacial-Link", "VTube-IFacial-Link\VTube-IFacial-Link.csproj", "{60B67190-25F3-4E0B-BDA5-352BC547CC49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VTube-IFacial-Link-MAUI", "VTube-IFacial-Link-MAUI\VTube-IFacial-Link-MAUI.csproj", "{60B67190-25F3-4E0B-BDA5-352BC547CC49}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib-VTube-IFacial-Link", "Lib-VTube-IFacial-Link\Lib-VTube-IFacial-Link.csproj", "{98A21671-64E4-45B7-8E4C-D59877D35549}"
 EndProject
