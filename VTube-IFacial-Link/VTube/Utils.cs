@@ -28,8 +28,11 @@ namespace VTube
             do
             {
                 receiveResult = clientWebSocket.ReceiveAsync(buffer, CancellationToken.None).Result;
-                if (receiveResult.MessageType != WebSocketMessageType.Close)
-                    outputStream.Write(buffer, 0, receiveResult.Count);
+                if (receiveResult.MessageType == WebSocketMessageType.Close)
+                {
+                    throw new Exception("Connection Closed by VTube Studio");
+                }
+                outputStream.Write(buffer, 0, receiveResult.Count);
             }
             while (!receiveResult.EndOfMessage);
             outputStream.Position = 0;
