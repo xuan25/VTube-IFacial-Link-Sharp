@@ -40,7 +40,7 @@
             </Border>
         </wraplayout:WrapPanel>
 
-        <ScrollViewer Grid.Row="1">
+        <ScrollViewer x:Name="DataPanel" Grid.Row="1">
 
             <wraplayout:WrapPanel Orientation="Horizontal" Margin="16,0" VerticalAlignment="Center" HorizontalAlignment="Center">
 
@@ -148,9 +148,14 @@
         </ScrollViewer>
 
         <Grid Grid.Row="1" Opacity="{Binding BusyMessageOpacity}" IsHitTestVisible="False">
-            <Grid Width="300" Height="200">
-                <Border Background="Black" Opacity="0.2" CornerRadius="8"/>
-                <Border Margin="3" Background="White" CornerRadius="8"/>
+            <Grid Width="300" Height="200" Translation="0,0,32" RenderTransformOrigin="0.5,0.5">
+                <Grid.RenderTransform>
+                    <ScaleTransform ScaleX="{Binding BusyMessageScale}" ScaleY="{Binding BusyMessageScale}"/>
+                </Grid.RenderTransform>
+                <Grid.Shadow>
+                    <local:ThemeShadow Receiver="{Binding ElementName=DataPanel}"/>
+                </Grid.Shadow>
+                <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" CornerRadius="8" BorderThickness="1" BorderBrush="{ThemeResource ApplicationPressedForegroundThemeBrush}"/>
                 <StackPanel VerticalAlignment="Center" Spacing="24">
                     <ProgressRing IsIndeterminate="{Binding IsBusy}"/>
                     <TextBlock Text="{Binding BusyMessage}" HorizontalAlignment="Center" HorizontalTextAlignment="Center"/>

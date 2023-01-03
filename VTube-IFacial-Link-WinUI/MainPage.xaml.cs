@@ -4,24 +4,15 @@
 using IFacial;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Media.Animation;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VTube;
 using VTube_IFacial_Link.DataModel;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -275,51 +266,77 @@ namespace VTube_IFacial_Link
         public static readonly DependencyProperty IsBusyProperty = DependencyProperty.Register(nameof(IsBusy), typeof(bool), typeof(MainPage), new PropertyMetadata(false, (DependencyObject d, DependencyPropertyChangedEventArgs e) =>
         {
             MainPage mainPage = (MainPage)d;
+            TimeSpan animationTime = new(250 * 10000);
             if ((bool)e.NewValue)
             {
-                mainPage.BusyMessageOpacity = 1;
-                mainPage.BusyMessageScale = 1;
+                TimeSpan holdTime = new(1000 * 10000);
+                Storyboard storyboard = new();
+                {
+                    DoubleAnimation doubleAnimation = new()
+                    {
+                        EnableDependentAnimation = true,
+                        BeginTime = holdTime,
+                        Duration = animationTime,
+                        From = 1.15,
+                        To = 1,
+                        EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut },
+                    };
+                    Storyboard.SetTarget(doubleAnimation, mainPage);
+                    Storyboard.SetTargetProperty(doubleAnimation, nameof(BusyMessageScale));
+                    storyboard.Children.Add(doubleAnimation);
+                }
+                {
+                    DoubleAnimation doubleAnimation = new()
+                    {
+                        EnableDependentAnimation = true,
+                        BeginTime = holdTime,
+                        Duration = animationTime,
+                        From = 0,
+                        To = 1,
+                        EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut },
+                    };
+                    Storyboard.SetTarget(doubleAnimation, mainPage);
+                    Storyboard.SetTargetProperty(doubleAnimation, nameof(BusyMessageOpacity));
+                    storyboard.Children.Add(doubleAnimation);
+                }
+                storyboard.Begin();
             }
             else
             {
-                mainPage.BusyMessageOpacity = 0;
-                mainPage.BusyMessageScale = 1.15;
+                Storyboard storyboard = new();
+                {
+                    DoubleAnimation doubleAnimation = new()
+                    {
+                        EnableDependentAnimation = true,
+                        Duration = animationTime,
+                        To = 1.15,
+                        EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseIn },
+                    };
+                    Storyboard.SetTarget(doubleAnimation, mainPage);
+                    Storyboard.SetTargetProperty(doubleAnimation, nameof(BusyMessageScale));
+                    storyboard.Children.Add(doubleAnimation);
+                }
+                {
+                    DoubleAnimation doubleAnimation = new()
+                    {
+                        EnableDependentAnimation = true,
+                        Duration = animationTime,
+                        To = 0,
+                        EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseIn },
+                    };
+                    Storyboard.SetTarget(doubleAnimation, mainPage);
+                    Storyboard.SetTargetProperty(doubleAnimation, nameof(BusyMessageOpacity));
+                    storyboard.Children.Add(doubleAnimation);
+                }
+                storyboard.Begin();
             }
-            //mainPage.AbortAnimation("BusyMessageFadeAnimation");
-            //uint duration = 250;
-            //if ((bool)newValue)
-            //{
-            //    // show Busy Indicator if the process is longer than one second
-            //    uint startDelay = 1000;
-            //    Animation animation = new Animation();
-            //    animation.Add((double)startDelay / (startDelay + duration), 1, new Animation(v => mainPage.BusyMessageOpacity = v, 0, 1, Easing.CubicOut));
-            //    animation.Add((double)startDelay / (startDelay + duration), 1, new Animation(v => mainPage.BusyMessageScale = v, 1.15, 1, Easing.CubicOut));
-            //    animation.Commit(mainPage, "BusyMessageFadeAnimation", 16, (startDelay + duration), null, (v, c) => {
-            //        if (c) return;
-            //        mainPage.BusyMessageOpacity = 1;
-            //        mainPage.BusyMessageScale = 1;
-            //    }, () => false);
-            //}
-            //else
-            //{
-            //    // hide Busy Indicator immediately
-            //    Animation animation = new Animation();
-            //    animation.Add(0, 1, new Animation(v => mainPage.BusyMessageOpacity = v, mainPage.BusyMessageOpacity, 0, Easing.CubicIn));
-            //    animation.Add(0, 1, new Animation(v => mainPage.BusyMessageScale = v, mainPage.BusyMessageScale, 1.15, Easing.CubicIn));
-            //    animation.Commit(mainPage, "BusyMessageFadeAnimation", 16, duration, null, (v, c) =>
-            //    {
-            //        if (c) return;
-            //        mainPage.BusyMessageOpacity = 0;
-            //        mainPage.BusyMessageScale = 1.15;
-            //    }, () => false);
-            //}
         }));
+
         public bool IsBusy
         {
             get => (bool)GetValue(IsBusyProperty);
             set
             {
-                //base.IsBusy = value;
                 SetValue(IsBusyProperty, value);
             }
         }
@@ -364,7 +381,7 @@ namespace VTube_IFacial_Link
                 facialClient.DataUpdated += FacialClient_DataUpdated;
                 facialClient.ExceptionOccurred += FacialClient_ExceptionOccurred;
 
-                vtubeClient = new VTubeClient(new System.Uri(VTubeAddress), facialClient.Data, Path.Combine(PathUtils.ConfigPath, "config-vtube.json"));
+                vtubeClient = new VTubeClient(new Uri(VTubeAddress), facialClient.Data, Path.Combine(PathUtils.ConfigPath, "config-vtube.json"));
                 vtubeClient.ExceptionOccurred += VtubeClient_ExceptionOccurred;
 
             }
