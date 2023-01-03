@@ -29,6 +29,7 @@ namespace VTube_IFacial_Link
         public MainWindow()
         {
             this.InitializeComponent();
+            this.Title = "VTube-IFacial-Link";
         }
     }
 }
