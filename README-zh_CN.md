@@ -6,6 +6,8 @@
 
 ![](imgs/screenshot.png)
 
+![](imgs/preview.gif)
+
 ## 快速开始指南
 
 1. 从源码编译或下载预构建 VTube-IFacial-Link 可执行程序

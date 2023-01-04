@@ -8,6 +8,8 @@ A *VTube Studio* plugin that bridging facial tracking from *iFacialMocap* (IOS),
 
 ![](imgs/screenshot.png)
 
+![](imgs/preview.gif)
+
 ## Quick Start Guide
 
 1. Compile from the source code or download the pre-built VTube-IFacial-Link executable 
