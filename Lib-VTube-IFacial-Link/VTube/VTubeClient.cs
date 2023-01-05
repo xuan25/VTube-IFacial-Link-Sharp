@@ -21,7 +21,9 @@ namespace VTube
         ConfigStore Config;
         public Uri ApiAddress { get; private set; }
 
-        public VTubeClient(Uri apiAddress, CapturedData captured, string configPath) {
+        ParameterConverter ParamConverter { get; set; }
+
+        public VTubeClient(Uri apiAddress, CapturedData captured, string configPath, ParameterConverter parameterConverter) {
             ApiAddress = apiAddress;
             Captured = captured;
 
@@ -30,6 +32,8 @@ namespace VTube
             {
                 Config = new ConfigStore();
             }
+
+            ParamConverter = parameterConverter;
         }
 
         ClientWebSocket clientWebSocket;
@@ -116,7 +120,7 @@ namespace VTube
             {
                 while (!CTS.IsCancellationRequested)
                 {
-                    List<InjectParameterDataRequest.DataSection.ParameterValue> parameterValues = ParameterConverter.Convert(Captured);
+                    List<InjectParameterDataRequest.DataSection.ParameterValue> parameterValues = ParamConverter.Convert(Captured);
                     Api.RequestInjectParameterData(clientWebSocket, true, "set", parameterValues);
                 }
             }

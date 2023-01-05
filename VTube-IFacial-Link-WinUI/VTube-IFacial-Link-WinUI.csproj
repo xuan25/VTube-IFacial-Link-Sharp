@@ -49,6 +49,14 @@
     <ProjectReference Include="..\Lib-VTube-IFacial-Link\Lib-VTube-IFacial-Link.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="default-globals.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="default-parameters.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,6 +6,9 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text.Json;
@@ -106,12 +109,19 @@ namespace VTube_IFacial_Link
         public BrowseAppDataCommandModel BrowseAppDataCommand { private set; get; }
 
         readonly string configPath;
+        readonly string scriptsPath;
 
         public class ConfigStore
         {
             public string IFacialAddress { get; set; }
             public string VTubeAddress { get; set; }
             public bool StartOnLaunch { get; set; }
+        }
+
+        public class ScriptStore
+        {
+            public ObservableCollection<ScriptParameterModel> Parameters { get; set; }
+            public ObservableCollection<ScriptGlobalModel> Globals { get; set; }
         }
 
         public MainPage()
@@ -121,11 +131,15 @@ namespace VTube_IFacial_Link
             BrowseAppDataCommand = new BrowseAppDataCommandModel(this);
 
             configPath = Path.Combine(PathUtils.ConfigPath, "config-ui.json");
+            scriptsPath = Path.Combine(PathUtils.ConfigPath, "scripts.json");
+
             this.Loaded += MainPage_Loaded;
             InitializeComponent();
 
             Directory.CreateDirectory(PathUtils.ConfigPath);
+
             LoadConfig();
+            LoadScripts();
         }
 
         private void BrowseAppData()
@@ -146,6 +160,7 @@ namespace VTube_IFacial_Link
         private void MainWindow_Closed(object sender, WindowEventArgs args)
         {
             Stop();
+            SaveScripts();
         }
 
         private bool LoadConfig()
@@ -172,6 +187,7 @@ namespace VTube_IFacial_Link
                 IFacialAddress = config.IFacialAddress;
                 VTubeAddress = config.VTubeAddress;
                 StartOnLaunch = config.StartOnLaunch;
+
                 return true;
 
             }
@@ -204,6 +220,98 @@ namespace VTube_IFacial_Link
             System.Diagnostics.Debug.WriteLine($"Config saved. ({configPath})");
         }
 
+        private bool LoadScripts()
+        {
+            System.Diagnostics.Debug.WriteLine($"Loading scripts... ({scriptsPath})");
+            try
+            {
+                if (File.Exists(scriptsPath))
+                {
+                    ScriptStore config;
+                    using (FileStream configStream = File.OpenRead(scriptsPath))
+                    {
+                        config = JsonSerializer.Deserialize<ScriptStore>(configStream);
+                    }
+
+                    if (config != null)
+                    {
+                        ScriptParameters = config.Parameters;
+                        ScriptGlobals = config.Globals;
+                    }
+                }
+
+                if (ScriptParameters == null)
+                {
+                    using (FileStream configStream = File.OpenRead("default-parameters.json"))
+                    {
+                        JsonSerializerOptions serializeOptions = new()
+                        {
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                            WriteIndented = false
+                        };
+                        ScriptParameters = JsonSerializer.Deserialize<ObservableCollection<ScriptParameterModel>>(configStream, serializeOptions);
+                    }
+                }
+
+                if (ScriptGlobals == null)
+                {
+                    using (FileStream configStream = File.OpenRead("default-globals.json"))
+                    {
+                        JsonSerializerOptions serializeOptions = new()
+                        {
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                            WriteIndented = false
+                        };
+                        ScriptGlobals = JsonSerializer.Deserialize<ObservableCollection<ScriptGlobalModel>>(configStream, serializeOptions);
+                    }
+                }
+
+                return true;
+
+            }
+            catch (System.Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                System.Diagnostics.Debug.WriteLine($"Failed to load scripts. ({scriptsPath})");
+                return false;
+            }
+
+            
+
+        }
+
+        private void SaveScripts()
+        {
+            ScriptStore config = new()
+            {
+                Parameters = ScriptParameters,
+                Globals = ScriptGlobals,
+            };
+            if (File.Exists(scriptsPath))
+            {
+                File.Delete(scriptsPath);
+            }
+            using (FileStream configStream = File.OpenWrite(scriptsPath))
+            {
+                JsonSerializer.Serialize<ScriptStore>(configStream, config);
+            }
+            System.Diagnostics.Debug.WriteLine($"Scripts saved. ({scriptsPath})");
+        }
+
+        public static readonly DependencyProperty ScriptParametersProperty = DependencyProperty.Register(nameof(ScriptParameters), typeof(ObservableCollection<ScriptParameterModel>), typeof(MainPage), new PropertyMetadata(null));
+        public ObservableCollection<ScriptParameterModel> ScriptParameters
+        {
+            get => (ObservableCollection<ScriptParameterModel>)GetValue(ScriptParametersProperty);
+            set => SetValue(ScriptParametersProperty, value);
+        }
+
+        public static readonly DependencyProperty ScriptGlobalsProperty = DependencyProperty.Register(nameof(ScriptGlobals), typeof(ObservableCollection<ScriptGlobalModel>), typeof(MainPage), new PropertyMetadata(null));
+        public ObservableCollection<ScriptGlobalModel> ScriptGlobals
+        {
+            get => (ObservableCollection<ScriptGlobalModel>)GetValue(ScriptGlobalsProperty);
+            set => SetValue(ScriptGlobalsProperty, value);
+        }
 
 
         public static readonly DependencyProperty CapDataModelProperty = DependencyProperty.Register(nameof(CapDataModel), typeof(CapturedDataModel), typeof(MainPage), new PropertyMetadata(null));
@@ -381,7 +489,8 @@ namespace VTube_IFacial_Link
                 facialClient.DataUpdated += FacialClient_DataUpdated;
                 facialClient.ExceptionOccurred += FacialClient_ExceptionOccurred;
 
-                vtubeClient = new VTubeClient(new Uri(VTubeAddress), facialClient.Data, Path.Combine(PathUtils.ConfigPath, "config-vtube.json"));
+                ParameterConverter parameterConverter = new ParameterConverter(ScriptParameters, ScriptGlobals);
+                vtubeClient = new VTubeClient(new Uri(VTubeAddress), facialClient.Data, Path.Combine(PathUtils.ConfigPath, "config-vtube.json"), parameterConverter);
                 vtubeClient.ExceptionOccurred += VtubeClient_ExceptionOccurred;
 
             }

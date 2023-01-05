@@ -40,112 +40,171 @@
             </Border>
         </wraplayout:WrapPanel>
 
-        <ScrollViewer x:Name="DataPanel" Grid.Row="1">
+        <Grid x:Name="DataPanel" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <ScrollViewer Grid.Column="0">
+                <wraplayout:WrapPanel Orientation="Horizontal" Margin="16,0" VerticalAlignment="Center" HorizontalAlignment="Center">
 
-            <wraplayout:WrapPanel Orientation="Horizontal" Margin="16,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border>
+                        <StackPanel Margin="12" Width="200">
+                            <local:LabelledValueSlider Text="EyeBlinkLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="EyeLookDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="EyeLookInLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="EyeLookOutLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="EyeLookUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="EyeSquintLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="EyeWideLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeWideLeft, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </Border>
 
-                <Border>
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="EyeBlinkLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookInLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookOutLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeSquintLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeWideLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeWideLeft, Mode=TwoWay}"/>
-                    </StackPanel>
-                </Border>
+                    <Border>
+                        <StackPanel Margin="12" Width="200">
+                            <local:LabelledValueSlider Text="EyeBlinkRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="EyeLookDownRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="EyeLookInRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="EyeLookOutRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="EyeLookUpRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="EyeSquintRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="EyeWideRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeWideRight, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </Border>
 
-                <Border>
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="EyeBlinkRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookDownRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookInRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookOutRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookUpRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeSquintRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeWideRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeWideRight, Mode=TwoWay}"/>
-                    </StackPanel>
-                </Border>
+                    <Border>
 
-                <Border>
+                        <StackPanel Margin="12" Width="200">
+                            <local:LabelledValueSlider Text="JawForward" Value="{Binding CapDataModel.Data.BlendShapes.JawForward, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="JawLeft" Value="{Binding CapDataModel.Data.BlendShapes.JawLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="JawRight" Value="{Binding CapDataModel.Data.BlendShapes.JawRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="JawOpen" Value="{Binding CapDataModel.Data.BlendShapes.JawOpen, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </Border>
 
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="JawForward" Value="{Binding CapDataModel.Data.BlendShapes.JawForward, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="JawLeft" Value="{Binding CapDataModel.Data.BlendShapes.JawLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="JawRight" Value="{Binding CapDataModel.Data.BlendShapes.JawRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="JawOpen" Value="{Binding CapDataModel.Data.BlendShapes.JawOpen, Mode=TwoWay}"/>
-                    </StackPanel>
-                </Border>
+                    <Border>
+                        <StackPanel Margin="12" Width="200">
+                            <local:LabelledValueSlider Text="MouthClose" Value="{Binding CapDataModel.Data.BlendShapes.MouthClose, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthFunnel" Value="{Binding CapDataModel.Data.BlendShapes.MouthFunnel, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthPucker" Value="{Binding CapDataModel.Data.BlendShapes.MouthPucker, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthSmileLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthSmileRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthFrownLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthFrownRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthDimpleLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthDimpleRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleRight, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </Border>
 
-                <Border>
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="MouthClose" Value="{Binding CapDataModel.Data.BlendShapes.MouthClose, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthFunnel" Value="{Binding CapDataModel.Data.BlendShapes.MouthFunnel, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthPucker" Value="{Binding CapDataModel.Data.BlendShapes.MouthPucker, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthSmileLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthSmileRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthFrownLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthFrownRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthDimpleLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthDimpleRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleRight, Mode=TwoWay}"/>
-                    </StackPanel>
-                </Border>
+                    <Border>
+                        <StackPanel Margin="12" Width="200">
+                            <local:LabelledValueSlider Text="MouthStretchLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthStretchRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthRollLower" Value="{Binding CapDataModel.Data.BlendShapes.MouthRollLower, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthRollUpper" Value="{Binding CapDataModel.Data.BlendShapes.MouthRollUpper, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthShrugLower" Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugLower, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthShrugUpper" Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugUpper, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthPressLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthPressLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthPressRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthPressRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthLowerDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthLowerDownRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthUpperUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="MouthUpperUpRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpRight, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </Border>
 
-                <Border>
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="MouthStretchLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthStretchRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthRollLower" Value="{Binding CapDataModel.Data.BlendShapes.MouthRollLower, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthRollUpper" Value="{Binding CapDataModel.Data.BlendShapes.MouthRollUpper, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthShrugLower" Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugLower, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthShrugUpper" Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugUpper, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthPressLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthPressLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthPressRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthPressRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthLowerDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthLowerDownRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthUpperUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthUpperUpRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpRight, Mode=TwoWay}"/>
-                    </StackPanel>
-                </Border>
+                    <Border>
+                        <StackPanel Margin="12" Width="200">
+                            <local:LabelledValueSlider Text="BrowDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.BrowDownLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="BrowDownRight" Value="{Binding CapDataModel.Data.BlendShapes.BrowDownRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="BrowInnerUp" Value="{Binding CapDataModel.Data.BlendShapes.BrowInnerUp, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="BrowOuterUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="BrowOuterUpRight" Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="CheekPuff" Value="{Binding CapDataModel.Data.BlendShapes.CheekPuff, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="CheekSquintLeft" Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="CheekSquintRight" Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="NoseSneerLeft" Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerLeft, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="NoseSneerRight" Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerRight, Mode=TwoWay}"/>
+                            <local:LabelledValueSlider Text="TongueOut" Value="{Binding CapDataModel.Data.BlendShapes.TongueOut, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </Border>
 
-                <Border>
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="BrowDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.BrowDownLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="BrowDownRight" Value="{Binding CapDataModel.Data.BlendShapes.BrowDownRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="BrowInnerUp" Value="{Binding CapDataModel.Data.BlendShapes.BrowInnerUp, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="BrowOuterUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="BrowOuterUpRight" Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="CheekPuff" Value="{Binding CapDataModel.Data.BlendShapes.CheekPuff, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="CheekSquintLeft" Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="CheekSquintRight" Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="NoseSneerLeft" Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="NoseSneerRight" Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="TongueOut" Value="{Binding CapDataModel.Data.BlendShapes.TongueOut, Mode=TwoWay}"/>
-                    </StackPanel>
-                </Border>
+                    <Border>
+                        <StackPanel Margin="12" Width="200">
+                            <local:LabelledValueSlider Text="Head.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.X, Mode=TwoWay}" Minimum="-90" Maximum="90"/>
+                            <local:LabelledValueSlider Text="Head.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Y, Mode=TwoWay}" Minimum="-90" Maximum="90"/>
+                            <local:LabelledValueSlider Text="Head.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Z, Mode=TwoWay}" Minimum="-90" Maximum="90"/>
+                            <local:LabelledValueSlider Text="Head.Position.X" Value="{Binding CapDataModel.Data.Tracking.Head.Position.X, Mode=TwoWay}" Minimum="-0.5" Maximum="0.5"/>
+                            <local:LabelledValueSlider Text="Head.Position.Y" Value="{Binding CapDataModel.Data.Tracking.Head.Position.Y, Mode=TwoWay}" Minimum="-0.5" Maximum="0.5"/>
+                            <local:LabelledValueSlider Text="Head.Position.Z" Value="{Binding CapDataModel.Data.Tracking.Head.Position.Z, Mode=TwoWay}" Minimum="-0.5" Maximum="0.5"/>
+                            <local:LabelledValueSlider Text="LeftEye.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.X, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
+                            <local:LabelledValueSlider Text="LeftEye.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Y, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
+                            <local:LabelledValueSlider Text="LeftEye.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Z, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
+                            <local:LabelledValueSlider Text="RightEye.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.X, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
+                            <local:LabelledValueSlider Text="RightEye.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Y, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
+                            <local:LabelledValueSlider Text="RightEye.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Z, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
+                        </StackPanel>
+                    </Border>
+                </wraplayout:WrapPanel>
 
-                <Border>
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="Head.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.X, Mode=TwoWay}" Minimum="-90" Maximum="90"/>
-                        <local:LabelledValueSlider Text="Head.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Y, Mode=TwoWay}" Minimum="-90" Maximum="90"/>
-                        <local:LabelledValueSlider Text="Head.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Z, Mode=TwoWay}" Minimum="-90" Maximum="90"/>
-                        <local:LabelledValueSlider Text="Head.Position.X" Value="{Binding CapDataModel.Data.Tracking.Head.Position.X, Mode=TwoWay}" Minimum="-0.5" Maximum="0.5"/>
-                        <local:LabelledValueSlider Text="Head.Position.Y" Value="{Binding CapDataModel.Data.Tracking.Head.Position.Y, Mode=TwoWay}" Minimum="-0.5" Maximum="0.5"/>
-                        <local:LabelledValueSlider Text="Head.Position.Z" Value="{Binding CapDataModel.Data.Tracking.Head.Position.Z, Mode=TwoWay}" Minimum="-0.5" Maximum="0.5"/>
-                        <local:LabelledValueSlider Text="LeftEye.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.X, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
-                        <local:LabelledValueSlider Text="LeftEye.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Y, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
-                        <local:LabelledValueSlider Text="LeftEye.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Z, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
-                        <local:LabelledValueSlider Text="RightEye.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.X, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
-                        <local:LabelledValueSlider Text="RightEye.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Y, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
-                        <local:LabelledValueSlider Text="RightEye.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Z, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
-                    </StackPanel>
-                </Border>
-            </wraplayout:WrapPanel>
+            </ScrollViewer>
 
-        </ScrollViewer>
+            <ScrollViewer Grid.Column="1">
+                <StackPanel>
+                    <Expander HorizontalAlignment="Stretch" Header="Globals" HorizontalContentAlignment="Stretch">
+                        <ItemsControl ItemsSource="{Binding ScriptGlobals}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="4">
+                                        <StackPanel>
+                                            <Grid>
+                                                <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Left" />
+                                                <!--<TextBlock Text="{Binding Path=RecentValue}" HorizontalAlignment="Right"/>-->
+                                            </Grid>
+                                            <NumberBox Value="{Binding Path=Value, Mode=TwoWay}" AcceptsExpression="True"/>
+                                            <!--<TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>-->
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Expander>
+                    <Expander HorizontalAlignment="Stretch" Header="Parameters" IsExpanded="True" HorizontalContentAlignment="Stretch">
+                        <ItemsControl ItemsSource="{Binding ScriptParameters}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="4">
+                                        <StackPanel>
+                                            <Grid>
+                                                <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Left" />
+                                                <TextBlock Text="{Binding Path=RecentValue}" HorizontalAlignment="Right"/>
+                                            </Grid>
+                                            <TextBox Text="{Binding Path=Script, Mode=TwoWay}" AcceptsReturn="True" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                                            <TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Expander>
+                </StackPanel>
+            </ScrollViewer>
+
+        </Grid>
+
 
         <Border Grid.Row="1" Width="300" Height="200" Opacity="{Binding BusyMessageOpacity}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderThickness="1" BorderBrush="{ThemeResource ApplicationPressedForegroundThemeBrush}" CornerRadius="8" IsHitTestVisible="False" Translation="0,0,128" RenderTransformOrigin="0.5,0.5">
             <Border.RenderTransform>

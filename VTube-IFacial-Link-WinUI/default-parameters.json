@@ -1,0 +1,300 @@
+[
+  {
+    "name": "FacePositionX",
+    "script": "return capturedData.Tracking.Head.Position.X * FACE_POSITION_X_RATIO"
+  },
+  {
+    "name": "FacePositionY",
+    "script": "return capturedData.Tracking.Head.Position.Y * FACE_POSITION_Y_RATIO"
+  },
+  {
+    "name": "FacePositionZ",
+    "script": "return -capturedData.Tracking.Head.Position.Z * FACE_POSITION_Z_RATIO"
+  },
+  {
+    "name": "FaceAngleX",
+    "script": "return capturedData.Tracking.Head.Rotation.Y * FACE_ANGLE_X_RATIO"
+  },
+  {
+    "name": "FaceAngleY",
+    "script": "return -capturedData.Tracking.Head.Rotation.X * FACE_ANGLE_Y_RATIO"
+  },
+  {
+    "name": "FaceAngleZ",
+    "script": "return -capturedData.Tracking.Head.Rotation.Z * FACE_ANGLE_Z_RATIO"
+  },
+  {
+    "name": "MouthSmile",
+    "script": "return (\r  (\r    math.max(capturedData.BlendShapes.MouthSmileLeft + capturedData.BlendShapes.MouthSmileRight - 0.2, 0)  -- mouth smile (pos*2)\r    - math.pow(math.max(capturedData.BlendShapes.MouthShrugLower - 0.4, 0), 1) * 1  -- mouth shrug (neg*1) (threshold: 0.4)\r    - math.pow(math.max(\r        (capturedData.BlendShapes.BrowDownLeft + capturedData.BlendShapes.BrowDownRight) / 2 - 0.3 + \r        (0.08 + ((capturedData.BlendShapes.JawOpen - capturedData.BlendShapes.MouthClose) * 0.15))\r        , 0), 0.4) * 1.5  -- brow low (neg*1.5) (threshold: 0.08 + mouth_open_factor)\r  ) * MOUTH_SMILE_RATIO  -- ratio\r) / 2 + 0.5 "
+  },
+  {
+    "name": "MouthOpen",
+    "script": "return (capturedData.BlendShapes.JawOpen - capturedData.BlendShapes.MouthClose) * MOUTH_OPEN_RATIO"
+  },
+  {
+    "name": "Brows",
+    "script": "return capturedData.BlendShapes.BrowInnerUp * BROWS_RATIO"
+  },
+  {
+    "name": "TongueOut",
+    "script": "if (capturedData.BlendShapes.TongueOut < TONGUE_OUT_RATIO) then\r  return 0\relse\r  return 1\rend"
+  },
+  {
+    "name": "EyeOpenLeft",
+    "script": "return (1 - capturedData.BlendShapes.EyeBlinkLeft) * EYE_OPEN_RATIO - (EYE_OPEN_RATIO - 1)"
+  },
+  {
+    "name": "EyeOpenRight",
+    "script": "return (1 - capturedData.BlendShapes.EyeBlinkRight) * EYE_OPEN_RATIO - (EYE_OPEN_RATIO - 1)"
+  },
+  {
+    "name": "EyeLeftX",
+    "script": "return (capturedData.BlendShapes.EyeLookInLeft - capturedData.BlendShapes.EyeLookOutLeft) * EYE_ROTATION_RATIO"
+  },
+  {
+    "name": "EyeLeftY",
+    "script": "return (capturedData.BlendShapes.EyeLookUpLeft - capturedData.BlendShapes.EyeLookDownLeft) * EYE_ROTATION_RATIO"
+  },
+  {
+    "name": "EyeRightX",
+    "script": "return (capturedData.BlendShapes.EyeLookOutRight - capturedData.BlendShapes.EyeLookInRight) * EYE_ROTATION_RATIO"
+  },
+  {
+    "name": "EyeRightY",
+    "script": "return (capturedData.BlendShapes.EyeLookUpRight - capturedData.BlendShapes.EyeLookDownRight) * EYE_ROTATION_RATIO"
+  },
+  {
+    "name": "CheekPuff",
+    "script": "return capturedData.BlendShapes.CheekPuff * CHEEK_PUFF_RATIO"
+  },
+  {
+    "name": "FaceAngry",
+    "script": "if ((capturedData.BlendShapes.MouthRollLower * capturedData.BlendShapes.MouthShrugLower) < FACE_ANGRY_RATIO) then\r  return 0\relse\r  return 1\rend"
+  },
+  {
+    "name": "BrowLeftY",
+    "script": "return ((capturedData.BlendShapes.BrowOuterUpLeft - capturedData.BlendShapes.BrowDownLeft) * BROW_LEFT_Y_RATIO + 1) / 2"
+  },
+  {
+    "name": "BrowRightY",
+    "script": "return ((capturedData.BlendShapes.BrowOuterUpRight - capturedData.BlendShapes.BrowDownRight) * BROW_RIGHT_Y_RATIO + 1) / 2"
+  },
+  {
+    "name": "MouthX",
+    "script": "return (capturedData.BlendShapes.MouthLeft - capturedData.BlendShapes.MouthRight) * MOUTH_X_RATIO"
+  },
+
+  {
+    "name": "EyeBlinkLeft",
+    "script": "return capturedData.BlendShapes.EyeBlinkLeft"
+  },
+  {
+    "name": "EyeLookDownLeft",
+    "script": "return capturedData.BlendShapes.EyeLookDownLeft"
+  },
+  {
+    "name": "EyeLookInLeft",
+    "script": "return capturedData.BlendShapes.EyeLookInLeft"
+  },
+  {
+    "name": "EyeLookOutLeft",
+    "script": "return capturedData.BlendShapes.EyeLookOutLeft"
+  },
+  {
+    "name": "EyeLookUpLeft",
+    "script": "return capturedData.BlendShapes.EyeLookUpLeft"
+  },
+  {
+    "name": "EyeSquintLeft",
+    "script": "return capturedData.BlendShapes.EyeSquintLeft"
+  },
+  {
+    "name": "EyeWideLeft",
+    "script": "return capturedData.BlendShapes.EyeWideLeft"
+  },
+
+  {
+    "name": "EyeBlinkRight",
+    "script": "return capturedData.BlendShapes.EyeBlinkRight"
+  },
+  {
+    "name": "EyeLookDownRight",
+    "script": "return capturedData.BlendShapes.EyeLookDownRight"
+  },
+  {
+    "name": "EyeLookInRight",
+    "script": "return capturedData.BlendShapes.EyeLookInRight"
+  },
+  {
+    "name": "EyeLookOutRight",
+    "script": "return capturedData.BlendShapes.EyeLookOutRight"
+  },
+  {
+    "name": "EyeLookUpRight",
+    "script": "return capturedData.BlendShapes.EyeLookUpRight"
+  },
+  {
+    "name": "EyeSquintRight",
+    "script": "return capturedData.BlendShapes.EyeSquintRight"
+  },
+  {
+    "name": "EyeWideRight",
+    "script": "return capturedData.BlendShapes.EyeWideRight"
+  },
+
+  {
+    "name": "JawForward",
+    "script": "return capturedData.BlendShapes.JawForward"
+  },
+  {
+    "name": "JawLeft",
+    "script": "return capturedData.BlendShapes.JawLeft"
+  },
+  {
+    "name": "JawRight",
+    "script": "return capturedData.BlendShapes.JawRight"
+  },
+  {
+    "name": "JawOpen",
+    "script": "return capturedData.BlendShapes.JawOpen"
+  },
+  {
+    "name": "MouthClose",
+    "script": "return capturedData.BlendShapes.MouthClose"
+  },
+  {
+    "name": "MouthFunnel",
+    "script": "return capturedData.BlendShapes.MouthFunnel"
+  },
+  {
+    "name": "MouthPucker",
+    "script": "return capturedData.BlendShapes.MouthPucker"
+  },
+  {
+    "name": "MouthLeft",
+    "script": "return capturedData.BlendShapes.MouthLeft"
+  },
+  {
+    "name": "MouthRight",
+    "script": "return capturedData.BlendShapes.MouthRight"
+  },
+  {
+    "name": "MouthSmileLeft",
+    "script": "return capturedData.BlendShapes.MouthSmileLeft"
+  },
+  {
+    "name": "MouthSmileRight",
+    "script": "return capturedData.BlendShapes.MouthSmileRight"
+  },
+  {
+    "name": "MouthFrownLeft",
+    "script": "return capturedData.BlendShapes.MouthFrownLeft"
+  },
+  {
+    "name": "MouthFrownRight",
+    "script": "return capturedData.BlendShapes.MouthFrownRight"
+  },
+  {
+    "name": "MouthDimpleLeft",
+    "script": "return capturedData.BlendShapes.MouthDimpleLeft"
+  },
+  {
+    "name": "MouthDimpleRight",
+    "script": "return capturedData.BlendShapes.MouthDimpleRight"
+  },
+  {
+    "name": "MouthStretchLeft",
+    "script": "return capturedData.BlendShapes.MouthStretchLeft"
+  },
+  {
+    "name": "MouthStretchRight",
+    "script": "return capturedData.BlendShapes.MouthStretchRight"
+  },
+  {
+    "name": "MouthRollLower",
+    "script": "return capturedData.BlendShapes.MouthRollLower"
+  },
+  {
+    "name": "MouthRollUpper",
+    "script": "return capturedData.BlendShapes.MouthRollUpper"
+  },
+  {
+    "name": "MouthShrugLower",
+    "script": "return capturedData.BlendShapes.MouthShrugLower"
+  },
+  {
+    "name": "MouthShrugUpper",
+    "script": "return capturedData.BlendShapes.MouthShrugUpper"
+  },
+  {
+    "name": "MouthPressLeft",
+    "script": "return capturedData.BlendShapes.MouthPressLeft"
+  },
+  {
+    "name": "MouthPressRight",
+    "script": "return capturedData.BlendShapes.MouthPressRight"
+  },
+  {
+    "name": "MouthLowerDownLeft",
+    "script": "return capturedData.BlendShapes.MouthLowerDownLeft"
+  },
+  {
+    "name": "MouthLowerDownRight",
+    "script": "return capturedData.BlendShapes.MouthLowerDownRight"
+  },
+  {
+    "name": "MouthUpperUpLeft",
+    "script": "return capturedData.BlendShapes.MouthUpperUpLeft"
+  },
+  {
+    "name": "MouthUpperUpRight",
+    "script": "return capturedData.BlendShapes.MouthUpperUpRight"
+  },
+
+  {
+    "name": "BrowDownLeft",
+    "script": "return capturedData.BlendShapes.BrowDownLeft"
+  },
+  {
+    "name": "BrowDownRight",
+    "script": "return capturedData.BlendShapes.BrowDownRight"
+  },
+  {
+    "name": "BrowInnerUp",
+    "script": "return capturedData.BlendShapes.BrowInnerUp"
+  },
+  {
+    "name": "BrowOuterUpLeft",
+    "script": "return capturedData.BlendShapes.BrowOuterUpLeft"
+  },
+  {
+    "name": "BrowOuterUpRight",
+    "script": "return capturedData.BlendShapes.BrowOuterUpRight"
+  },
+
+  {
+    "name": "CheekPuff",
+    "script": "return capturedData.BlendShapes.CheekPuff"
+  },
+  {
+    "name": "CheekSquintLeft",
+    "script": "return capturedData.BlendShapes.CheekSquintLeft"
+  },
+  {
+    "name": "CheekSquintRight",
+    "script": "return capturedData.BlendShapes.CheekSquintRight"
+  },
+  {
+    "name": "NoseSneerLeft",
+    "script": "return capturedData.BlendShapes.NoseSneerLeft"
+  },
+  {
+    "name": "NoseSneerRight",
+    "script": "return capturedData.BlendShapes.NoseSneerRight"
+  },
+
+  {
+    "name": "TongueOut",
+    "script": "return capturedData.BlendShapes.TongueOut"
+  }
+]
