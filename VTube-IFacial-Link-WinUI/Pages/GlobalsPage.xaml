@@ -26,10 +26,10 @@
                             <StackPanel>
                                 <Grid>
                                     <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Left" />
-                                    <TextBlock Text="{Binding Path=RecentValue}" HorizontalAlignment="Right"/>
+                                    <!--<TextBlock Text="{Binding Path=RecentValue}" HorizontalAlignment="Right"/>-->
                                 </Grid>
                                 <NumberBox Value="{Binding Path=Value, Mode=TwoWay}" AcceptsExpression="True"/>
-                                <TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>
+                                <!--<TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>-->
                                 <Button Content="Remove" Command="{Binding RemoveScriptGlobalCommand, ElementName=Root}" CommandParameter="{Binding}"/>
                             </StackPanel>
                         </Border>
