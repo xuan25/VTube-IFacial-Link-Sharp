@@ -9,7 +9,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:VTube_IFacial_Link.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" NavigationCacheMode="Required">
 
     <ScrollViewer>
         <StackPanel Margin="16,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
