@@ -121,9 +121,20 @@ namespace VTube_IFacial_Link
                 return true;
             }
 
-            public void Execute(object parameter)
+            public async void Execute(object parameter)
             {
-                Parent.ScriptGlobals.Add(new ScriptGlobalModel() { Name = "NewGlobal", Value = 0 });
+                CreateNameDialog createNameDialog = new()
+                {
+                    Title = "Create New Global Variable",
+                    XamlRoot = Parent.Content.XamlRoot,
+                    Value = "NEW_GLOBAL",
+                    DefaultButton = ContentDialogButton.Primary
+                };
+                ContentDialogResult contentDialogResult = await createNameDialog.ShowAsync();
+                if (contentDialogResult == ContentDialogResult.Primary) {
+                    string name = createNameDialog.Value;
+                    Parent.ScriptGlobals.Add(new ScriptGlobalModel() { Name = name, Value = 0 });
+                }
             }
         }
 
@@ -166,11 +177,23 @@ namespace VTube_IFacial_Link
                 return true;
             }
 
-            public void Execute(object parameter)
+            public async void Execute(object parameter)
             {
-                lock(Parent.ScriptParameters)
+                CreateNameDialog createNameDialog = new()
                 {
-                    Parent.ScriptParameters.Add(new ScriptParameterModel() { Name = "NewParameter", Script = string.Empty });
+                    Title = "Create New Parameter",
+                    XamlRoot = Parent.Content.XamlRoot,
+                    Value = "NewParameter",
+                    DefaultButton = ContentDialogButton.Primary
+                };
+                ContentDialogResult contentDialogResult = await createNameDialog.ShowAsync();
+                if (contentDialogResult == ContentDialogResult.Primary)
+                {
+                    string name = createNameDialog.Value;
+                    lock (Parent.ScriptParameters)
+                    {
+                        Parent.ScriptParameters.Add(new ScriptParameterModel() { Name = name, Script = string.Empty });
+                    }
                 }
             }
         }

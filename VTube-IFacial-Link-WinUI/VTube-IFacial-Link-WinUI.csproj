@@ -27,6 +27,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="CreateNameDialog.xaml" />
     <None Remove="LabelledValueSlider.xaml" />
     <None Remove="MainPage.xaml" />
   </ItemGroup>
@@ -55,6 +56,9 @@
     <None Update="default-parameters.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="CreateNameDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainPage.xaml">
