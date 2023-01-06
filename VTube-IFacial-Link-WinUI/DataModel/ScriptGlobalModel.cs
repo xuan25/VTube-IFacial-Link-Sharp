@@ -1,15 +1,12 @@
 ﻿using Microsoft.UI.Xaml;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VTube;
+using VTube.Interfaces;
 
 namespace VTube_IFacial_Link.DataModel
 {
-    public class ScriptGlobalModel : DependencyObject, ParameterConverter.IGlobal, INotifyPropertyChanged
+    public class ScriptGlobalModel : DependencyObject, IScriptGlobal, INotifyPropertyChanged
     {
         public event EventHandler ValueUpdated;
 

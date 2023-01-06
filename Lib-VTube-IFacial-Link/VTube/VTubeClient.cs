@@ -2,15 +2,14 @@
 using System.Text.Json;
 using VTube.DataModel;
 using IFacial;
-using System;
-using System.Threading;
-using System.IO;
-using System.Collections.Generic;
+using System.Collections.Specialized;
+using VTube.Interfaces;
 
 namespace VTube
 {
     public class VTubeClient
     {
+
         readonly string configPath;
 
         public class ConfigStore
@@ -21,9 +20,9 @@ namespace VTube
         ConfigStore Config;
         public Uri ApiAddress { get; private set; }
 
-        ParameterConverter ParamConverter { get; set; }
+        public IParameterConverter ParamConverter { get; private set; }
 
-        public VTubeClient(Uri apiAddress, CapturedData captured, string configPath, ParameterConverter parameterConverter) {
+        public VTubeClient(Uri apiAddress, CapturedData captured, string configPath, IParameterConverter parameterConverter) {
             ApiAddress = apiAddress;
             Captured = captured;
 
@@ -34,9 +33,39 @@ namespace VTube
             }
 
             ParamConverter = parameterConverter;
+            ParamConverter.Parameters.CollectionChanged += Parameters_CollectionChanged;
+        }
+
+        private void Parameters_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if(IsConnected)
+            {
+                if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Replace)
+                {
+                    foreach (IParameter param in e.NewItems)
+                    {
+                        Api.RequestParameterCreation(clientWebSocket, param.Name, "", 0, 1, 0);
+                    }
+                }
+                if (e.Action == NotifyCollectionChangedAction.Remove || e.Action == NotifyCollectionChangedAction.Replace)
+                {
+                    foreach (IParameter param in e.OldItems)
+                    {
+                        if(!DefaultParameters.Contains(param.Name))
+                        {
+                            Api.RequestParameterDeletion(clientWebSocket, param.Name);
+                        }
+                    }
+                }
+                if (e.Action == NotifyCollectionChangedAction.Reset)
+                {
+                    Init();
+                }
+            }
         }
 
         ClientWebSocket clientWebSocket;
+        public bool IsConnected = false;
 
         public void Connect(Action<string> messageHandler = null)
         {
@@ -57,31 +86,50 @@ namespace VTube
             {
                 Authentication(messageHandler);
             }
+            IsConnected = true;
         }
 
         public CapturedData Captured { get; set; }
+
+        private HashSet<string> DefaultParameters { get; set; }
 
         public bool Init()
         {
             System.Diagnostics.Debug.WriteLine($"Requesting Registered Input Parameter List...");
             InputParameterListResponse.DataSection data = Api.RequestInputParameterList(clientWebSocket);
 
-            HashSet<string> registeredParameters = new();
+            HashSet<string> requiredParameters = new();
+            foreach (IParameter parameter in ParamConverter.Parameters)
+            {
+                requiredParameters.Add(parameter.Name);
+            }
+
+            HashSet<string> defaultParameters = new();
             foreach (InputParameterListResponse.DataSection.Parameter parameter in data.DefaultParameters)
             {
-                registeredParameters.Add(parameter.Name);
+                defaultParameters.Add(parameter.Name);
             }
-            foreach(InputParameterListResponse.DataSection.Parameter parameter in data.CustomParameters)
+            DefaultParameters = defaultParameters;
+
+            HashSet<string> customParameters = new();
+            foreach (InputParameterListResponse.DataSection.Parameter parameter in data.CustomParameters)
             {
-                registeredParameters.Add(parameter.Name);
+                if (!requiredParameters.Contains(parameter.Name))
+                {
+                    Api.RequestParameterDeletion(clientWebSocket, parameter.Name);
+                } 
+                else
+                {
+                    customParameters.Add(parameter.Name);
+                }
             }
 
             System.Diagnostics.Debug.WriteLine($"Registering Missing Parameters...");
-            foreach (string paramName in Enum.GetNames(typeof(Params)))
+            foreach(IParameter parameter in ParamConverter.Parameters)
             {
-                if (!registeredParameters.Contains(paramName))
+                if (!customParameters.Contains(parameter.Name) && !defaultParameters.Contains(parameter.Name))
                 {
-                    Api.RequestParameterCreation(clientWebSocket, paramName, "", 0, 1, 0);
+                    Api.RequestParameterCreation(clientWebSocket, parameter.Name, "", 0, 1, 0);
                 }
             }
 
@@ -121,7 +169,11 @@ namespace VTube
                 while (!CTS.IsCancellationRequested)
                 {
                     List<InjectParameterDataRequest.DataSection.ParameterValue> parameterValues = ParamConverter.Convert(Captured);
-                    Api.RequestInjectParameterData(clientWebSocket, true, "set", parameterValues);
+                    if (parameterValues.Count > 0)
+                    {
+                        Api.RequestInjectParameterData(clientWebSocket, true, "set", parameterValues);
+                    }
+                    Thread.Sleep(1);
                 }
             }
             catch (Exception ex)
@@ -132,6 +184,7 @@ namespace VTube
 
         public void Dispose()
         {
+            ParamConverter.Parameters.CollectionChanged -= Parameters_CollectionChanged;
             if (clientWebSocket != null && clientWebSocket.State == WebSocketState.Open)
             {
                 clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, null, CancellationToken.None).Wait();

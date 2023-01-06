@@ -155,50 +155,59 @@
             <ScrollViewer Grid.Column="1">
                 <StackPanel>
                     <Expander HorizontalAlignment="Stretch" Header="Globals" HorizontalContentAlignment="Stretch">
-                        <ItemsControl ItemsSource="{Binding ScriptGlobals}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Margin="4">
-                                        <StackPanel>
-                                            <Grid>
-                                                <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Left" />
-                                                <!--<TextBlock Text="{Binding Path=RecentValue}" HorizontalAlignment="Right"/>-->
-                                            </Grid>
-                                            <NumberBox Value="{Binding Path=Value, Mode=TwoWay}" AcceptsExpression="True"/>
-                                            <!--<TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>-->
-                                        </StackPanel>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                        <StackPanel>
+                            <Button Content="Add" Command="{Binding AddScriptGlobalCommand}"/>
+                            <ItemsControl ItemsSource="{Binding ScriptGlobals}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Margin="4">
+                                            <StackPanel>
+                                                <Grid>
+                                                    <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Left" />
+                                                    <!--<TextBlock Text="{Binding Path=RecentValue}" HorizontalAlignment="Right"/>-->
+                                                </Grid>
+                                                <NumberBox Value="{Binding Path=Value, Mode=TwoWay}" AcceptsExpression="True"/>
+                                                <!--<TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>-->
+                                                <Button Content="Remove" Command="{Binding RemoveScriptGlobalCommand, ElementName=Root}" CommandParameter="{Binding}"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                        
                     </Expander>
                     <Expander HorizontalAlignment="Stretch" Header="Parameters" IsExpanded="True" HorizontalContentAlignment="Stretch">
-                        <ItemsControl ItemsSource="{Binding ScriptParameters}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Margin="4">
-                                        <StackPanel>
-                                            <Grid>
-                                                <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Left" />
-                                                <TextBlock Text="{Binding Path=RecentValue}" HorizontalAlignment="Right"/>
-                                            </Grid>
-                                            <TextBox Text="{Binding Path=Script, Mode=TwoWay}" AcceptsReturn="True" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-                                            <TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>
-                                        </StackPanel>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                        <StackPanel>
+                            <Button Content="Add" Command="{Binding AddScriptParameterCommand}"/>
+                            <ItemsControl ItemsSource="{Binding ScriptParameters}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Margin="4">
+                                            <StackPanel>
+                                                <Grid>
+                                                    <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Left" />
+                                                    <TextBlock Text="{Binding Path=RecentValue}" HorizontalAlignment="Right"/>
+                                                </Grid>
+                                                <TextBox Text="{Binding Path=Script, Mode=TwoWay}" AcceptsReturn="True" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                                                <TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>
+                                                <Button Content="Remove" Command="{Binding RemoveScriptParameterCommand, ElementName=Root}" CommandParameter="{Binding}"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
                     </Expander>
                 </StackPanel>
             </ScrollViewer>

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.WebSockets;
+﻿using System.Net.WebSockets;
 using VTube.DataModel;
 
 namespace VTube
@@ -49,6 +47,16 @@ namespace VTube
         {
             Utils.SendRequest(clientWebSocket, new ParameterCreationRequest(parameterName, explanation, min, max, defaultValue));
             ParameterCreationResponse res = Utils.ReceiveResponse<ParameterCreationResponse>(clientWebSocket);
+            if (res.Data.ErrorID != 0)
+            {
+                throw new Exception($"{res.Data.Message} ({res.Data.ErrorID})");
+            }
+        }
+
+        public static void RequestParameterDeletion(ClientWebSocket clientWebSocket, string parameterName)
+        {
+            Utils.SendRequest(clientWebSocket, new ParameterDeletionRequest(parameterName));
+            ParameterDeletionResponse res = Utils.ReceiveResponse<ParameterDeletionResponse>(clientWebSocket);
             if (res.Data.ErrorID != 0)
             {
                 throw new Exception($"{res.Data.Message} ({res.Data.ErrorID})");

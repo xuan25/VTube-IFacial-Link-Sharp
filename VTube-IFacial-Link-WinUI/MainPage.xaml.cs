@@ -6,9 +6,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text.Json;
@@ -108,6 +105,107 @@ namespace VTube_IFacial_Link
         public StopCommandModel StopCommand { private set; get; }
         public BrowseAppDataCommandModel BrowseAppDataCommand { private set; get; }
 
+        public class AddScriptGlobalCommandModel : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+
+            public MainPage Parent { get; private set; }
+
+            public AddScriptGlobalCommandModel(MainPage parent)
+            {
+                Parent = parent;
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public void Execute(object parameter)
+            {
+                Parent.ScriptGlobals.Add(new ScriptGlobalModel() { Name = "NewGlobal", Value = 0 });
+            }
+        }
+
+        public class RemoveScriptGlobalCommandModel : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+
+            public MainPage Parent { get; private set; }
+
+            public RemoveScriptGlobalCommandModel(MainPage parent)
+            {
+                Parent = parent;
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public void Execute(object parameter)
+            {
+                ScriptGlobalModel scriptGlobalModel = (ScriptGlobalModel)parameter;
+                Parent.ScriptGlobals.Remove(scriptGlobalModel);
+            }
+        }
+
+        public class AddScriptParameterCommandModel : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+
+            public MainPage Parent { get; private set; }
+
+            public AddScriptParameterCommandModel(MainPage parent)
+            {
+                Parent = parent;
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public void Execute(object parameter)
+            {
+                lock(Parent.ScriptParameters)
+                {
+                    Parent.ScriptParameters.Add(new ScriptParameterModel() { Name = "NewParameter", Script = string.Empty });
+                }
+            }
+        }
+
+        public class RemoveScriptParameterCommandModel : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+
+            public MainPage Parent { get; private set; }
+
+            public RemoveScriptParameterCommandModel(MainPage parent)
+            {
+                Parent = parent;
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public void Execute(object parameter)
+            {
+                ScriptParameterModel scriptGlobalModel = (ScriptParameterModel)parameter;
+                lock (Parent.ScriptParameters)
+                {
+                    Parent.ScriptParameters.Remove(scriptGlobalModel);
+                }
+            }
+        }
+
+        public AddScriptGlobalCommandModel AddScriptGlobalCommand { private set; get; }
+        public RemoveScriptGlobalCommandModel RemoveScriptGlobalCommand { private set; get; }
+        public AddScriptParameterCommandModel AddScriptParameterCommand { private set; get; }
+        public RemoveScriptParameterCommandModel RemoveScriptParameterCommand { private set; get; }
+
         readonly string configPath;
         readonly string scriptsPath;
 
@@ -120,8 +218,8 @@ namespace VTube_IFacial_Link
 
         public class ScriptStore
         {
-            public ObservableCollection<ScriptParameterModel> Parameters { get; set; }
-            public ObservableCollection<ScriptGlobalModel> Globals { get; set; }
+            public ScriptParameterCollection<ScriptParameterModel> Parameters { get; set; }
+            public ScriptGlobalCollection<ScriptGlobalModel> Globals { get; set; }
         }
 
         public MainPage()
@@ -129,6 +227,10 @@ namespace VTube_IFacial_Link
             StartCommand = new StartCommandModel(this);
             StopCommand = new StopCommandModel(this);
             BrowseAppDataCommand = new BrowseAppDataCommandModel(this);
+            AddScriptGlobalCommand = new AddScriptGlobalCommandModel(this);
+            RemoveScriptGlobalCommand = new RemoveScriptGlobalCommandModel(this);
+            AddScriptParameterCommand = new AddScriptParameterCommandModel(this);
+            RemoveScriptParameterCommand = new RemoveScriptParameterCommandModel(this);
 
             configPath = Path.Combine(PathUtils.ConfigPath, "config-ui.json");
             scriptsPath = Path.Combine(PathUtils.ConfigPath, "scripts.json");
@@ -249,7 +351,7 @@ namespace VTube_IFacial_Link
                             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                             WriteIndented = false
                         };
-                        ScriptParameters = JsonSerializer.Deserialize<ObservableCollection<ScriptParameterModel>>(configStream, serializeOptions);
+                        ScriptParameters = JsonSerializer.Deserialize<ScriptParameterCollection<ScriptParameterModel>>(configStream, serializeOptions);
                     }
                 }
 
@@ -262,7 +364,7 @@ namespace VTube_IFacial_Link
                             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                             WriteIndented = false
                         };
-                        ScriptGlobals = JsonSerializer.Deserialize<ObservableCollection<ScriptGlobalModel>>(configStream, serializeOptions);
+                        ScriptGlobals = JsonSerializer.Deserialize<ScriptGlobalCollection<ScriptGlobalModel>>(configStream, serializeOptions);
                     }
                 }
 
@@ -276,9 +378,6 @@ namespace VTube_IFacial_Link
                 System.Diagnostics.Debug.WriteLine($"Failed to load scripts. ({scriptsPath})");
                 return false;
             }
-
-            
-
         }
 
         private void SaveScripts()
@@ -299,17 +398,17 @@ namespace VTube_IFacial_Link
             System.Diagnostics.Debug.WriteLine($"Scripts saved. ({scriptsPath})");
         }
 
-        public static readonly DependencyProperty ScriptParametersProperty = DependencyProperty.Register(nameof(ScriptParameters), typeof(ObservableCollection<ScriptParameterModel>), typeof(MainPage), new PropertyMetadata(null));
-        public ObservableCollection<ScriptParameterModel> ScriptParameters
+        public static readonly DependencyProperty ScriptParametersProperty = DependencyProperty.Register(nameof(ScriptParameters), typeof(ScriptParameterCollection<ScriptParameterModel>), typeof(MainPage), new PropertyMetadata(null));
+        public ScriptParameterCollection<ScriptParameterModel> ScriptParameters
         {
-            get => (ObservableCollection<ScriptParameterModel>)GetValue(ScriptParametersProperty);
+            get => (ScriptParameterCollection<ScriptParameterModel>)GetValue(ScriptParametersProperty);
             set => SetValue(ScriptParametersProperty, value);
         }
 
-        public static readonly DependencyProperty ScriptGlobalsProperty = DependencyProperty.Register(nameof(ScriptGlobals), typeof(ObservableCollection<ScriptGlobalModel>), typeof(MainPage), new PropertyMetadata(null));
-        public ObservableCollection<ScriptGlobalModel> ScriptGlobals
+        public static readonly DependencyProperty ScriptGlobalsProperty = DependencyProperty.Register(nameof(ScriptGlobals), typeof(ScriptGlobalCollection<ScriptGlobalModel>), typeof(MainPage), new PropertyMetadata(null));
+        public ScriptGlobalCollection<ScriptGlobalModel> ScriptGlobals
         {
-            get => (ObservableCollection<ScriptGlobalModel>)GetValue(ScriptGlobalsProperty);
+            get => (ScriptGlobalCollection<ScriptGlobalModel>)GetValue(ScriptGlobalsProperty);
             set => SetValue(ScriptGlobalsProperty, value);
         }
 
@@ -489,7 +588,7 @@ namespace VTube_IFacial_Link
                 facialClient.DataUpdated += FacialClient_DataUpdated;
                 facialClient.ExceptionOccurred += FacialClient_ExceptionOccurred;
 
-                ParameterConverter parameterConverter = new ParameterConverter(ScriptParameters, ScriptGlobals);
+                ScriptParameterConverter parameterConverter = new ScriptParameterConverter(ScriptParameters, ScriptGlobals);
                 vtubeClient = new VTubeClient(new Uri(VTubeAddress), facialClient.Data, Path.Combine(PathUtils.ConfigPath, "config-vtube.json"), parameterConverter);
                 vtubeClient.ExceptionOccurred += VtubeClient_ExceptionOccurred;
 
@@ -651,6 +750,7 @@ namespace VTube_IFacial_Link
                 if (vtubeClient != null)
                 {
                     vtubeClient.Stop();
+                    vtubeClient.ParamConverter.Dispose();
                     vtubeClient.Dispose();
                     vtubeClient = null;
                 }
@@ -679,5 +779,6 @@ namespace VTube_IFacial_Link
                 CapDataModel.NotifyDataChanged();
             });
         }
+
     }
 }

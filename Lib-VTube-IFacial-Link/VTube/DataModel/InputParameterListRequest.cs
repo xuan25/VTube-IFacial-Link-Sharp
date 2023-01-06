@@ -1,6 +1,6 @@
 ﻿namespace VTube.DataModel
 {
-    class InputParameterListRequest : RequestBase
+    public class InputParameterListRequest : RequestBase
     {
         public InputParameterListRequest() : base("InputParameterListRequest") { }
     }

@@ -1,6 +1,6 @@
 ﻿namespace VTube.DataModel
 {
-    class ResponseBase
+    public class ResponseBase
     {
         public string ApiName { get; set; }
         public string ApiVersion { get; set; }
