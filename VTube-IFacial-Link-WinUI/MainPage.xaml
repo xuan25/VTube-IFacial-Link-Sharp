@@ -12,30 +12,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="Root">
 
     <Grid DataContext="{Binding ElementName=Root}">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger
-                        MinWindowWidth="{x:Bind NavView.CompactModeThresholdWidth}"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <!-- Remove the next 3 lines for left-only navigation. -->
-                        <Setter Target="NavView.PaneDisplayMode" Value="Top"/>
-                        <Setter Target="ConfigurationsHeader.Visibility" Value="Collapsed"/>
-                        <!-- Leave the next line for left-only navigation. -->
-                        <Setter Target="ContentFrame.Padding" Value="24,0,24,24"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
         
         <!--Nav-->
-        <muxc:NavigationView x:Name="NavView" SelectionChanged="NavView_SelectionChanged" IsSettingsVisible="False" IsBackEnabled="False" IsBackButtonVisible="Collapsed" AlwaysShowHeader="False">
+        <muxc:NavigationView x:Name="NavView" SelectionChanged="NavView_SelectionChanged" PaneDisplayMode="Top" IsSettingsVisible="False" IsBackEnabled="False" IsBackButtonVisible="Collapsed" AlwaysShowHeader="False">
             <muxc:NavigationView.MenuItems>
                 <muxc:NavigationViewItem Tag="home" Icon="Home" Content="Home" IsSelected="True"/>
                 <muxc:NavigationViewItemSeparator/>
-                <muxc:NavigationViewItemHeader x:Name="ConfigurationsHeader" Content="Configurations"/>
                 <muxc:NavigationViewItem Tag="data" Content="Data">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE957;"/>
@@ -54,7 +36,7 @@
             </muxc:NavigationView.MenuItems>
 
             <Grid>
-                <Frame x:Name="ContentFrame" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="12,0,12,24" IsTabStop="True" NavigationFailed="ContentFrame_NavigationFailed"/>
+                <Frame x:Name="ContentFrame" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" IsTabStop="True" NavigationFailed="ContentFrame_NavigationFailed"/>
 
                 <Border Grid.Row="1" Width="300" Height="200" Opacity="{Binding BusyMessageOpacity}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderThickness="1" BorderBrush="{ThemeResource ApplicationPressedForegroundThemeBrush}" CornerRadius="8" IsHitTestVisible="False" Translation="0,0,128" RenderTransformOrigin="0.5,0.5">
                     <Border.RenderTransform>

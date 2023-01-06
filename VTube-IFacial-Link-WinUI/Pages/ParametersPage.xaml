@@ -13,7 +13,6 @@
 
     <ScrollViewer>
         <StackPanel Margin="16,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-            <Button Content="Add" Command="{Binding AddScriptParameterCommand}"/>
             <controls:RemovableItemsControl x:Name="ParameterItemsControl" ItemsSource="{Binding ScriptParameters}" RemoveCommand="{Binding RemoveScriptParameterCommand}">
                 <controls:RemovableItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -22,20 +21,27 @@
                 </controls:RemovableItemsControl.ItemsPanel>
                 <controls:RemovableItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="4">
-                            <StackPanel>
-                                <Grid>
-                                    <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Left" />
-                                    <TextBlock Text="{Binding Path=RecentValue}" HorizontalAlignment="Right"/>
-                                </Grid>
-                                <TextBox Text="{Binding Path=Script, Mode=TwoWay}" AcceptsReturn="True" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-                                <TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>
-                                <Button Content="Remove" Command="{Binding RemoveCommand, ElementName=ParameterItemsControl}" CommandParameter="{Binding}"/>
-                            </StackPanel>
-                        </Border>
+                        <StackPanel Margin="4">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <Grid>
+                                        <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Left" />
+                                        <TextBlock Text="{Binding Path=RecentValue}" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                    <TextBox Text="{Binding Path=Script, Mode=TwoWay}" AcceptsReturn="True" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                                </StackPanel>
+                                <Button Grid.Column="1" VerticalAlignment="Bottom" Content="Remove" Command="{Binding RemoveCommand, ElementName=ParameterItemsControl}" CommandParameter="{Binding}"/>
+                            </Grid>
+                            <TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>
+                        </StackPanel>
                     </DataTemplate>
                 </controls:RemovableItemsControl.ItemTemplate>
             </controls:RemovableItemsControl>
+            <Button Margin="8" Content="Add" HorizontalAlignment="Stretch" Command="{Binding AddScriptParameterCommand}"/>
         </StackPanel>
     </ScrollViewer>
 </Page>

@@ -13,7 +13,6 @@
 
     <ScrollViewer>
         <StackPanel Margin="16,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-            <Button Content="Add" Command="{Binding AddScriptGlobalCommand}"/>
             <controls:RemovableItemsControl x:Name="GlobalItemsControl" ItemsSource="{Binding ScriptGlobals}" RemoveCommand="{Binding RemoveScriptGlobalCommand}">
                 <controls:RemovableItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -22,20 +21,28 @@
                 </controls:RemovableItemsControl.ItemsPanel>
                 <controls:RemovableItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="4">
-                            <StackPanel>
-                                <Grid>
-                                    <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Left" />
-                                    <!--<TextBlock Text="{Binding Path=RecentValue}" HorizontalAlignment="Right"/>-->
-                                </Grid>
-                                <NumberBox Value="{Binding Path=Value, Mode=TwoWay}" AcceptsExpression="True"/>
-                                <!--<TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>-->
-                                <Button Content="Remove" Command="{Binding RemoveCommand, ElementName=GlobalItemsControl}" CommandParameter="{Binding}"/>
-                            </StackPanel>
-                        </Border>
+                        <StackPanel Margin="4">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <Grid>
+                                        <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Left" />
+                                        <TextBlock Text="{x:Null}" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                    <NumberBox Value="{Binding Path=Value, Mode=TwoWay}" AcceptsExpression="True"/>
+                                    
+                                </StackPanel>
+                                <Button Grid.Column="1" VerticalAlignment="Bottom" Content="Remove" Command="{Binding RemoveCommand, ElementName=GlobalItemsControl}" CommandParameter="{Binding}"/>
+                            </Grid>
+                            <TextBlock Text="{x:Null}" Foreground="{ThemeResource SystemErrorTextColor}"/>
+                        </StackPanel>
                     </DataTemplate>
                 </controls:RemovableItemsControl.ItemTemplate>
             </controls:RemovableItemsControl>
+            <Button Margin="8" Content="Add" HorizontalAlignment="Stretch" Command="{Binding AddScriptGlobalCommand}"/>
         </StackPanel>
     </ScrollViewer>
 </Page>
