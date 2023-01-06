@@ -20,8 +20,6 @@ using VTube_IFacial_Link.Dialogs;
 using VTube_IFacial_Link.Pages;
 using VTube_IFacial_Link.Utils;
 using Windows.System;
-using Windows.UI.ApplicationSettings;
-using Windows.UI.Core;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,6 +31,8 @@ namespace VTube_IFacial_Link
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        #region Nav
+
         private void ContentFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
@@ -83,6 +83,10 @@ namespace VTube_IFacial_Link
                 ContentFrame.Navigate(_page, null, transitionInfo);
             }
         }
+
+        #endregion
+
+        #region Commands
 
         public class StartCommandModel : ICommand
         {
@@ -288,6 +292,19 @@ namespace VTube_IFacial_Link
         public AddScriptParameterCommandModel AddScriptParameterCommand { private set; get; }
         public RemoveScriptParameterCommandModel RemoveScriptParameterCommand { private set; get; }
 
+        #endregion
+
+        #region Config
+
+        private JsonSerializerOptions configSerializeOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true,
+            AllowTrailingCommas = true,
+            PropertyNameCaseInsensitive = false,
+            ReadCommentHandling = JsonCommentHandling.Skip,
+        };
+
         readonly string configPath;
         readonly string scriptsPath;
 
@@ -303,6 +320,135 @@ namespace VTube_IFacial_Link
             public ScriptParameterCollection<ScriptParameterModel> Parameters { get; set; }
             public ScriptGlobalCollection<ScriptGlobalModel> Globals { get; set; }
         }
+
+
+        private bool LoadConfig()
+        {
+            System.Diagnostics.Debug.WriteLine($"Loading config... ({configPath})");
+            try
+            {
+                if (!File.Exists(configPath))
+                {
+                    return false;
+                }
+
+                ConfigStore store;
+                using (FileStream configStream = File.OpenRead(configPath))
+                {
+                    store = JsonSerializer.Deserialize<ConfigStore>(configStream, configSerializeOptions);
+                }
+
+                if (store == null)
+                {
+                    return false;
+                }
+
+                IFacialAddress = store.IFacialAddress;
+                VTubeAddress = store.VTubeAddress;
+                StartOnLaunch = store.StartOnLaunch;
+
+                return true;
+
+            }
+            catch (System.Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                System.Diagnostics.Debug.WriteLine($"Failed to load config. ({configPath})");
+                return false;
+            }
+
+        }
+
+        private void SaveConfig()
+        {
+            ConfigStore store = new()
+            {
+                IFacialAddress = IFacialAddress,
+                VTubeAddress = VTubeAddress,
+                StartOnLaunch = StartOnLaunch,
+            };
+            if (File.Exists(configPath))
+            {
+                File.Delete(configPath);
+            }
+            using (FileStream configStream = File.OpenWrite(configPath))
+            {
+                JsonSerializer.Serialize<ConfigStore>(configStream, store, configSerializeOptions);
+            }
+            System.Diagnostics.Debug.WriteLine($"Config saved. ({configPath})");
+        }
+
+        private bool LoadScripts()
+        {
+            System.Diagnostics.Debug.WriteLine($"Loading scripts... ({scriptsPath})");
+            try
+            {
+                if (File.Exists(scriptsPath))
+                {
+                    ScriptStore store;
+                    using (FileStream configStream = File.OpenRead(scriptsPath))
+                    {
+                        store = JsonSerializer.Deserialize<ScriptStore>(configStream, configSerializeOptions);
+                    }
+
+                    ScriptParameters = store.Parameters;
+                    ScriptGlobals = store.Globals;
+
+                    return true;
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"Scripts not found ({scriptsPath})");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                System.Diagnostics.Debug.WriteLine($"Failed to load scripts. ({scriptsPath})");
+            }
+
+            // Load default
+            {
+                System.Diagnostics.Debug.WriteLine($"Loading default scripts... ({scriptsPath})");
+                ScriptStore store;
+                using (FileStream configStream = File.OpenRead("default-scripts.json"))
+                {
+                    store = JsonSerializer.Deserialize<ScriptStore>(configStream, configSerializeOptions);
+                }
+
+                if (store != null)
+                {
+                    ScriptParameters = store.Parameters;
+                    ScriptGlobals = store.Globals;
+                }
+            }
+
+            return false;
+        }
+
+        private void SaveScripts()
+        {
+            ScriptStore store = new()
+            {
+                Parameters = ScriptParameters,
+                Globals = ScriptGlobals,
+            };
+            if (File.Exists(scriptsPath))
+            {
+                File.Delete(scriptsPath);
+            }
+            using (FileStream configStream = File.OpenWrite(scriptsPath))
+            {
+                JsonSerializer.Serialize<ScriptStore>(configStream, store, configSerializeOptions);
+            }
+            System.Diagnostics.Debug.WriteLine($"Scripts saved. ({scriptsPath})");
+        }
+
+        #endregion
+
+        #region Common
 
         public MainPage()
         {
@@ -347,138 +493,9 @@ namespace VTube_IFacial_Link
             SaveScripts();
         }
 
-        private bool LoadConfig()
-        {
-            System.Diagnostics.Debug.WriteLine($"Loading config... ({configPath})");
-            try
-            {
-                if (!File.Exists(configPath))
-                {
-                    return false;
-                }
+        #endregion
 
-                ConfigStore config;
-                using (FileStream configStream = File.OpenRead(configPath))
-                {
-                    config = JsonSerializer.Deserialize<ConfigStore>(configStream);
-                }
-
-                if (config == null)
-                {
-                    return false;
-                }
-
-                IFacialAddress = config.IFacialAddress;
-                VTubeAddress = config.VTubeAddress;
-                StartOnLaunch = config.StartOnLaunch;
-
-                return true;
-
-            }
-            catch (System.Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
-                System.Diagnostics.Debug.WriteLine($"Failed to load config. ({configPath})");
-                return false;
-            }
-
-        }
-
-        private void SaveConfig()
-        {
-            ConfigStore config = new()
-            {
-                IFacialAddress = IFacialAddress,
-                VTubeAddress = VTubeAddress,
-                StartOnLaunch = StartOnLaunch,
-            };
-            if (File.Exists(configPath))
-            {
-                File.Delete(configPath);
-            }
-            using (FileStream configStream = File.OpenWrite(configPath))
-            {
-                JsonSerializer.Serialize<ConfigStore>(configStream, config);
-            }
-            System.Diagnostics.Debug.WriteLine($"Config saved. ({configPath})");
-        }
-
-        private bool LoadScripts()
-        {
-            System.Diagnostics.Debug.WriteLine($"Loading scripts... ({scriptsPath})");
-            try
-            {
-                if (File.Exists(scriptsPath))
-                {
-                    ScriptStore config;
-                    using (FileStream configStream = File.OpenRead(scriptsPath))
-                    {
-                        config = JsonSerializer.Deserialize<ScriptStore>(configStream);
-                    }
-
-                    if (config != null)
-                    {
-                        ScriptParameters = config.Parameters;
-                        ScriptGlobals = config.Globals;
-                    }
-                }
-
-                if (ScriptParameters == null)
-                {
-                    using (FileStream configStream = File.OpenRead("default-parameters.json"))
-                    {
-                        JsonSerializerOptions serializeOptions = new()
-                        {
-                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                            WriteIndented = false
-                        };
-                        ScriptParameters = JsonSerializer.Deserialize<ScriptParameterCollection<ScriptParameterModel>>(configStream, serializeOptions);
-                    }
-                }
-
-                if (ScriptGlobals == null)
-                {
-                    using (FileStream configStream = File.OpenRead("default-globals.json"))
-                    {
-                        JsonSerializerOptions serializeOptions = new()
-                        {
-                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                            WriteIndented = false
-                        };
-                        ScriptGlobals = JsonSerializer.Deserialize<ScriptGlobalCollection<ScriptGlobalModel>>(configStream, serializeOptions);
-                    }
-                }
-
-                return true;
-
-            }
-            catch (System.Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
-                System.Diagnostics.Debug.WriteLine($"Failed to load scripts. ({scriptsPath})");
-                return false;
-            }
-        }
-
-        private void SaveScripts()
-        {
-            ScriptStore config = new()
-            {
-                Parameters = ScriptParameters,
-                Globals = ScriptGlobals,
-            };
-            if (File.Exists(scriptsPath))
-            {
-                File.Delete(scriptsPath);
-            }
-            using (FileStream configStream = File.OpenWrite(scriptsPath))
-            {
-                JsonSerializer.Serialize<ScriptStore>(configStream, config);
-            }
-            System.Diagnostics.Debug.WriteLine($"Scripts saved. ({scriptsPath})");
-        }
+        #region DependencyProperty
 
         public static readonly DependencyProperty ScriptParametersProperty = DependencyProperty.Register(nameof(ScriptParameters), typeof(ScriptParameterCollection<ScriptParameterModel>), typeof(MainPage), new PropertyMetadata(null));
         public ScriptParameterCollection<ScriptParameterModel> ScriptParameters
@@ -650,6 +667,10 @@ namespace VTube_IFacial_Link
             get => (string)GetValue(BusyMessageProperty);
             set => SetValue(BusyMessageProperty, value);
         }
+
+        #endregion
+
+        #region Client
 
         IFacialClient facialClient;
         VTubeClient vtubeClient;
@@ -861,6 +882,8 @@ namespace VTube_IFacial_Link
                 CapDataModel.NotifyDataChanged();
             });
         }
+
+        #endregion
 
     }
 }

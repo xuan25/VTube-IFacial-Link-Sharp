@@ -54,10 +54,10 @@
     <ProjectReference Include="..\Lib-VTube-IFacial-Link\Lib-VTube-IFacial-Link.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="default-globals.json">
+    <None Update="default-scripts.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="default-parameters.json">
+    <None Update="default-globals.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Page Update="Pages\HomePage.xaml">
