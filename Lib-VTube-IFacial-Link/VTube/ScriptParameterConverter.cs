@@ -142,7 +142,7 @@ namespace VTube
 
         public List<InjectParameterDataRequest.DataSection.ParameterValue> Convert(CapturedData capturedData)
         {
-            ScriptSession.Globals["capturedData"] = capturedData;
+            ScriptSession.Globals["data"] = capturedData;
 
             List<InjectParameterDataRequest.DataSection.ParameterValue> parameterValues = new List<InjectParameterDataRequest.DataSection.ParameterValue>();
             lock (ScriptParameters)

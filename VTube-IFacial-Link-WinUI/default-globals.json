@@ -11,7 +11,6 @@
     "name": "FACE_POSITION_Z_RATIO",
     "value": 20
   },
-
   {
     "name": "FACE_ANGLE_X_RATIO",
     "value": 1
@@ -24,7 +23,6 @@
     "name": "FACE_ANGLE_Z_RATIO",
     "value": 1
   },
-
   {
     "name": "MOUTH_SMILE_RATIO",
     "value": 2
@@ -33,7 +31,6 @@
     "name": "MOUTH_OPEN_RATIO",
     "value": 1.2
   },
-
   {
     "name": "BROWS_RATIO",
     "value": 2
@@ -43,7 +40,6 @@
     "name": "TONGUE_OUT_RATIO",
     "value": 0.4
   },
-
   {
     "name": "EYE_OPEN_RATIO",
     "value": 1.25
@@ -52,7 +48,6 @@
     "name": "EYE_ROTATION_RATIO",
     "value": 1.5
   },
-
   {
     "name": "CHEEK_PUFF_RATIO",
     "value": 2
@@ -61,7 +56,6 @@
     "name": "FACE_ANGRY_RATIO",
     "value": 0.3
   },
-
   {
     "name": "BROW_LEFT_Y_RATIO",
     "value": 2
@@ -70,7 +64,6 @@
     "name": "BROW_RIGHT_Y_RATIO",
     "value": 2
   },
-
   {
     "name": "MOUTH_X_RATIO",
     "value": 2
