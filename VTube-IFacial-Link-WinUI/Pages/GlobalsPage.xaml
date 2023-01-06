@@ -7,20 +7,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:VTube_IFacial_Link.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:VTube_IFacial_Link.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <ScrollViewer>
-        <StackPanel>
+        <StackPanel Margin="16,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
             <Button Content="Add" Command="{Binding AddScriptGlobalCommand}"/>
-            <ItemsControl ItemsSource="{Binding ScriptGlobals}">
-                <ItemsControl.ItemsPanel>
+            <controls:RemovableItemsControl x:Name="GlobalItemsControl" ItemsSource="{Binding ScriptGlobals}" RemoveCommand="{Binding RemoveScriptGlobalCommand}">
+                <controls:RemovableItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel/>
                     </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
+                </controls:RemovableItemsControl.ItemsPanel>
+                <controls:RemovableItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="4">
                             <StackPanel>
@@ -30,12 +30,12 @@
                                 </Grid>
                                 <NumberBox Value="{Binding Path=Value, Mode=TwoWay}" AcceptsExpression="True"/>
                                 <!--<TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>-->
-                                <Button Content="Remove" Command="{Binding RemoveScriptGlobalCommand, ElementName=Root}" CommandParameter="{Binding}"/>
+                                <Button Content="Remove" Command="{Binding RemoveCommand, ElementName=GlobalItemsControl}" CommandParameter="{Binding}"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                </controls:RemovableItemsControl.ItemTemplate>
+            </controls:RemovableItemsControl>
         </StackPanel>
     </ScrollViewer>
 </Page>

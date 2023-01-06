@@ -7,20 +7,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:VTube_IFacial_Link.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:VTube_IFacial_Link.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <ScrollViewer>
-        <StackPanel>
+        <StackPanel Margin="16,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
             <Button Content="Add" Command="{Binding AddScriptParameterCommand}"/>
-            <ItemsControl ItemsSource="{Binding ScriptParameters}">
-                <ItemsControl.ItemsPanel>
+            <controls:RemovableItemsControl x:Name="ParameterItemsControl" ItemsSource="{Binding ScriptParameters}" RemoveCommand="{Binding RemoveScriptParameterCommand}">
+                <controls:RemovableItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel/>
                     </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
+                </controls:RemovableItemsControl.ItemsPanel>
+                <controls:RemovableItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="4">
                             <StackPanel>
@@ -30,12 +30,12 @@
                                 </Grid>
                                 <TextBox Text="{Binding Path=Script, Mode=TwoWay}" AcceptsReturn="True" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                                 <TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>
-                                <Button Content="Remove" Command="{Binding RemoveScriptParameterCommand, ElementName=Root}" CommandParameter="{Binding}"/>
+                                <Button Content="Remove" Command="{Binding RemoveCommand, ElementName=ParameterItemsControl}" CommandParameter="{Binding}"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                </controls:RemovableItemsControl.ItemTemplate>
+            </controls:RemovableItemsControl>
         </StackPanel>
     </ScrollViewer>
 </Page>
