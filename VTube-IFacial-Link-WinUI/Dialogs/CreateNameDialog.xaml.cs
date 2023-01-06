@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace VTube_IFacial_Link
+namespace VTube_IFacial_Link.Dialogs
 {
     public sealed partial class CreateNameDialog : ContentDialog
     {

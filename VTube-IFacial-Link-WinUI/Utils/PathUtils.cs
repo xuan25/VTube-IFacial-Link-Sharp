@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace VTube_IFacial_Link
+namespace VTube_IFacial_Link.Utils
 {
     internal class PathUtils
     {
