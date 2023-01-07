@@ -5,9 +5,7 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lib-VTube-IFacial-Link", "Lib-VTube-IFacial-Link\Lib-VTube-IFacial-Link.csproj", "{98A21671-64E4-45B7-8E4C-D59877D35549}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VTube-IFacial-Link-MAUI", "VTube-IFacial-Link-MAUI\VTube-IFacial-Link-MAUI.csproj", "{60B67190-25F3-4E0B-BDA5-352BC547CC49}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VTube-IFacial-Link-WinUI", "VTube-IFacial-Link-WinUI\VTube-IFacial-Link-WinUI.csproj", "{AB07BC61-AB28-4096-B5B6-91E3B5A4DA8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VTube-IFacial-Link-WinUI", "VTube-IFacial-Link-WinUI\VTube-IFacial-Link-WinUI.csproj", "{AB07BC61-AB28-4096-B5B6-91E3B5A4DA8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,24 +19,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Debug|x64.Build.0 = Debug|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Debug|x86.Build.0 = Debug|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Release|ARM64.Build.0 = Release|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Release|x64.ActiveCfg = Release|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Release|x64.Build.0 = Release|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Release|x86.ActiveCfg = Release|Any CPU
-		{60B67190-25F3-4E0B-BDA5-352BC547CC49}.Release|x86.Build.0 = Release|Any CPU
 		{98A21671-64E4-45B7-8E4C-D59877D35549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{98A21671-64E4-45B7-8E4C-D59877D35549}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98A21671-64E4-45B7-8E4C-D59877D35549}.Debug|ARM64.ActiveCfg = Debug|Any CPU
