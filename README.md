@@ -6,9 +6,15 @@ A *VTube Studio* plugin that bridging facial tracking from *iFacialMocap* (IOS),
 
 *This is a version implemented in C#, there is also a [version implemented in Python](https://github.com/xuan25/VTube-IFacial-Link)*
 
-![](imgs/screenshot.png)
-
 ![](imgs/preview.gif)
+
+| ![](imgs/screenshot-1.png) | ![](imgs/screenshot-2.png) |
+| --- | --- |
+
+## Scripting Support (Lua)
+
+| ![](imgs/screenshot-3.png) | ![](imgs/screenshot-4.png) |
+| --- | --- |
 
 ## Quick Start Guide
 
