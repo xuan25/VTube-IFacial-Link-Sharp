@@ -242,6 +242,9 @@ namespace VTube_IFacial_Link
 
             public async void Execute(object parameter)
             {
+                Parent.BusyMessage = "Creating New Parameter";
+                Parent.IsBusy = true;
+
                 CreateNameDialog createNameDialog = new()
                 {
                     Title = "Create New Parameter",
@@ -249,14 +252,54 @@ namespace VTube_IFacial_Link
                     Value = "NewParameter",
                     DefaultButton = ContentDialogButton.Primary
                 };
-                ContentDialogResult contentDialogResult = await createNameDialog.ShowAsync();
-                if (contentDialogResult == ContentDialogResult.Primary)
+                
+                while (true)
                 {
-                    string name = createNameDialog.Value;
-                    lock (Parent.ScriptParameters)
+                    ContentDialogResult contentDialogResult = await createNameDialog.ShowAsync();
+                    if (contentDialogResult == ContentDialogResult.Primary)
                     {
-                        Parent.ScriptParameters.Add(new ScriptParameterModel() { Name = name, Script = string.Empty });
+                        string name = createNameDialog.Value;
+                        ScriptParameterModel newParameter = new ScriptParameterModel() { Name = name, Script = string.Empty };
+                        string errorMessage = null;
+                        lock (Parent.ScriptParameters)
+                        {
+                            try
+                            {
+                                Parent.ScriptParameters.Add(newParameter);
+
+                                Parent.IsBusy = false;
+                                break;
+                            }
+                            catch (Exception ex)
+                            {
+                                errorMessage = ex.Message;
+                                try
+                                {
+                                    Parent.ScriptParameters.Remove(newParameter);
+                                }
+                                catch (Exception)
+                                {
+                                    // Note: Error will triggered again
+                                }
+                            }
+                        }
+                        if (errorMessage != null)
+                        {
+                            await new ContentDialog
+                            {
+                                Title = "Failed to Add Parameter",
+                                Content = $"{errorMessage}",
+                                CloseButtonText = "Ok",
+                                XamlRoot = Parent.Content.XamlRoot
+                            }.ShowAsync();
+                        }
                     }
+                    else
+                    {
+                        Parent.IsBusy = false;
+                        break;
+                    }
+                
                 }
             }
         }

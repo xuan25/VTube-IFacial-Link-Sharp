@@ -45,15 +45,18 @@ namespace VTube
                     foreach (IParameter param in e.NewItems)
                     {
                         Api.RequestParameterCreation(clientWebSocket, param.Name, "", 0, 1, 0);
+                        CustomParameters.Add(param.Name);
                     }
                 }
                 if (e.Action == NotifyCollectionChangedAction.Remove || e.Action == NotifyCollectionChangedAction.Replace)
                 {
                     foreach (IParameter param in e.OldItems)
                     {
-                        if(!DefaultParameters.Contains(param.Name))
+                        var a = !DefaultParameters.Contains(param.Name) && CustomParameters.Contains(param.Name);
+                        if (!DefaultParameters.Contains(param.Name) && CustomParameters.Contains(param.Name))
                         {
                             Api.RequestParameterDeletion(clientWebSocket, param.Name);
+                            CustomParameters.Remove(param.Name);
                         }
                     }
                 }
@@ -92,6 +95,7 @@ namespace VTube
         public CapturedData Captured { get; set; }
 
         private HashSet<string> DefaultParameters { get; set; }
+        private HashSet<string> CustomParameters { get; set; }
 
         public bool Init()
         {
@@ -130,8 +134,10 @@ namespace VTube
                 if (!customParameters.Contains(parameter.Name) && !defaultParameters.Contains(parameter.Name))
                 {
                     Api.RequestParameterCreation(clientWebSocket, parameter.Name, "", 0, 1, 0);
+                    customParameters.Add(parameter.Name);
                 }
             }
+            CustomParameters = customParameters;
 
             System.Diagnostics.Debug.WriteLine("Successfully Initialized");
 
