@@ -13,5 +13,11 @@
 	<Description>Library for VTube Studio plugin that bridging facial tracking from iFacialMocap (IOS), enabling full Apple ARKit facial tracking features.</Description>
 	<AssemblyVersion>0.1.0.0</AssemblyVersion>
   </PropertyGroup>
+	
+  <ItemGroup>
+    <None Update="default-globals.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

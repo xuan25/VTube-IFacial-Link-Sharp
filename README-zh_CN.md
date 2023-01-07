@@ -4,9 +4,15 @@
 
 *这是一个使用 C# 实现的版本，另外还有一个[使用 Python 实现的版本](https://github.com/xuan25/VTube-IFacial-Link)*
 
-![](imgs/screenshot.png)
-
 ![](imgs/preview.gif)
+
+| ![](imgs/screenshot-1.png) | ![](imgs/screenshot-2.png) |
+| --- | --- |
+
+## 脚本支持 (Lua)
+
+| ![](imgs/screenshot-3.png) | ![](imgs/screenshot-4.png) |
+| --- | --- |
 
 ## 快速开始指南
 

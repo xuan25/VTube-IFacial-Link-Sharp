@@ -1,6 +1,6 @@
 ﻿namespace VTube.DataModel
 {
-    class AuthenticationTokenRequest : RequestBase
+    public class AuthenticationTokenRequest : RequestBase
     {
         public class DataSection
         {

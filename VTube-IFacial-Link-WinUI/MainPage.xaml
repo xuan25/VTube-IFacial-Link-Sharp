@@ -7,157 +7,51 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:VTube_IFacial_Link"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:wraplayout="using:WrapLayout"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ui="using:VTube_IFacial_Link.UI" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" x:Name="Root">
 
     <Grid DataContext="{Binding ElementName=Root}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+        
+        <!--Nav-->
+        <muxc:NavigationView x:Name="NavView" SelectionChanged="NavView_SelectionChanged" PaneDisplayMode="Top" IsSettingsVisible="False" IsBackEnabled="False" IsBackButtonVisible="Collapsed" AlwaysShowHeader="False">
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItem Tag="home" Icon="Home" Content="Home" IsSelected="True"/>
+                <muxc:NavigationViewItemSeparator/>
+                <muxc:NavigationViewItem Tag="data" Content="Data">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE957;"/>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Tag="globals" Content="Variables">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEB3C;"/>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem Tag="parameters" Content="Parameters">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE8EF;"/>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+            </muxc:NavigationView.MenuItems>
 
-        <wraplayout:WrapPanel Orientation="Horizontal" Grid.Row="0" Margin="16,8" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Border VerticalAlignment="Center">
-                <TextBox Width="200" Margin="4,2" IsEnabled="{Binding CanStart}" Text="{Binding IFacialAddress, Mode=TwoWay}"/>
-            </Border>
-            <Border VerticalAlignment="Center">
-                <TextBox Width="200" Margin="4,2" IsEnabled="{Binding CanStart}" Text="{Binding VTubeAddress, Mode=TwoWay}"/>
-            </Border>
-            <Border VerticalAlignment="Center">
-                <StackPanel Orientation="Horizontal" Margin="4,2" Spacing="8">
-                    <Button Width="80" Content="Start" VerticalAlignment="Center" Command="{Binding StartCommand}"/>
-                    <Button Width="80" Content="Stop" VerticalAlignment="Center" Command="{Binding StopCommand}"/>
-                </StackPanel>
-            </Border>
-            <Border VerticalAlignment="Center">
-                <StackPanel Orientation="Horizontal" Margin="4,2" Spacing="8">
-                    <ToggleSwitch IsOn="{Binding StartOnLaunch, Mode=TwoWay}" VerticalAlignment="Center" OnContent="Start on Launch" OffContent="Start on Launch"/>
-                </StackPanel>
-            </Border>
-            <Border VerticalAlignment="Center">
-                <Button Width="160" Margin="4,2" Content="Browse App Data" Command="{Binding BrowseAppDataCommand}"/>
-            </Border>
-        </wraplayout:WrapPanel>
+            <Grid>
+                <Frame x:Name="ContentFrame" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" IsTabStop="True" IsNavigationStackEnabled="False" NavigationFailed="ContentFrame_NavigationFailed"/>
 
-        <ScrollViewer x:Name="DataPanel" Grid.Row="1">
-
-            <wraplayout:WrapPanel Orientation="Horizontal" Margin="16,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-
-                <Border>
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="EyeBlinkLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookInLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookOutLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeSquintLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeWideLeft" Value="{Binding CapDataModel.Data.BlendShapes.EyeWideLeft, Mode=TwoWay}"/>
+                <Border Grid.Row="1" Width="300" Height="200" Opacity="{Binding BusyMessageOpacity}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderThickness="1" BorderBrush="{ThemeResource ApplicationPressedForegroundThemeBrush}" CornerRadius="8" IsHitTestVisible="False" Translation="0,0,128" RenderTransformOrigin="0.5,0.5">
+                    <Border.RenderTransform>
+                        <ScaleTransform ScaleX="{Binding BusyMessageScale}" ScaleY="{Binding BusyMessageScale}"/>
+                    </Border.RenderTransform>
+                    <Border.Shadow>
+                        <ui:ThemeShadow Receiver="{Binding ElementName=DataPanel}"/>
+                    </Border.Shadow>
+                    <StackPanel VerticalAlignment="Center" Spacing="24">
+                        <ProgressRing IsIndeterminate="{Binding IsBusy}"/>
+                        <TextBlock Text="{Binding BusyMessage}" HorizontalAlignment="Center" HorizontalTextAlignment="Center"/>
                     </StackPanel>
                 </Border>
-
-                <Border>
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="EyeBlinkRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeBlinkRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookDownRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookDownRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookInRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookInRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookOutRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookOutRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeLookUpRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeLookUpRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeSquintRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeSquintRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="EyeWideRight" Value="{Binding CapDataModel.Data.BlendShapes.EyeWideRight, Mode=TwoWay}"/>
-                    </StackPanel>
-                </Border>
-
-                <Border>
-
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="JawForward" Value="{Binding CapDataModel.Data.BlendShapes.JawForward, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="JawLeft" Value="{Binding CapDataModel.Data.BlendShapes.JawLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="JawRight" Value="{Binding CapDataModel.Data.BlendShapes.JawRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="JawOpen" Value="{Binding CapDataModel.Data.BlendShapes.JawOpen, Mode=TwoWay}"/>
-                    </StackPanel>
-                </Border>
-
-                <Border>
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="MouthClose" Value="{Binding CapDataModel.Data.BlendShapes.MouthClose, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthFunnel" Value="{Binding CapDataModel.Data.BlendShapes.MouthFunnel, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthPucker" Value="{Binding CapDataModel.Data.BlendShapes.MouthPucker, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthSmileLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthSmileRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthSmileRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthFrownLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthFrownRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthFrownRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthDimpleLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthDimpleRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthDimpleRight, Mode=TwoWay}"/>
-                    </StackPanel>
-                </Border>
-
-                <Border>
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="MouthStretchLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthStretchRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthStretchRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthRollLower" Value="{Binding CapDataModel.Data.BlendShapes.MouthRollLower, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthRollUpper" Value="{Binding CapDataModel.Data.BlendShapes.MouthRollUpper, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthShrugLower" Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugLower, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthShrugUpper" Value="{Binding CapDataModel.Data.BlendShapes.MouthShrugUpper, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthPressLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthPressLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthPressRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthPressRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthLowerDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthLowerDownRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthLowerDownRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthUpperUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="MouthUpperUpRight" Value="{Binding CapDataModel.Data.BlendShapes.MouthUpperUpRight, Mode=TwoWay}"/>
-                    </StackPanel>
-                </Border>
-
-                <Border>
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="BrowDownLeft" Value="{Binding CapDataModel.Data.BlendShapes.BrowDownLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="BrowDownRight" Value="{Binding CapDataModel.Data.BlendShapes.BrowDownRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="BrowInnerUp" Value="{Binding CapDataModel.Data.BlendShapes.BrowInnerUp, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="BrowOuterUpLeft" Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="BrowOuterUpRight" Value="{Binding CapDataModel.Data.BlendShapes.BrowOuterUpRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="CheekPuff" Value="{Binding CapDataModel.Data.BlendShapes.CheekPuff, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="CheekSquintLeft" Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="CheekSquintRight" Value="{Binding CapDataModel.Data.BlendShapes.CheekSquintRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="NoseSneerLeft" Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerLeft, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="NoseSneerRight" Value="{Binding CapDataModel.Data.BlendShapes.NoseSneerRight, Mode=TwoWay}"/>
-                        <local:LabelledValueSlider Text="TongueOut" Value="{Binding CapDataModel.Data.BlendShapes.TongueOut, Mode=TwoWay}"/>
-                    </StackPanel>
-                </Border>
-
-                <Border>
-                    <StackPanel Margin="12" Width="200">
-                        <local:LabelledValueSlider Text="Head.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.X, Mode=TwoWay}" Minimum="-90" Maximum="90"/>
-                        <local:LabelledValueSlider Text="Head.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Y, Mode=TwoWay}" Minimum="-90" Maximum="90"/>
-                        <local:LabelledValueSlider Text="Head.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.Head.Rotation.Z, Mode=TwoWay}" Minimum="-90" Maximum="90"/>
-                        <local:LabelledValueSlider Text="Head.Position.X" Value="{Binding CapDataModel.Data.Tracking.Head.Position.X, Mode=TwoWay}" Minimum="-0.5" Maximum="0.5"/>
-                        <local:LabelledValueSlider Text="Head.Position.Y" Value="{Binding CapDataModel.Data.Tracking.Head.Position.Y, Mode=TwoWay}" Minimum="-0.5" Maximum="0.5"/>
-                        <local:LabelledValueSlider Text="Head.Position.Z" Value="{Binding CapDataModel.Data.Tracking.Head.Position.Z, Mode=TwoWay}" Minimum="-0.5" Maximum="0.5"/>
-                        <local:LabelledValueSlider Text="LeftEye.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.X, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
-                        <local:LabelledValueSlider Text="LeftEye.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Y, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
-                        <local:LabelledValueSlider Text="LeftEye.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.LeftEye.Rotation.Z, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
-                        <local:LabelledValueSlider Text="RightEye.Rotation.X" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.X, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
-                        <local:LabelledValueSlider Text="RightEye.Rotation.Y" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Y, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
-                        <local:LabelledValueSlider Text="RightEye.Rotation.Z" Value="{Binding CapDataModel.Data.Tracking.RightEye.Rotation.Z, Mode=TwoWay}" Minimum="-60" Maximum="60"/>
-                    </StackPanel>
-                </Border>
-            </wraplayout:WrapPanel>
-
-        </ScrollViewer>
-
-        <Border Grid.Row="1" Width="300" Height="200" Opacity="{Binding BusyMessageOpacity}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderThickness="1" BorderBrush="{ThemeResource ApplicationPressedForegroundThemeBrush}" CornerRadius="8" IsHitTestVisible="False" Translation="0,0,128" RenderTransformOrigin="0.5,0.5">
-            <Border.RenderTransform>
-                <ScaleTransform ScaleX="{Binding BusyMessageScale}" ScaleY="{Binding BusyMessageScale}"/>
-            </Border.RenderTransform>
-            <Border.Shadow>
-                <local:ThemeShadow Receiver="{Binding ElementName=DataPanel}"/>
-            </Border.Shadow>
-            <StackPanel VerticalAlignment="Center" Spacing="24">
-                <ProgressRing IsIndeterminate="{Binding IsBusy}"/>
-                <TextBlock Text="{Binding BusyMessage}" HorizontalAlignment="Center" HorizontalTextAlignment="Center"/>
-            </StackPanel>
-        </Border>
+            </Grid>
+        </muxc:NavigationView>
     </Grid>
+
 </Page>

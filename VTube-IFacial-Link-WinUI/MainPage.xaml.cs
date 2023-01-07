@@ -5,14 +5,20 @@ using IFacial;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VTube;
 using VTube_IFacial_Link.DataModel;
+using VTube_IFacial_Link.Dialogs;
+using VTube_IFacial_Link.Pages;
+using VTube_IFacial_Link.Utils;
 using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -25,6 +31,63 @@ namespace VTube_IFacial_Link
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        #region Nav
+
+        private void ContentFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
+        {
+            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+        }
+
+        // List of ValueTuple holding the Navigation Tag and the relative Navigation Page
+        private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
+        {
+            ("home", typeof(HomePage)),
+            ("data", typeof(DataPage)),
+            ("globals", typeof(GlobalsPage)),
+            ("parameters", typeof(ParametersPage)),
+        };
+
+        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            if (args.IsSettingsSelected == true)
+            {
+                NavView_Navigate("settings", args.RecommendedNavigationTransitionInfo);
+            }
+            else if (args.SelectedItemContainer != null)
+            {
+                var navItemTag = args.SelectedItemContainer.Tag.ToString();
+                NavView_Navigate(navItemTag, args.RecommendedNavigationTransitionInfo);
+            }
+        }
+
+        private void NavView_Navigate(string navItemTag, NavigationTransitionInfo transitionInfo)
+        {
+            Type _page = null;
+            if (navItemTag == "settings")
+            {
+                throw new NotImplementedException("No Setting Page");
+                //_page = typeof(SettingsPage);
+            }
+            else
+            {
+                var item = _pages.FirstOrDefault(p => p.Tag.Equals(navItemTag));
+                _page = item.Page;
+            }
+            // Get the page type before navigation so you can prevent duplicate
+            // entries in the backstack.
+            var preNavPageType = ContentFrame.CurrentSourcePageType;
+
+            // Only navigate if the selected page isn't currently loaded.
+            if (!(_page is null) && !Type.Equals(preNavPageType, _page))
+            {
+                ContentFrame.Navigate(_page, null, transitionInfo);
+            }
+        }
+
+        #endregion
+
+        #region Commands
+
         public class StartCommandModel : ICommand
         {
             public event EventHandler CanExecuteChanged;
@@ -105,7 +168,183 @@ namespace VTube_IFacial_Link
         public StopCommandModel StopCommand { private set; get; }
         public BrowseAppDataCommandModel BrowseAppDataCommand { private set; get; }
 
+        public class AddScriptGlobalCommandModel : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+
+            public MainPage Parent { get; private set; }
+
+            public AddScriptGlobalCommandModel(MainPage parent)
+            {
+                Parent = parent;
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public async void Execute(object parameter)
+            {
+                CreateNameDialog createNameDialog = new()
+                {
+                    Title = "New Global Variable",
+                    XamlRoot = Parent.Content.XamlRoot,
+                    Value = "NEW_GLOBAL",
+                    DefaultButton = ContentDialogButton.Primary
+                };
+                ContentDialogResult contentDialogResult = await createNameDialog.ShowAsync();
+                if (contentDialogResult == ContentDialogResult.Primary) {
+                    string name = createNameDialog.Value;
+                    Parent.ScriptGlobals.Add(new ScriptGlobalModel() { Name = name, Value = 0 });
+                }
+            }
+        }
+
+        public class RemoveScriptGlobalCommandModel : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+
+            public MainPage Parent { get; private set; }
+
+            public RemoveScriptGlobalCommandModel(MainPage parent)
+            {
+                Parent = parent;
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public void Execute(object parameter)
+            {
+                ScriptGlobalModel scriptGlobalModel = (ScriptGlobalModel)parameter;
+                Parent.ScriptGlobals.Remove(scriptGlobalModel);
+            }
+        }
+
+        public class AddScriptParameterCommandModel : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+
+            public MainPage Parent { get; private set; }
+
+            public AddScriptParameterCommandModel(MainPage parent)
+            {
+                Parent = parent;
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public async void Execute(object parameter)
+            {
+                CreateNameDialog createNameDialog = new()
+                {
+                    Title = "New Parameter",
+                    XamlRoot = Parent.Content.XamlRoot,
+                    Value = "NewParameter",
+                    DefaultButton = ContentDialogButton.Primary
+                };
+                
+                while (true)
+                {
+                    ContentDialogResult contentDialogResult = await createNameDialog.ShowAsync();
+                    if (contentDialogResult == ContentDialogResult.Primary)
+                    {
+                        string name = createNameDialog.Value;
+                        ScriptParameterModel newParameter = new ScriptParameterModel() { Name = name, Script = string.Empty };
+                        string errorMessage = null;
+                        lock (Parent.ScriptParameters)
+                        {
+                            try
+                            {
+                                Parent.ScriptParameters.Add(newParameter);
+                                break;
+                            }
+                            catch (Exception ex)
+                            {
+                                errorMessage = ex.Message;
+                                try
+                                {
+                                    Parent.ScriptParameters.Remove(newParameter);
+                                }
+                                catch (Exception)
+                                {
+                                    // Note: Error will triggered again
+                                }
+                            }
+                        }
+                        if (errorMessage != null)
+                        {
+                            await new ContentDialog
+                            {
+                                Title = "Failed to Add Parameter",
+                                Content = $"{errorMessage}",
+                                CloseButtonText = "Ok",
+                                XamlRoot = Parent.Content.XamlRoot
+                            }.ShowAsync();
+                        }
+                    }
+                    else
+                    {
+                        Parent.IsBusy = false;
+                        break;
+                    }
+                
+                }
+            }
+        }
+
+        public class RemoveScriptParameterCommandModel : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+
+            public MainPage Parent { get; private set; }
+
+            public RemoveScriptParameterCommandModel(MainPage parent)
+            {
+                Parent = parent;
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public void Execute(object parameter)
+            {
+                ScriptParameterModel scriptGlobalModel = (ScriptParameterModel)parameter;
+                lock (Parent.ScriptParameters)
+                {
+                    Parent.ScriptParameters.Remove(scriptGlobalModel);
+                }
+            }
+        }
+
+        public AddScriptGlobalCommandModel AddScriptGlobalCommand { private set; get; }
+        public RemoveScriptGlobalCommandModel RemoveScriptGlobalCommand { private set; get; }
+        public AddScriptParameterCommandModel AddScriptParameterCommand { private set; get; }
+        public RemoveScriptParameterCommandModel RemoveScriptParameterCommand { private set; get; }
+
+        #endregion
+
+        #region Config
+
+        private JsonSerializerOptions configSerializeOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true,
+            AllowTrailingCommas = true,
+            PropertyNameCaseInsensitive = false,
+            ReadCommentHandling = JsonCommentHandling.Skip,
+        };
+
         readonly string configPath;
+        readonly string scriptsPath;
 
         public class ConfigStore
         {
@@ -114,39 +353,12 @@ namespace VTube_IFacial_Link
             public bool StartOnLaunch { get; set; }
         }
 
-        public MainPage()
+        public class ScriptStore
         {
-            StartCommand = new StartCommandModel(this);
-            StopCommand = new StopCommandModel(this);
-            BrowseAppDataCommand = new BrowseAppDataCommandModel(this);
-
-            configPath = Path.Combine(PathUtils.ConfigPath, "config-ui.json");
-            this.Loaded += MainPage_Loaded;
-            InitializeComponent();
-
-            Directory.CreateDirectory(PathUtils.ConfigPath);
-            LoadConfig();
+            public ScriptParameterCollection<ScriptParameterModel> Parameters { get; set; }
+            public ScriptGlobalCollection<ScriptGlobalModel> Globals { get; set; }
         }
 
-        private void BrowseAppData()
-        {
-            Launcher.LaunchFolderPathAsync(PathUtils.ConfigPath).AsTask().Wait();
-        }
-
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            ((App)App.Current).MainWindow.Closed += MainWindow_Closed;
-
-            if (StartOnLaunch)
-            {
-                Start();
-            }
-        }
-
-        private void MainWindow_Closed(object sender, WindowEventArgs args)
-        {
-            Stop();
-        }
 
         private bool LoadConfig()
         {
@@ -158,20 +370,21 @@ namespace VTube_IFacial_Link
                     return false;
                 }
 
-                ConfigStore config;
+                ConfigStore store;
                 using (FileStream configStream = File.OpenRead(configPath))
                 {
-                    config = JsonSerializer.Deserialize<ConfigStore>(configStream);
+                    store = JsonSerializer.Deserialize<ConfigStore>(configStream, configSerializeOptions);
                 }
 
-                if (config == null)
+                if (store == null)
                 {
                     return false;
                 }
 
-                IFacialAddress = config.IFacialAddress;
-                VTubeAddress = config.VTubeAddress;
-                StartOnLaunch = config.StartOnLaunch;
+                IFacialAddress = store.IFacialAddress;
+                VTubeAddress = store.VTubeAddress;
+                StartOnLaunch = store.StartOnLaunch;
+
                 return true;
 
             }
@@ -187,7 +400,7 @@ namespace VTube_IFacial_Link
 
         private void SaveConfig()
         {
-            ConfigStore config = new()
+            ConfigStore store = new()
             {
                 IFacialAddress = IFacialAddress,
                 VTubeAddress = VTubeAddress,
@@ -199,11 +412,142 @@ namespace VTube_IFacial_Link
             }
             using (FileStream configStream = File.OpenWrite(configPath))
             {
-                JsonSerializer.Serialize<ConfigStore>(configStream, config);
+                JsonSerializer.Serialize<ConfigStore>(configStream, store, configSerializeOptions);
             }
             System.Diagnostics.Debug.WriteLine($"Config saved. ({configPath})");
         }
 
+        private bool LoadScripts()
+        {
+            System.Diagnostics.Debug.WriteLine($"Loading scripts... ({scriptsPath})");
+            try
+            {
+                if (File.Exists(scriptsPath))
+                {
+                    ScriptStore store;
+                    using (FileStream configStream = File.OpenRead(scriptsPath))
+                    {
+                        store = JsonSerializer.Deserialize<ScriptStore>(configStream, configSerializeOptions);
+                    }
+
+                    ScriptParameters = store.Parameters;
+                    ScriptGlobals = store.Globals;
+
+                    return true;
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"Scripts not found ({scriptsPath})");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+                System.Diagnostics.Debug.WriteLine($"Failed to load scripts. ({scriptsPath})");
+            }
+
+            // Load default
+            {
+                System.Diagnostics.Debug.WriteLine($"Loading default scripts... ({scriptsPath})");
+                ScriptStore store;
+                using (FileStream configStream = File.OpenRead("default-scripts.json"))
+                {
+                    store = JsonSerializer.Deserialize<ScriptStore>(configStream, configSerializeOptions);
+                }
+
+                if (store != null)
+                {
+                    ScriptParameters = store.Parameters;
+                    ScriptGlobals = store.Globals;
+                }
+            }
+
+            return false;
+        }
+
+        private void SaveScripts()
+        {
+            ScriptStore store = new()
+            {
+                Parameters = ScriptParameters,
+                Globals = ScriptGlobals,
+            };
+            if (File.Exists(scriptsPath))
+            {
+                File.Delete(scriptsPath);
+            }
+            using (FileStream configStream = File.OpenWrite(scriptsPath))
+            {
+                JsonSerializer.Serialize<ScriptStore>(configStream, store, configSerializeOptions);
+            }
+            System.Diagnostics.Debug.WriteLine($"Scripts saved. ({scriptsPath})");
+        }
+
+        #endregion
+
+        #region Common
+
+        public MainPage()
+        {
+            StartCommand = new StartCommandModel(this);
+            StopCommand = new StopCommandModel(this);
+            BrowseAppDataCommand = new BrowseAppDataCommandModel(this);
+            AddScriptGlobalCommand = new AddScriptGlobalCommandModel(this);
+            RemoveScriptGlobalCommand = new RemoveScriptGlobalCommandModel(this);
+            AddScriptParameterCommand = new AddScriptParameterCommandModel(this);
+            RemoveScriptParameterCommand = new RemoveScriptParameterCommandModel(this);
+
+            configPath = Path.Combine(PathUtils.ConfigPath, "config-ui.json");
+            scriptsPath = Path.Combine(PathUtils.ConfigPath, "scripts.json");
+
+            this.Loaded += MainPage_Loaded;
+            InitializeComponent();
+
+            Directory.CreateDirectory(PathUtils.ConfigPath);
+
+            LoadConfig();
+            LoadScripts();
+        }
+
+        private async void BrowseAppData()
+        {
+            await Launcher.LaunchFolderPathAsync(PathUtils.ConfigPath);
+        }
+
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ((App)App.Current).MainWindow.Closed += MainWindow_Closed;
+
+            if (StartOnLaunch)
+            {
+                Start();
+            }
+        }
+
+        private void MainWindow_Closed(object sender, WindowEventArgs args)
+        {
+            Stop();
+            SaveScripts();
+        }
+
+        #endregion
+
+        #region DependencyProperty
+
+        public static readonly DependencyProperty ScriptParametersProperty = DependencyProperty.Register(nameof(ScriptParameters), typeof(ScriptParameterCollection<ScriptParameterModel>), typeof(MainPage), new PropertyMetadata(null));
+        public ScriptParameterCollection<ScriptParameterModel> ScriptParameters
+        {
+            get => (ScriptParameterCollection<ScriptParameterModel>)GetValue(ScriptParametersProperty);
+            set => SetValue(ScriptParametersProperty, value);
+        }
+
+        public static readonly DependencyProperty ScriptGlobalsProperty = DependencyProperty.Register(nameof(ScriptGlobals), typeof(ScriptGlobalCollection<ScriptGlobalModel>), typeof(MainPage), new PropertyMetadata(null));
+        public ScriptGlobalCollection<ScriptGlobalModel> ScriptGlobals
+        {
+            get => (ScriptGlobalCollection<ScriptGlobalModel>)GetValue(ScriptGlobalsProperty);
+            set => SetValue(ScriptGlobalsProperty, value);
+        }
 
 
         public static readonly DependencyProperty CapDataModelProperty = DependencyProperty.Register(nameof(CapDataModel), typeof(CapturedDataModel), typeof(MainPage), new PropertyMetadata(null));
@@ -362,10 +706,14 @@ namespace VTube_IFacial_Link
             set => SetValue(BusyMessageProperty, value);
         }
 
+        #endregion
+
+        #region Client
+
         IFacialClient facialClient;
         VTubeClient vtubeClient;
 
-        private void Start()
+        private async void Start()
         {
             BusyMessage = "Starting...";
             IsBusy = true;
@@ -381,28 +729,25 @@ namespace VTube_IFacial_Link
                 facialClient.DataUpdated += FacialClient_DataUpdated;
                 facialClient.ExceptionOccurred += FacialClient_ExceptionOccurred;
 
-                vtubeClient = new VTubeClient(new Uri(VTubeAddress), facialClient.Data, Path.Combine(PathUtils.ConfigPath, "config-vtube.json"));
+                ScriptParameterConverter parameterConverter = new ScriptParameterConverter(ScriptParameters, ScriptGlobals);
+                vtubeClient = new VTubeClient(new Uri(VTubeAddress), facialClient.Data, Path.Combine(PathUtils.ConfigPath, "config-vtube.json"), parameterConverter);
                 vtubeClient.ExceptionOccurred += VtubeClient_ExceptionOccurred;
 
             }
             catch (System.Exception ex)
             {
-                BusyMessage = string.Empty;
-                new ContentDialog
+                await new ContentDialog
                 {
                     Title = "Failed to Initialize",
                     Content = $"{ex.Message}",
                     CloseButtonText = "Ok",
                     XamlRoot = this.Content.XamlRoot
-                }.ShowAsync().GetResults();
+                }.ShowAsync();
                 Stop();
-                CanStart = true;
-                IsBusy = false;
-
                 return;
             }
 
-            Task.Factory.StartNew(() =>
+            await Task.Factory.StartNew(() =>
             {
                 try
                 {
@@ -420,19 +765,16 @@ namespace VTube_IFacial_Link
                 catch (System.Exception ex)
                 {
 
-                    DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+                    DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
                     {
-                        BusyMessage = string.Empty;
-                        new ContentDialog
+                        await new ContentDialog
                         {
                             Title = "Failed to Connect Capturing Device",
                             Content = $"{ex.Message}",
                             CloseButtonText = "Ok",
                             XamlRoot = this.Content.XamlRoot
-                        }.ShowAsync().GetResults();
+                        }.ShowAsync();
                         Stop();
-                        CanStart = true;
-                        IsBusy = false;
                     });
                     return;
                 }
@@ -463,26 +805,22 @@ namespace VTube_IFacial_Link
                 }
                 catch (System.Exception ex)
                 {
-                    DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+                    DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
                     {
-                        BusyMessage = string.Empty;
-                        new ContentDialog
+                        await new ContentDialog
                         {
                             Title = "Failed to Connect VTube Studio",
                             Content = $"{ex.Message}",
                             CloseButtonText = "Ok",
                             XamlRoot = this.Content.XamlRoot
-                        }.ShowAsync().GetResults();
+                        }.ShowAsync();
                         Stop();
-                        CanStart = true;
-                        IsBusy = false;
                     });
                     return;
                 }
 
                 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
                 {
-                    BusyMessage = string.Empty;
                     CanStop = true;
                     IsBusy = false;
                 });
@@ -493,16 +831,16 @@ namespace VTube_IFacial_Link
         {
             Task.Factory.StartNew(() =>
             {
-                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
                 {
                     Stop();
-                    new ContentDialog
+                    await new ContentDialog
                     {
                         Title = "Error Occurred with VTube Studio",
                         Content = $"{exception.Message}",
                         CloseButtonText = "Ok",
                         XamlRoot = this.Content.XamlRoot
-                    }.ShowAsync().GetResults();
+                    }.ShowAsync();
                 });
             });
 
@@ -512,22 +850,22 @@ namespace VTube_IFacial_Link
         {
             Task.Factory.StartNew(() =>
             {
-                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
                 {
                     Stop();
-                    new ContentDialog
+                    await new ContentDialog
                     {
                         Title = "Error Occurred with Capturing Device",
                         Content = $"{exception.Message}",
                         CloseButtonText = "Ok",
                         XamlRoot = this.Content.XamlRoot
-                    }.ShowAsync().GetResults();
+                    }.ShowAsync();
                 });
             });
 
         }
 
-        private void Stop()
+        private async void Stop()
         {
             IsBusy = true;
             CanStop = false;
@@ -542,6 +880,7 @@ namespace VTube_IFacial_Link
                 if (vtubeClient != null)
                 {
                     vtubeClient.Stop();
+                    vtubeClient.ParamConverter.Dispose();
                     vtubeClient.Dispose();
                     vtubeClient = null;
                 }
@@ -550,13 +889,13 @@ namespace VTube_IFacial_Link
             }
             catch (System.Exception ex)
             {
-                new ContentDialog
+                await new ContentDialog
                 {
                     Title = "Failed to Stop",
                     Content = $"{ex.Message}",
                     CloseButtonText = "Ok",
                     XamlRoot = this.Content.XamlRoot
-                }.ShowAsync().GetResults();
+                }.ShowAsync();
                 CanStop = true;
                 IsBusy = false;
             }
@@ -570,5 +909,8 @@ namespace VTube_IFacial_Link
                 CapDataModel.NotifyDataChanged();
             });
         }
+
+        #endregion
+
     }
 }

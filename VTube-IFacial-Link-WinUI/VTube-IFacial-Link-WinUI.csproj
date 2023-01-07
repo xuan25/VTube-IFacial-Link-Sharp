@@ -27,8 +27,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="CreateNameDialog.xaml" />
     <None Remove="LabelledValueSlider.xaml" />
     <None Remove="MainPage.xaml" />
+    <None Remove="Pages\DataPage.xaml" />
+    <None Remove="Pages\GlobalsPage.xaml" />
+    <None Remove="Pages\HomePage.xaml" />
+    <None Remove="Pages\ParametersPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +54,29 @@
     <ProjectReference Include="..\Lib-VTube-IFacial-Link\Lib-VTube-IFacial-Link.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="default-scripts.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="default-globals.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Page Update="Pages\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\DataPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\ParametersPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\GlobalsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="CreateNameDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -57,6 +85,9 @@
     <Page Update="LabelledValueSlider.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dialogs\" />
   </ItemGroup>
 
   <!-- 

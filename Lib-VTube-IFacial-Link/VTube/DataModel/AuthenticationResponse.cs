@@ -1,6 +1,6 @@
 ﻿namespace VTube.DataModel
 {
-    class AuthenticationResponse : ResponseBase
+    public class AuthenticationResponse : ResponseBase
     {
         public class DataSection : ErrorInfoBase
         {

@@ -1,6 +1,6 @@
 ﻿namespace VTube.DataModel
 {
-    class ParameterCreationRequest : RequestBase
+    public class ParameterCreationRequest : RequestBase
     {
         public class DataSection
         {

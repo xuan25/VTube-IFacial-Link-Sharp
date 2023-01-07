@@ -1,6 +1,6 @@
 ﻿namespace VTube.DataModel
 {
-    class RequestBase
+    public class RequestBase
     {
         public string ApiName { get; set; } = "VTubeStudioPublicAPI";
         public string ApiVersion { get; set; } = "1.0";

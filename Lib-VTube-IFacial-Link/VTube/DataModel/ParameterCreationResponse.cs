@@ -1,6 +1,6 @@
 ﻿namespace VTube.DataModel
 {
-    class ParameterCreationResponse : ResponseBase
+    public class ParameterCreationResponse : ResponseBase
     {
         public class DataSection : ErrorInfoBase
         {

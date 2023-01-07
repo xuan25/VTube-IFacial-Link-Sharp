@@ -2,7 +2,7 @@
 
 namespace VTube.DataModel
 {
-    class InputParameterListResponse : ResponseBase
+    public class InputParameterListResponse : ResponseBase
     {
         public class DataSection : ErrorInfoBase
         {

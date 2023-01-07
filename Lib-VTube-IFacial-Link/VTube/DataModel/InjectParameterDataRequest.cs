@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using static VTube.DataModel.InjectParameterDataRequest.DataSection;
-
-namespace VTube.DataModel
+﻿namespace VTube.DataModel
 {
-    class InjectParameterDataRequest : RequestBase
+    public class InjectParameterDataRequest : RequestBase
     {
         public class DataSection
         {
@@ -17,13 +13,6 @@ namespace VTube.DataModel
                 public ParameterValue(string id, double weight, double value)
                 {
                     Id = id;
-                    Weight = weight;
-                    Value = value;
-                }
-
-                public ParameterValue(Params id, double weight, double value)
-                {
-                    Id = Enum.GetName(typeof(Params), id);
                     Weight = weight;
                     Value = value;
                 }
@@ -43,7 +32,7 @@ namespace VTube.DataModel
 
         public DataSection Data { get; set; }
 
-        public InjectParameterDataRequest(bool faceFound, string mode, List<ParameterValue> parameterValues) : base("InjectParameterDataRequest")
+        public InjectParameterDataRequest(bool faceFound, string mode, List<DataSection.ParameterValue> parameterValues) : base("InjectParameterDataRequest")
         {
             Data = new DataSection(faceFound, mode, parameterValues);
         }
