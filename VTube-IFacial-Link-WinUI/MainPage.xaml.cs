@@ -472,9 +472,9 @@ namespace VTube_IFacial_Link
             LoadScripts();
         }
 
-        private void BrowseAppData()
+        private async void BrowseAppData()
         {
-            Launcher.LaunchFolderPathAsync(PathUtils.ConfigPath).AsTask().Wait();
+            await Launcher.LaunchFolderPathAsync(PathUtils.ConfigPath);
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -675,7 +675,7 @@ namespace VTube_IFacial_Link
         IFacialClient facialClient;
         VTubeClient vtubeClient;
 
-        private void Start()
+        private async void Start()
         {
             BusyMessage = "Starting...";
             IsBusy = true;
@@ -698,22 +698,18 @@ namespace VTube_IFacial_Link
             }
             catch (System.Exception ex)
             {
-                BusyMessage = string.Empty;
-                new ContentDialog
+                await new ContentDialog
                 {
                     Title = "Failed to Initialize",
                     Content = $"{ex.Message}",
                     CloseButtonText = "Ok",
                     XamlRoot = this.Content.XamlRoot
-                }.ShowAsync().GetResults();
+                }.ShowAsync();
                 Stop();
-                CanStart = true;
-                IsBusy = false;
-
                 return;
             }
 
-            Task.Factory.StartNew(() =>
+            await Task.Factory.StartNew(() =>
             {
                 try
                 {
@@ -731,19 +727,16 @@ namespace VTube_IFacial_Link
                 catch (System.Exception ex)
                 {
 
-                    DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+                    DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
                     {
-                        BusyMessage = string.Empty;
-                        new ContentDialog
+                        await new ContentDialog
                         {
                             Title = "Failed to Connect Capturing Device",
                             Content = $"{ex.Message}",
                             CloseButtonText = "Ok",
                             XamlRoot = this.Content.XamlRoot
-                        }.ShowAsync().GetResults();
+                        }.ShowAsync();
                         Stop();
-                        CanStart = true;
-                        IsBusy = false;
                     });
                     return;
                 }
@@ -774,26 +767,22 @@ namespace VTube_IFacial_Link
                 }
                 catch (System.Exception ex)
                 {
-                    DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+                    DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
                     {
-                        BusyMessage = string.Empty;
-                        new ContentDialog
+                        await new ContentDialog
                         {
                             Title = "Failed to Connect VTube Studio",
                             Content = $"{ex.Message}",
                             CloseButtonText = "Ok",
                             XamlRoot = this.Content.XamlRoot
-                        }.ShowAsync().GetResults();
+                        }.ShowAsync();
                         Stop();
-                        CanStart = true;
-                        IsBusy = false;
                     });
                     return;
                 }
 
                 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
                 {
-                    BusyMessage = string.Empty;
                     CanStop = true;
                     IsBusy = false;
                 });
@@ -804,16 +793,16 @@ namespace VTube_IFacial_Link
         {
             Task.Factory.StartNew(() =>
             {
-                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
                 {
                     Stop();
-                    new ContentDialog
+                    await new ContentDialog
                     {
                         Title = "Error Occurred with VTube Studio",
                         Content = $"{exception.Message}",
                         CloseButtonText = "Ok",
                         XamlRoot = this.Content.XamlRoot
-                    }.ShowAsync().GetResults();
+                    }.ShowAsync();
                 });
             });
 
@@ -823,22 +812,22 @@ namespace VTube_IFacial_Link
         {
             Task.Factory.StartNew(() =>
             {
-                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
                 {
                     Stop();
-                    new ContentDialog
+                    await new ContentDialog
                     {
                         Title = "Error Occurred with Capturing Device",
                         Content = $"{exception.Message}",
                         CloseButtonText = "Ok",
                         XamlRoot = this.Content.XamlRoot
-                    }.ShowAsync().GetResults();
+                    }.ShowAsync();
                 });
             });
 
         }
 
-        private void Stop()
+        private async void Stop()
         {
             IsBusy = true;
             CanStop = false;
@@ -862,13 +851,13 @@ namespace VTube_IFacial_Link
             }
             catch (System.Exception ex)
             {
-                new ContentDialog
+                await new ContentDialog
                 {
                     Title = "Failed to Stop",
                     Content = $"{ex.Message}",
                     CloseButtonText = "Ok",
                     XamlRoot = this.Content.XamlRoot
-                }.ShowAsync().GetResults();
+                }.ShowAsync();
                 CanStop = true;
                 IsBusy = false;
             }
