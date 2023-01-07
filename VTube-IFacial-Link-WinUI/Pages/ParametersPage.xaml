@@ -12,7 +12,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" NavigationCacheMode="Required">
 
     <ScrollViewer>
-        <StackPanel Margin="16,0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+        <StackPanel Margin="16,8" VerticalAlignment="Center" HorizontalAlignment="Stretch">
             <controls:RemovableItemsControl x:Name="ParameterItemsControl" ItemsSource="{Binding ScriptParameters}" RemoveCommand="{Binding RemoveScriptParameterCommand}">
                 <controls:RemovableItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -27,14 +27,14 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
-                                    <Grid>
+                                <StackPanel Grid.Column="0" Margin="4,0">
+                                    <Grid Margin="8,0">
                                         <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Left" />
                                         <TextBlock Text="{Binding Path=RecentValue}" HorizontalAlignment="Right"/>
                                     </Grid>
-                                    <TextBox Text="{Binding Path=Script, Mode=TwoWay}" AcceptsReturn="True" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                                    <TextBox Text="{Binding Path=Script, Mode=TwoWay}" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                                 </StackPanel>
-                                <Button Grid.Column="1" VerticalAlignment="Bottom" Command="{Binding RemoveCommand, ElementName=ParameterItemsControl}" CommandParameter="{Binding}">
+                                <Button Grid.Column="1" Margin="4,0" VerticalAlignment="Bottom" Command="{Binding RemoveCommand, ElementName=ParameterItemsControl}" CommandParameter="{Binding}">
                                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE74D;"/>
                                 </Button>
                             </Grid>

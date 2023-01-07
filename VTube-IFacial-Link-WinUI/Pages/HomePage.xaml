@@ -11,28 +11,28 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" NavigationCacheMode="Required">
 
-    <StackPanel Grid.Row="0" Margin="16,8" VerticalAlignment="Center" HorizontalAlignment="Center">
+    <StackPanel Margin="16,8" VerticalAlignment="Center" HorizontalAlignment="Center">
         <wraplayout:WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Border>
-                <TextBox PlaceholderText="Capturing device IP address" Width="200" Margin="4,2" IsEnabled="{Binding CanStart}" Text="{Binding IFacialAddress, Mode=TwoWay}"/>
+                <TextBox PlaceholderText="Capturing device IP address" Width="200" Margin="8,4" IsEnabled="{Binding CanStart}" Text="{Binding IFacialAddress, Mode=TwoWay}"/>
             </Border>
             <Border>
-                <TextBox PlaceholderText="VTube Studio API address" Width="200" Margin="4,2" IsEnabled="{Binding CanStart}" Text="{Binding VTubeAddress, Mode=TwoWay}"/>
+                <TextBox PlaceholderText="VTube Studio API address" Width="200" Margin="8,4" IsEnabled="{Binding CanStart}" Text="{Binding VTubeAddress, Mode=TwoWay}"/>
             </Border>
         </wraplayout:WrapPanel>
         <wraplayout:WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Border>
-                <Button Margin="4,2" Width="80" Content="Start" VerticalAlignment="Center" Command="{Binding StartCommand}"/>
+                <Button Margin="8,4" Width="80" Content="Start" VerticalAlignment="Center" Command="{Binding StartCommand}"/>
             </Border>
             <Border>
-                <Button Margin="4,2" Width="80" Content="Stop" VerticalAlignment="Center" Command="{Binding StopCommand}"/>
+                <Button Margin="8,4" Width="80" Content="Stop" VerticalAlignment="Center" Command="{Binding StopCommand}"/>
             </Border>
             <Border>
-                <ToggleSwitch Margin="4,2" IsOn="{Binding StartOnLaunch, Mode=TwoWay}" VerticalAlignment="Center" OnContent="Start on Launch" OffContent="Start on Launch"/>
+                <ToggleSwitch Margin="8,4" IsOn="{Binding StartOnLaunch, Mode=TwoWay}" VerticalAlignment="Center" OnContent="Start on Launch" OffContent="Start on Launch"/>
             </Border>
         </wraplayout:WrapPanel>
         <Border HorizontalAlignment="Center">
-            <Button Width="160" Margin="4,2" Content="Browse App Data" Command="{Binding BrowseAppDataCommand}"/>
+            <Button Width="160" Margin="8,4" Content="Browse App Data" Command="{Binding BrowseAppDataCommand}"/>
         </Border>
     </StackPanel>
 </Page>

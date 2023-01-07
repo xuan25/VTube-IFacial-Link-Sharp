@@ -12,7 +12,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" NavigationCacheMode="Required">
 
     <ScrollViewer>
-        <wraplayout:WrapPanel Orientation="Horizontal" Margin="16,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <wraplayout:WrapPanel Orientation="Horizontal" Margin="16,8" VerticalAlignment="Center" HorizontalAlignment="Center">
 
             <Border>
                 <StackPanel Margin="12" Width="200">
