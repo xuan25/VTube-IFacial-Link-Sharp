@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lib-VTube-IFacial-Link", "Lib-VTube-IFacial-Link\Lib-VTube-IFacial-Link.csproj", "{98A21671-64E4-45B7-8E4C-D59877D35549}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VTube-IFacial-Link-WinUI", "VTube-IFacial-Link-WinUI\VTube-IFacial-Link-WinUI.csproj", "{AB07BC61-AB28-4096-B5B6-91E3B5A4DA8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VTube-IFacial-Link", "VTube-IFacial-Link\VTube-IFacial-Link.csproj", "{AB07BC61-AB28-4096-B5B6-91E3B5A4DA8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -19,7 +19,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-	<AssemblyName>VTube-IFacial-Link</AssemblyName>
   	<Authors>Xuan25</Authors>
   	<Copyright>Copyright © 2023 Xuan25</Copyright>
   	<Description>A VTube Studio plugin that bridging facial tracking from iFacialMocap (IOS), enabling full Apple ARKit facial tracking features.</Description>
