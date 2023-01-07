@@ -188,7 +188,7 @@ namespace VTube_IFacial_Link
             {
                 CreateNameDialog createNameDialog = new()
                 {
-                    Title = "Create New Global Variable",
+                    Title = "New Global Variable",
                     XamlRoot = Parent.Content.XamlRoot,
                     Value = "NEW_GLOBAL",
                     DefaultButton = ContentDialogButton.Primary
@@ -242,12 +242,9 @@ namespace VTube_IFacial_Link
 
             public async void Execute(object parameter)
             {
-                Parent.BusyMessage = "Creating New Parameter";
-                Parent.IsBusy = true;
-
                 CreateNameDialog createNameDialog = new()
                 {
-                    Title = "Create New Parameter",
+                    Title = "New Parameter",
                     XamlRoot = Parent.Content.XamlRoot,
                     Value = "NewParameter",
                     DefaultButton = ContentDialogButton.Primary
@@ -266,8 +263,6 @@ namespace VTube_IFacial_Link
                             try
                             {
                                 Parent.ScriptParameters.Add(newParameter);
-
-                                Parent.IsBusy = false;
                                 break;
                             }
                             catch (Exception ex)

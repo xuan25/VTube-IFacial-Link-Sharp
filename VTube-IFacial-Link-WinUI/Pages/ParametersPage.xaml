@@ -34,14 +34,18 @@
                                     </Grid>
                                     <TextBox Text="{Binding Path=Script, Mode=TwoWay}" AcceptsReturn="True" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                                 </StackPanel>
-                                <Button Grid.Column="1" VerticalAlignment="Bottom" Content="Remove" Command="{Binding RemoveCommand, ElementName=ParameterItemsControl}" CommandParameter="{Binding}"/>
+                                <Button Grid.Column="1" VerticalAlignment="Bottom" Command="{Binding RemoveCommand, ElementName=ParameterItemsControl}" CommandParameter="{Binding}">
+                                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE74D;"/>
+                                </Button>
                             </Grid>
                             <TextBlock Text="{Binding Path=RecentError}" Foreground="{ThemeResource SystemErrorTextColor}"/>
                         </StackPanel>
                     </DataTemplate>
                 </controls:RemovableItemsControl.ItemTemplate>
             </controls:RemovableItemsControl>
-            <Button Margin="8" Content="Add" HorizontalAlignment="Stretch" Command="{Binding AddScriptParameterCommand}"/>
+            <Button Margin="8" HorizontalAlignment="Stretch" Command="{Binding AddScriptParameterCommand}">
+                <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE710;"/>
+            </Button>
         </StackPanel>
     </ScrollViewer>
 </Page>

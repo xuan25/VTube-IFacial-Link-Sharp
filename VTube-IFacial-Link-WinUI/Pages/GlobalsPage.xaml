@@ -35,14 +35,18 @@
                                     <NumberBox Value="{Binding Path=Value, Mode=TwoWay}" AcceptsExpression="True"/>
                                     
                                 </StackPanel>
-                                <Button Grid.Column="1" VerticalAlignment="Bottom" Content="Remove" Command="{Binding RemoveCommand, ElementName=GlobalItemsControl}" CommandParameter="{Binding}"/>
+                                <Button Grid.Column="1" VerticalAlignment="Bottom" Command="{Binding RemoveCommand, ElementName=GlobalItemsControl}" CommandParameter="{Binding}">
+                                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE74D;"/>
+                                </Button>
                             </Grid>
                             <TextBlock Text="{x:Null}" Foreground="{ThemeResource SystemErrorTextColor}"/>
                         </StackPanel>
                     </DataTemplate>
                 </controls:RemovableItemsControl.ItemTemplate>
             </controls:RemovableItemsControl>
-            <Button Margin="8" Content="Add" HorizontalAlignment="Stretch" Command="{Binding AddScriptGlobalCommand}"/>
+            <Button Margin="8" HorizontalAlignment="Stretch" Command="{Binding AddScriptGlobalCommand}">
+                <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE710;"/>
+            </Button>
         </StackPanel>
     </ScrollViewer>
 </Page>
