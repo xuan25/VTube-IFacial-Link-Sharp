@@ -19,6 +19,6 @@
     </ContentDialog.Shadow>
 
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" DataContext="{Binding ElementName=Root}">
-        <TextBox Text="{Binding Value}"/>
+        <TextBox Text="{Binding Value, Mode=TwoWay}"/>
     </StackPanel>
 </ContentDialog>
