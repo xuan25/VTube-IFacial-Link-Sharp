@@ -4,7 +4,7 @@ using System.ComponentModel;
 using VTube;
 using VTube.Interfaces;
 
-namespace VTube_IFacial_Link.DataModel
+namespace VTube_IFacial_Link.DataModels
 {
     public class ScriptParameterModel : DependencyObject, IScriptParameter, INotifyPropertyChanged
     {

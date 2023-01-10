@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using VTube_IFacial_Link.Pages;
+using VTube_IFacial_Link.Views;
 
 namespace VTube_IFacial_Link.Controls
 {

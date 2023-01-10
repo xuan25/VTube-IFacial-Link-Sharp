@@ -2,10 +2,10 @@
 <!-- Licensed under the MIT License. -->
 
 <Page
-    x:Class="VTube_IFacial_Link.Pages.ParametersPage"
+    x:Class="VTube_IFacial_Link.Views.ParametersPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:VTube_IFacial_Link.Pages"
+    xmlns:local="using:VTube_IFacial_Link.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:VTube_IFacial_Link.Controls"
     mc:Ignorable="d"

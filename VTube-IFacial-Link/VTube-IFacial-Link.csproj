@@ -29,10 +29,10 @@
     <None Remove="CreateNameDialog.xaml" />
     <None Remove="LabelledValueSlider.xaml" />
     <None Remove="MainPage.xaml" />
-    <None Remove="Pages\DataPage.xaml" />
-    <None Remove="Pages\GlobalsPage.xaml" />
-    <None Remove="Pages\HomePage.xaml" />
-    <None Remove="Pages\ParametersPage.xaml" />
+    <None Remove="Views\DataPage.xaml" />
+    <None Remove="Views\GlobalsPage.xaml" />
+    <None Remove="Views\HomePage.xaml" />
+    <None Remove="Views\ParametersPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
