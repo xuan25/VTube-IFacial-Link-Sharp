@@ -149,8 +149,8 @@ namespace WrapLayout
             }
 
             // Validate the Orientation
-            if ((value != Orientation.Horizontal) &&
-                (value != Orientation.Vertical))
+            if (value != Orientation.Horizontal &&
+                value != Orientation.Vertical)
             {
                 // Reset the property to its original state before throwing
                 source._ignorePropertyChange = true;
@@ -198,7 +198,7 @@ namespace WrapLayout
 
             // Validate the length (which must either be NaN or a positive,
             // finite number)
-            if (!double.IsNaN(value) && ((value <= 0.0) || double.IsPositiveInfinity(value)))
+            if (!double.IsNaN(value) && (value <= 0.0 || double.IsPositiveInfinity(value)))
             {
                 // Reset the property to its original state before throwing
                 source._ignorePropertyChange = true;
@@ -219,7 +219,7 @@ namespace WrapLayout
         /// Measures the child elements of a
         /// <see cref="T:WinRTXamlToolkit.Controls.WrapPanel" /> in anticipation
         /// of arranging them during the
-        /// <see cref="Microsoft.UI.Xaml.FrameworkElement.ArrangeOverride(Windows.Foundation.Size)" />
+        /// <see cref="FrameworkElement.ArrangeOverride(Size)" />
         /// pass.
         /// </summary>
         /// <param name="constraint">
@@ -330,9 +330,9 @@ namespace WrapLayout
             bool hasFixedWidth = !double.IsNaN(itemWidth);
             bool hasFixedHeight = !double.IsNaN(itemHeight);
             double indirectOffset = 0;
-            double? directDelta = (o == Orientation.Horizontal) ?
-                (hasFixedWidth ? (double?)itemWidth : null) :
-                (hasFixedHeight ? (double?)itemHeight : null);
+            double? directDelta = o == Orientation.Horizontal ?
+                hasFixedWidth ? itemWidth : null :
+                hasFixedHeight ? itemHeight : null;
 
             // Measure each of the Children.  We will process the elements one
             // line at a time, just like during measure, but we will wait until
@@ -499,7 +499,7 @@ namespace WrapLayout
             // An IEEE 754 double precision floating point number is NaN if its
             // exponent equals 2047 and it has a non-zero mantissa.
             ulong exponent = union.IntegerValue & 0xfff0000000000000L;
-            if ((exponent != 0x7ff0000000000000L) && (exponent != 0xfff0000000000000L))
+            if (exponent != 0x7ff0000000000000L && exponent != 0xfff0000000000000L)
             {
                 return false;
             }
@@ -518,7 +518,7 @@ namespace WrapLayout
         /// </returns>
         public static bool IsGreaterThan(double left, double right)
         {
-            return (left > right) && !AreClose(left, right);
+            return left > right && !AreClose(left, right);
         }
 
         /// <summary>
@@ -541,7 +541,7 @@ namespace WrapLayout
 
             double a = (Math.Abs(left) + Math.Abs(right) + 10.0) * 2.2204460492503131E-16;
             double b = left - right;
-            return (-a < b) && (a > b);
+            return -a < b && a > b;
         }
 
 #if !WINDOWS_PHONE
@@ -556,7 +556,7 @@ namespace WrapLayout
         /// </returns>
         public static bool IsLessThanOrClose(double left, double right)
         {
-            return (left < right) || AreClose(left, right);
+            return left < right || AreClose(left, right);
         }
 #endif
     }

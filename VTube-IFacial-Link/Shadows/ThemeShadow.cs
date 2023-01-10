@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 
-namespace VTube_IFacial_Link.UI
+namespace VTube_IFacial_Link.Shadows
 {
     internal class ThemeShadow : Microsoft.UI.Xaml.Media.ThemeShadow
     {
