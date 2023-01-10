@@ -86,6 +86,33 @@ namespace VTube_IFacial_Link.Views
             InitializeComponent();
         }
 
+        public void ShowMessageDialog(string title, string content)
+        {
+            if (DispatcherQueue.HasThreadAccess)
+            {
+                new ContentDialog
+                {
+                    Title = title,
+                    Content = content,
+                    CloseButtonText = "Ok",
+                    XamlRoot = Content.XamlRoot
+                }.ShowAsync().AsTask();
+            }
+            else
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    new ContentDialog
+                    {
+                        Title = title,
+                        Content = content,
+                        CloseButtonText = "Ok",
+                        XamlRoot = Content.XamlRoot
+                    }.ShowAsync().AsTask();
+                });
+            }
+        }
+
         #endregion
 
         #region Property

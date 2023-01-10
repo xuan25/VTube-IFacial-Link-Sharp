@@ -1,11 +1,7 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Dispatching;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VTube_IFacial_Link.ViewModels
 {
@@ -19,14 +15,28 @@ namespace VTube_IFacial_Link.ViewModels
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
         /// <summary>
         /// Notifies listeners that a property value has changed.
         /// </summary>
         /// <param name="propertyName">Name of the property used to notify listeners. This
         /// value is optional and can be provided automatically when invoked from compilers
         /// that support <see cref="CallerMemberNameAttribute"/>.</param>
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            if(dispatcherQueue.HasThreadAccess)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            } 
+            else
+            {
+                dispatcherQueue.TryEnqueue(() =>
+                {
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                });
+            }
+        }
 
         /// <summary>
         /// Checks if a property already matches a desired value. Sets the property and

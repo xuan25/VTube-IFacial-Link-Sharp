@@ -213,111 +213,65 @@ namespace VTube_IFacial_Link.Models
             ViewModel.IsBusy = true;
             ViewModel.CanStart = false;
 
-            try
-            {
-                ViewModel.BusyMessage = "Initializing...";
-                SaveConfig();
-
-                facialClient = new IFacialClient(IPAddress.Parse(ViewModel.IFacialAddress));
-                ViewModel.CapDataModel = new CapturedDataModel(facialClient.Data);
-                facialClient.DataUpdated += FacialClient_DataUpdated;
-                facialClient.ExceptionOccurred += FacialClient_ExceptionOccurred;
-
-                ScriptParameterConverter parameterConverter = new ScriptParameterConverter(ViewModel.ScriptParameters, ViewModel.ScriptGlobals);
-                vtubeClient = new VTubeClient(new Uri(ViewModel.VTubeAddress), facialClient.Data, Path.Combine(PathUtils.ConfigPath, "config-vtube.json"), parameterConverter);
-                vtubeClient.ExceptionOccurred += VtubeClient_ExceptionOccurred;
-
-            }
-            catch (Exception ex)
-            {
-                await new ContentDialog
-                {
-                    Title = "Failed to Initialize",
-                    Content = $"{ex.Message}",
-                    CloseButtonText = "Ok",
-                    XamlRoot = ViewModel.View.Content.XamlRoot
-                }.ShowAsync();
-                Stop();
-                return;
-            }
-
             await Task.Factory.StartNew(() =>
             {
                 try
                 {
-                    ViewModel.View.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
-                    {
-                        ViewModel.BusyMessage = " Connecting to Capturing Device...";
-                    });
-                    facialClient.Connect();
-                    ViewModel.View.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
-                    {
-                        ViewModel.BusyMessage = " Starting Captures...";
-                    });
-                    facialClient.Start();
+                    ViewModel.BusyMessage = "Initializing...";
+                    SaveConfig();
+
+                    facialClient = new IFacialClient(IPAddress.Parse(ViewModel.IFacialAddress));
+                    ViewModel.CapDataModel = new CapturedDataModel(facialClient.Data);
+                    facialClient.DataUpdated += FacialClient_DataUpdated;
+                    facialClient.ExceptionOccurred += FacialClient_ExceptionOccurred;
+
+                    ScriptParameterConverter parameterConverter = new ScriptParameterConverter(ViewModel.ScriptParameters, ViewModel.ScriptGlobals);
+                    vtubeClient = new VTubeClient(new Uri(ViewModel.VTubeAddress), facialClient.Data, Path.Combine(PathUtils.ConfigPath, "config-vtube.json"), parameterConverter);
+                    vtubeClient.ExceptionOccurred += VtubeClient_ExceptionOccurred;
+
                 }
                 catch (Exception ex)
                 {
-
-                    ViewModel.View.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
-                    {
-                        await new ContentDialog
-                        {
-                            Title = "Failed to Connect Capturing Device",
-                            Content = $"{ex.Message}",
-                            CloseButtonText = "Ok",
-                            XamlRoot = ViewModel.View.Content.XamlRoot
-                        }.ShowAsync();
-                        Stop();
-                    });
+                    ViewModel.ShowMessageDialog("Failed to Initialize", $"{ex.Message}");
+                    Stop();
                     return;
                 }
 
                 try
                 {
-                    ViewModel.View.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
-                    {
-                        ViewModel.BusyMessage = "Connecting to VTube Studio...";
-                    });
+                    ViewModel.BusyMessage = " Connecting to Capturing Device...";
+                    facialClient.Connect();
+                    ViewModel.BusyMessage = " Starting Captures...";
+                    facialClient.Start();
+                }
+                catch (Exception ex)
+                {
+                    ViewModel.ShowMessageDialog("Failed to Connect Capturing Device", $"{ex.Message}");
+                    Stop();
+                    return;
+                }
+
+                try
+                {
+                    ViewModel.BusyMessage = "Connecting to VTube Studio...";
                     vtubeClient.Connect((message) =>
                     {
-                        ViewModel.View.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
-                        {
-                            ViewModel.BusyMessage = $"Connecting to VTube Studio...\n{message}";
-                        });
+                        ViewModel.BusyMessage = $"Connecting to VTube Studio...\n{message}";
                     });
-                    ViewModel.View.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
-                    {
-                        ViewModel.BusyMessage = "Initializing VTube Studio...";
-                    });
+                    ViewModel.BusyMessage = "Initializing VTube Studio...";
                     vtubeClient.Init();
-                    ViewModel.View.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
-                    {
-                        ViewModel.BusyMessage = "Starting VTube Studio Plugin...";
-                    });
+                    ViewModel.BusyMessage = "Starting VTube Studio Plugin...";
                     vtubeClient.Start();
                 }
                 catch (Exception ex)
                 {
-                    ViewModel.View.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
-                    {
-                        await new ContentDialog
-                        {
-                            Title = "Failed to Connect VTube Studio",
-                            Content = $"{ex.Message}",
-                            CloseButtonText = "Ok",
-                            XamlRoot = ViewModel.View.Content.XamlRoot
-                        }.ShowAsync();
-                        Stop();
-                    });
+                    ViewModel.ShowMessageDialog("Failed to Connect VTube Studio", $"{ex.Message}");
+                    Stop();
                     return;
                 }
 
-                ViewModel.View.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
-                {
-                    ViewModel.CanStop = true;
-                    ViewModel.IsBusy = false;
-                });
+                ViewModel.CanStop = true;
+                ViewModel.IsBusy = false;
             });
         }
 
@@ -325,36 +279,17 @@ namespace VTube_IFacial_Link.Models
         {
             Task.Factory.StartNew(() =>
             {
-                ViewModel.View.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
-                {
-                    Stop();
-                    await new ContentDialog
-                    {
-                        Title = "Error Occurred with VTube Studio",
-                        Content = $"{exception.Message}",
-                        CloseButtonText = "Ok",
-                        XamlRoot = ViewModel.View.Content.XamlRoot
-                    }.ShowAsync();
-                });
+                Stop();
+                ViewModel.ShowMessageDialog("Failed to Connect VTube Studio", $"{exception.Message}");
             });
-
         }
 
         private void FacialClient_ExceptionOccurred(IFacialClient sender, Exception exception)
         {
             Task.Factory.StartNew(() =>
             {
-                ViewModel.View.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, async () =>
-                {
-                    Stop();
-                    await new ContentDialog
-                    {
-                        Title = "Error Occurred with Capturing Device",
-                        Content = $"{exception.Message}",
-                        CloseButtonText = "Ok",
-                        XamlRoot = ViewModel.View.Content.XamlRoot
-                    }.ShowAsync();
-                });
+                Stop();
+                ViewModel.ShowMessageDialog("Error Occurred with Capturing Device", $"{exception.Message}");
             });
 
         }
@@ -383,13 +318,7 @@ namespace VTube_IFacial_Link.Models
             }
             catch (Exception ex)
             {
-                await new ContentDialog
-                {
-                    Title = "Failed to Stop",
-                    Content = $"{ex.Message}",
-                    CloseButtonText = "Ok",
-                    XamlRoot = ViewModel.View.Content.XamlRoot
-                }.ShowAsync();
+                ViewModel.ShowMessageDialog("Error Occurred with Capturing Device", $"{ex.Message}");
                 ViewModel.CanStop = true;
                 ViewModel.IsBusy = false;
             }
@@ -398,10 +327,7 @@ namespace VTube_IFacial_Link.Models
 
         private void FacialClient_DataUpdated(object sender, EventArgs e)
         {
-            ViewModel.View.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
-            {
-                ViewModel.CapDataModel.NotifyDataChanged();
-            });
+            ViewModel.CapDataModel.NotifyDataChanged();
         }
 
         #endregion

@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Dispatching;
+﻿using System.Runtime.CompilerServices;
+using System;
 using VTube_IFacial_Link.DataModels;
 using VTube_IFacial_Link.Models;
 using VTube_IFacial_Link.ViewModels.Commands;
@@ -23,7 +24,6 @@ namespace VTube_IFacial_Link.ViewModels
         {
             View = view;
             Model = new MainModel(this);
-            Model.ViewModel = this;
 
             StartCommand = new StartCommandModel(this);
             StopCommand = new StopCommandModel(this);
@@ -33,8 +33,6 @@ namespace VTube_IFacial_Link.ViewModels
             AddScriptParameterCommand = new AddScriptParameterCommandModel(this);
             RemoveScriptParameterCommand = new RemoveScriptParameterCommandModel(this);
         }
-
-        private DispatcherQueue dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
         private ScriptParameterCollection<ScriptParameterModel> _scriptParameters = null;
         public ScriptParameterCollection<ScriptParameterModel> ScriptParameters
@@ -107,7 +105,7 @@ namespace VTube_IFacial_Link.ViewModels
                 {
                     if (View.IsLoaded)
                     {
-                        SaveConfig();
+                        Model.SaveConfig();
                     }
                 }
             }
@@ -134,5 +132,8 @@ namespace VTube_IFacial_Link.ViewModels
         public void SaveConfig() => Model.SaveConfig();
 
         public void SaveScripts() => Model.SaveScripts();
+
+        public void ShowMessageDialog(string title, string content) => View.ShowMessageDialog(title, content);
+
     }
 }
