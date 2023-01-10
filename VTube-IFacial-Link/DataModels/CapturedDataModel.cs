@@ -1,7 +1,7 @@
 ﻿using IFacial;
 using System.ComponentModel;
 
-namespace VTube_IFacial_Link.DataModel
+namespace VTube_IFacial_Link.DataModels
 {
     public class CapturedDataModel : INotifyPropertyChanged
     {
