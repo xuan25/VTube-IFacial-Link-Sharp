@@ -12,5 +12,13 @@ namespace VTube_IFacial_Link.Utils
                 return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
             }
         }
+
+        public static string ResourcesPath
+        {
+            get
+            {
+                return "Resources";
+            }
+        }
     }
 }

@@ -166,7 +166,7 @@ namespace VTube_IFacial_Link.Models
             {
                 System.Diagnostics.Debug.WriteLine($"Loading default scripts... ({scriptsPath})");
                 ScriptStore store;
-                using (FileStream configStream = File.OpenRead("default-scripts.json"))
+                using (FileStream configStream = File.OpenRead(Path.Combine(PathUtils.ResourcesPath, "default-scripts.json")))
                 {
                     store = JsonSerializer.Deserialize<ScriptStore>(configStream, configSerializeOptions);
                 }
