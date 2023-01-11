@@ -327,7 +327,7 @@ namespace VTube_IFacial_Link.Models
 
         private void FacialClient_DataUpdated(object sender, EventArgs e)
         {
-            ViewModel.CapDataModel.NotifyDataChanged();
+            ViewModel.CapDataModel.NotifyDataChanged(ViewModel.View.DispatcherQueue);
         }
 
         #endregion
