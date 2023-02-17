@@ -170,6 +170,12 @@ namespace VTube
 
         private void ConnectionLoop()
         {
+            long frameCount = 0;
+            long statInterval = 60;
+            long lastStatsTick = 0;
+            System.Diagnostics.Stopwatch stopwatch = new();
+            stopwatch.Start();
+
             try
             {
                 while (!CTS.IsCancellationRequested)
@@ -179,7 +185,16 @@ namespace VTube
                     {
                         Api.RequestInjectParameterData(clientWebSocket, true, "set", parameterValues);
                     }
-                    Thread.Sleep(1);
+
+                    frameCount++;
+                    if (frameCount % statInterval == 0)
+                    {
+                        long currentTick = stopwatch.ElapsedTicks;
+                        long statsDeltaTicks = currentTick - lastStatsTick;
+                        double fps = 1 / (((double)statsDeltaTicks / TimeSpan.TicksPerMillisecond / 1000) / statInterval);
+                        System.Diagnostics.Debug.WriteLine($"FPS: {fps:0.##}");
+                        lastStatsTick = currentTick;
+                    }
                 }
             }
             catch (Exception ex)
