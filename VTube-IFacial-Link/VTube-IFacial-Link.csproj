@@ -25,6 +25,14 @@
 	<AssemblyVersion>0.2.0.0</AssemblyVersion>
   </PropertyGroup>
 
+  <Target Name="Archive" AfterTargets="Publish">
+    <PropertyGroup>
+      <PackName>core_$(RuntimeIdentifier)</PackName>
+    </PropertyGroup>
+    <MakeDir Directories="..\publish"/>
+    <ZipDirectory DestinationFile="..\publish\$(PackName).zip" Overwrite="true" SourceDirectory="$(PublishDir)" />
+  </Target>
+
   <ItemGroup>
     <None Remove="CreateNameDialog.xaml" />
     <None Remove="LabelledValueSlider.xaml" />

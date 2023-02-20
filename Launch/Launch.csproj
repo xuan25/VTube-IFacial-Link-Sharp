@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Launch</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Message Text="Copy" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Unzip SourceFiles="..\publish\core_win10-x64.zip" DestinationFolder="$(OutDir)bin" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="Archive" AfterTargets="Publish" Condition="$(PublishSingleFile)">
+    <PropertyGroup>
+      <PackName>VTube-IFacial-Link</PackName>
+    </PropertyGroup>
+    <ItemGroup>
+      <Archive Include="$(PublishDir)*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Archive)" DestinationFolder="$(PublishDir)pack\$(PackName)" />
+    <MakeDir Directories="$(PublishDir)pack\$(PackName)\bin" />
+    <Unzip SourceFiles="..\publish\core_win10-x64.zip" DestinationFolder="$(PublishDir)pack\$(PackName)\bin" SkipUnchangedFiles="true" />
+    <MakeDir Directories="..\publish" />
+    <ZipDirectory DestinationFile="..\publish\$(PackName)_$(RuntimeIdentifier).zip" Overwrite="true" SourceDirectory="$(PublishDir)pack\$(PackName)" />
+  </Target>
+
+</Project>
