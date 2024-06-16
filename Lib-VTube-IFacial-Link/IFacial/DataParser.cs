@@ -47,6 +47,11 @@ namespace IFacial
         {
             switch (key)
             {
+                // Tracking
+                case "trackingStatus":
+                    Data.BlendShapes.TrackingStatus = value;
+                    break;
+
                 // Left Eye
                 case "eyeBlink_L":
                     Data.BlendShapes.EyeBlinkLeft = value;

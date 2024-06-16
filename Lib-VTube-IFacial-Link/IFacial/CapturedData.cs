@@ -35,6 +35,9 @@
         }
         public class BlendShapesData
         {
+            // TrackingStatus
+            public float TrackingStatus { get; set; }
+
             // Left Eye
             public float EyeBlinkLeft { get; set; }
             public float EyeLookDownLeft { get; set; }

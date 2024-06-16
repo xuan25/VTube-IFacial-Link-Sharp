@@ -183,7 +183,7 @@ namespace VTube
                     List<InjectParameterDataRequest.DataSection.ParameterValue> parameterValues = ParamConverter.Convert(Captured);
                     if (parameterValues.Count > 0)
                     {
-                        Api.RequestInjectParameterData(clientWebSocket, true, "set", parameterValues);
+                        Api.RequestInjectParameterData(clientWebSocket, Captured.BlendShapes.TrackingStatus > 0, "set", parameterValues);
                     }
 
                     frameCount++;
