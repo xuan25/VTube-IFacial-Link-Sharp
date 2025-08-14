@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace IFacial
 {
@@ -26,7 +27,7 @@ namespace IFacial
             {
                 string[] pair = section.Split('&');
                 string key = pair[0].Trim();
-                float val = float.Parse(pair[1].Trim()) / 100;
+                float val = float.Parse(pair[1].Trim(), CultureInfo.InvariantCulture) / 100;
                 ParseBlendShapes(key, val);
             }
             else
@@ -37,7 +38,7 @@ namespace IFacial
                 float[] vals = new float[valsStr.Length];
                 for(int i = 0; i < valsStr.Length; i++)
                 {
-                    vals[i] = float.Parse(valsStr[i].Trim());
+                    vals[i] = float.Parse(valsStr[i].Trim(), CultureInfo.InvariantCulture);
                 }
                 ParseTracking(key, vals);
             }
